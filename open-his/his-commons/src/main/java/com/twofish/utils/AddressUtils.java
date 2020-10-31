@@ -1,4 +1,5 @@
 package com.twofish.utils;
+
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
  * @author ccy
  */
 public class AddressUtils {
+
     private static final Logger log = LoggerFactory.getLogger(AddressUtils.class);
 
     public static final String IP_URL = "http://ip.taobao.com/service/getIpInfo.php";

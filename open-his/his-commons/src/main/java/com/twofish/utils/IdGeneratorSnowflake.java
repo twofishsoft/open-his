@@ -11,16 +11,20 @@ import org.slf4j.LoggerFactory;
  * @Description:雪花算法工具类
  */
 public class IdGeneratorSnowflake {
+    
     private static final Logger log = LoggerFactory.getLogger(HttpUtils.class);
+
     private static long workId = 0;
+
     private static long datacenterId = 1;
+
     private static Snowflake snowflake;
 
     static {
         try {
             workId = NetUtil.ipv4ToLong(NetUtil.getLocalhostStr());
             log.info("当前机器的工作ID为:" + workId);
-            snowflake=IdUtil.createSnowflake(workId, datacenterId);
+            snowflake = IdUtil.createSnowflake(workId, datacenterId);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("当前机器的workId获取失败", e);

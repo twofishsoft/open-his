@@ -1,7 +1,14 @@
 package com.twofish.service;
 
 import com.twofish.domain.User;
-import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+ * @author www32
+ * @date 2020/10/31
+ * @project open-his
+ * @description 用户业务接口
+ * @Version 1.0
+ */
 public interface UserService {
 
     /**
@@ -9,12 +16,12 @@ public interface UserService {
      * @param phone
      * @return
      */
-    User querybyphone(String phone);
+    User queryByPhone(String phone);
 
     /**
      * 根据用户id查询用户
      * @param userId
      * @return
      */
-    User getone(Long userId);
+    User getOne(Long userId);
 }

@@ -6,9 +6,10 @@ import java.util.HashMap;
 
 /**
  * 统一返回结果
+ *
  * @author ccy
  */
-public class AjaxResult extends HashMap<String,Object> {
+public class AjaxResult extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -122,8 +123,8 @@ public class AjaxResult extends HashMap<String,Object> {
      * @param data 数据对象
      * @return 成功消息
      */
-    public static AjaxResult success(String msg, Object data,Long total) {
-        return new AjaxResult(HttpStatus.SUCCESS, msg, data,total);
+    public static AjaxResult success(String msg, Object data, Long total) {
+        return new AjaxResult(HttpStatus.SUCCESS, msg, data, total);
     }
 
     /**

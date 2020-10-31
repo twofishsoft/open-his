@@ -15,6 +15,7 @@ import java.util.UUID;
  * 用于生成token
  * 如果head里有就返回
  * 没用就构建一个返回
+ *
  * @author ccy
  */
 @Configuration
@@ -23,9 +24,9 @@ public class TokenWebSessionManager extends DefaultWebSessionManager {
     protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
         //从头里面得到请求TOKEN 如果不存在就生成一个
         String header = WebUtils.toHttp(request).getHeader(Constants.TOKEN);
-        if(StringUtils.hasText(header)){
-            return  header;
+        if (StringUtils.hasText(header)) {
+            return header;
         }
-        return  UUID.randomUUID().toString() ;
+        return UUID.randomUUID().toString();
     }
 }

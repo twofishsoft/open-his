@@ -9,6 +9,7 @@ import java.util.Date;
 
 /**
  * 前端传参数到后台的基础数据传输类
+ *
  * @author ccy
  */
 @Data

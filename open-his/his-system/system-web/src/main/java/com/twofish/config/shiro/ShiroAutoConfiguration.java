@@ -1,4 +1,5 @@
 package com.twofish.config.shiro;
+
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -27,6 +28,7 @@ import java.util.Map;
 
 /**
  * shiro配置
+ *
  * @Author: ccy
  */
 @Configuration
@@ -139,8 +141,8 @@ public class ShiroAutoConfiguration {
 
     /**
      * sessionManager 里面可以决定sessionDAO
-     * @param redisSessionDao
-     * defaultWebSessionManager来源com.sxt.system.config.TokenWebSessionManager
+     *
+     * @param redisSessionDao defaultWebSessionManager来源com.sxt.system.config.TokenWebSessionManager
      * @return
      */
     @Bean
@@ -157,13 +159,16 @@ public class ShiroAutoConfiguration {
     @Bean
     public RedisSessionDAO redisSessionDAO(IRedisManager redisManager) {
         RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
-        redisSessionDAO.setRedisManager(redisManager); //操作那个redis
-        redisSessionDAO.setExpire(7 * 24 * 3600); // 用户的登录信息保存多久？ 7 天
+        // 操作那个redis
+        redisSessionDAO.setRedisManager(redisManager);
+        // 用户的登录信息保存多久？ 7 天
+        redisSessionDAO.setExpire(7 * 24 * 3600);
         return redisSessionDAO;
     }
 
     /**
      * 因为分步式项目，所以使用redis去存我们的登陆Session
+     *
      * @return
      */
     @Bean

@@ -2,16 +2,25 @@ package com.twofish.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.twofish.constants.Constants;
-import com.twofish.domain.SimpleUser;
-import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
-import java.util.List;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.twofish.domain.Menu;
+import com.twofish.domain.SimpleUser;
 import com.twofish.mapper.MenuMapper;
 import com.twofish.service.MenuService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * @author www32
+ * @date 2020/10/31
+ * @project open-his
+ * @description 菜单业务接口实现类
+ * @Version 1.0
+ */
 @Service
 public class MenuServiceImpl implements MenuService{
+
     @Resource
     private MenuMapper menuMapper;
 

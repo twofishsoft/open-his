@@ -15,8 +15,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableDubbo
 @Slf4j
 public class SystemApplication {
-     public static void main(String args[]) {
-          SpringApplication.run(SystemApplication.class,args);
-          log.info("主系统启动成功...");
-      }
+
+    public static void main(String[] args) {
+        SpringApplication.run(SystemApplication.class, args);
+        log.info("主系统启动成功...");
+    }
 }
