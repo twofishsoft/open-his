@@ -10,10 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author ccy
  * 系统启动类
  */
-@SpringBootApplication
-@MapperScan(basePackages = {"com.twofish.mapper"})
-@EnableDubbo
 @Slf4j
+@EnableDubbo
+@MapperScan(basePackages = {"com.twofish.mapper"})
+@SpringBootApplication
 public class SystemApplication {
 
     public static void main(String[] args) {
