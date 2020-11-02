@@ -2,7 +2,6 @@ package com.twofish.service;
 
 
 import com.twofish.domain.DictType;
-import com.twofish.domain.SimpleUser;
 import com.twofish.dto.DicTypeDto;
 import com.twofish.vo.DataGridView;
 
@@ -13,6 +12,7 @@ public interface DictTypeService {
 
     /**
      * 分页多条件查询字典
+     *
      * @param dicTypeDto
      * @return
      */
@@ -20,12 +20,14 @@ public interface DictTypeService {
 
     /**
      * 查询所有字典类型
+     *
      * @return
      */
     DataGridView list();
 
     /**
      * 新增字典
+     *
      * @param dicTypeDto
      * @return
      */
@@ -33,6 +35,7 @@ public interface DictTypeService {
 
     /**
      * 查询单个字典
+     *
      * @param dictId
      * @return
      */
@@ -40,6 +43,7 @@ public interface DictTypeService {
 
     /**
      * 修改字典
+     *
      * @param dicTypeDto
      * @return
      */
@@ -47,6 +51,7 @@ public interface DictTypeService {
 
     /**
      * 删除字典(可以批量删除)
+     *
      * @param dictIds
      * @return
      */
@@ -54,13 +59,12 @@ public interface DictTypeService {
 
     /**
      * 检查字典类型是否存在
+     *
      * @param dictId
      * @param dictType
      * @return
      */
-    Boolean checkdictypeuniq(Long dictId,String dictType);
-
-
+    Boolean checkdictypeuniq(Long dictId, String dictType);
 
 
 }

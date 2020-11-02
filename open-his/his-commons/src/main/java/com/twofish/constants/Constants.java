@@ -2,6 +2,7 @@ package com.twofish.constants;
 
 /**
  * 常量接口
+ *
  * @author ccy
  */
 public interface Constants {
@@ -68,12 +69,18 @@ public interface Constants {
     /**
      * 挂号单状态
      */
-    String REG_STATUS_0 = "0"; //待支付
-    String REG_STATUS_1 = "1"; //待就诊
-    String REG_STATUS_2 = "2"; //就诊中
-    String REG_STATUS_3 = "3"; //就诊完成
-    String REG_STATUS_4 = "4"; //已退号
-    String REG_STATUS_5 = "5"; //已作废
+    // 待支付
+    String REG_STATUS_0 = "0";
+    // 待就诊
+    String REG_STATUS_1 = "1";
+    // 就诊中
+    String REG_STATUS_2 = "2";
+    // 就诊完成
+    String REG_STATUS_3 = "3";
+    // 已退号
+    String REG_STATUS_4 = "4";
+    // 已作废
+    String REG_STATUS_5 = "5";
     /**
      * 处方类型
      */
@@ -108,7 +115,9 @@ public interface Constants {
     /**
      * 支付类型
      */
-    String PAY_TYPE_0 = "0";//现金
-    String PAY_TYPE_1 = "1";//支付宝
+    // 现金
+    String PAY_TYPE_0 = "0";
+    // 支付宝
+    String PAY_TYPE_1 = "1";
 
 }

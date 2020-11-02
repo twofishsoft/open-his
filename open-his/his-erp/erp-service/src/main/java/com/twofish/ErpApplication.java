@@ -8,16 +8,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * 进销存药品主入口
- * @author ccy
  *
+ * @author ccy
  */
 @SpringBootApplication
 @MapperScan(basePackages = {"com.twofish.mapper"})
 @EnableDubbo
 @Slf4j
 public class ErpApplication {
-     public static void main(String args[]) {
-         SpringApplication.run(ErpApplication.class,args);
-         log.info("erp子系统启动成功");
-      } 
+
+    public static void main(String[] args) {
+        SpringApplication.run(ErpApplication.class, args);
+        log.info("erp子系统启动成功");
+    }
+
 }

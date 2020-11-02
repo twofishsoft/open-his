@@ -28,6 +28,7 @@ public class GlobleExceptionHadler {
 
     /**
      * 未指定异常 所有异常处理根方法
+     *
      * @param e
      * @return
      */
@@ -39,6 +40,7 @@ public class GlobleExceptionHadler {
 
     /**
      * 异常信息转化方法，用于将异常信息封装地更美观
+     *
      * @param allErrors
      * @return
      */
@@ -57,6 +59,7 @@ public class GlobleExceptionHadler {
 
     /**
      * 登录参数校验异常
+     *
      * @param e
      * @return
      */
@@ -68,6 +71,7 @@ public class GlobleExceptionHadler {
 
     /**
      * 字典类型参数异常处理 异常信息转化
+     *
      * @param e
      * @return
      */
@@ -79,6 +83,7 @@ public class GlobleExceptionHadler {
 
     /**
      * 方法参数类型异常 异常信息转化
+     *
      * @param e
      * @return
      */

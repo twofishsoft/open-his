@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * mp配置
+ *
  * @author ccy
  */
 @Configuration
@@ -16,6 +17,7 @@ public class MybatisPlusConfig {
 
     /**
      * mybatis 分页插件
+     *
      * @return
      */
     @Bean

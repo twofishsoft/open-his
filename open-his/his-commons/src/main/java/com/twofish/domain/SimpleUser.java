@@ -8,12 +8,21 @@ import java.io.Serializable;
 
 /**
  * 用户对象传输类：rpc调用时方便知道当前登录的用户是谁
+ *
  * @author ccy
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class SimpleUser implements Serializable {
+
+    /**
+     * 用户ID
+     */
     private Serializable userId;
+
+    /**
+     * 用户名
+     */
     private String userName;
 }

@@ -2,6 +2,7 @@ package com.twofish.constants;
 
 /**
  * 状态码常量类
+ *
  * @author ccy
  */
 public interface HttpStatus {

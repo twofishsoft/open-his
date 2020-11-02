@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * 就诊子系统主入口
+ *
  * @author ccy
  */
 @SpringBootApplication
@@ -15,8 +16,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableDubbo
 @Slf4j
 public class DoctorApplication {
-     public static void main(String args[]) {
-         SpringApplication.run(DoctorApplication.class,args);
-         log.info("就诊子系统启动成功。。。");
-      }
+
+    public static void main(String[] args) {
+        SpringApplication.run(DoctorApplication.class, args);
+        log.info("就诊子系统启动成功。。。");
+    }
+
 }

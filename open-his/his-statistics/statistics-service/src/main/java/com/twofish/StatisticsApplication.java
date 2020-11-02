@@ -8,16 +8,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * 统计分析系统主入口
- * @author ccy
  *
+ * @author ccy
  */
 @SpringBootApplication
 @MapperScan(basePackages = {"com.twofish.mapper"})
 @EnableDubbo
 @Slf4j
 public class StatisticsApplication {
-     public static void main(String args[]) {
-         SpringApplication.run(StatisticsApplication.class,args);
-         log.info("系统分析子系统启动成功。。");
-      }
+
+    public static void main(String[] args) {
+        SpringApplication.run(StatisticsApplication.class, args);
+        log.info("系统分析子系统启动成功。。");
+    }
+
 }
