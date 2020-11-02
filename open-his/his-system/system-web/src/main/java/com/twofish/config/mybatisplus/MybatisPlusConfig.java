@@ -14,7 +14,10 @@ import org.springframework.context.annotation.Configuration;
 @MapperScan("com.twofish.mapper")
 public class MybatisPlusConfig {
 
-    //分页插件
+    /**
+     * mybatis 分页插件
+     * @return
+     */
     @Bean
     public PaginationInterceptor paginationInterceptor() {
         PaginationInterceptor paginationInterceptor = new PaginationInterceptor();

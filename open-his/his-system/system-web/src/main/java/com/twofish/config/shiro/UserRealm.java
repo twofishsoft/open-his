@@ -1,4 +1,5 @@
 package com.twofish.config.shiro;
+
 import com.twofish.domain.User;
 import com.twofish.service.UserService;
 import com.twofish.vo.ActivierUser;
@@ -20,52 +21,57 @@ import org.springframework.context.annotation.Lazy;
  */
 public class UserRealm extends AuthorizingRealm {
 
+    /**
+     * 注入用户业务接口
+     */
+    @Autowired
+    @Lazy
+    private UserService userService;
 
-	@Autowired
-	@Lazy
-	private UserService userService;
 
+    @Override
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
 
-	@Override
-	public String getName() {
-		return this.getClass().getSimpleName();
-	}
+    /**
+     * 做认证  --就是登陆
+     *
+     * @param token
+     * @return
+     * @throws AuthenticationException
+     */
+    @Override
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+        //得到用户登陆名
+        String phone = token.getPrincipal().toString();
+        //根据电话查询用户是否存在
+        User user = this.userService.querybyphone(phone);
+        // 说明用户存在，但是密码可能不正确
+        if (null != user) {
+            //组装存放到reids里面的对象
+            ActivierUser activerUser = new ActivierUser();
+            activerUser.setUser(user);
+            //匹配密码
+            SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(activerUser, user.getPassword(), ByteSource.Util.bytes(user.getSalt()), this.getName());
+            return info;
+        } else {
+            // 代表用户不存在
+            return null;
+        }
+    }
 
-	/**
-	 * 做认证  --就是登陆
-	 * @param token
-	 * @return
-	 * @throws AuthenticationException
-	 */
-	@Override
-	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-		//得到用户登陆名
-		String phone=token.getPrincipal().toString();
-		//根据电话查询用户是否存在
-		User user = this.userService.querybyphone(phone);
-		if(null!=user){//说明用户存在，但是密码可能不正确
-			//组装存放到reids里面的对象
-			ActivierUser activerUser=new ActivierUser();
-			activerUser.setUser(user);
-			//匹配密码
-			SimpleAuthenticationInfo  info=new SimpleAuthenticationInfo(
-					activerUser,user.getPassword(), ByteSource.Util.bytes(user.getSalt()),this.getName()
-			);
-			return info;
-		}else{
-			return null;//代表用户不存在
-		}
-	}
-
-	/**
-	 * 做授权  --登陆成功之后判断用户是否有某个菜单或按钮的权限
-	 * @param principals
-	 * @return
-	 */
-	@Override
-	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		ActivierUser activerUser= (ActivierUser) principals.getPrimaryPrincipal();//身份得到的就是上一个方法的返回值的值 第一个参数activerUser
-		SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
-		return info;
-	}
+    /**
+     * 做授权  --登陆成功之后判断用户是否有某个菜单或按钮的权限
+     *
+     * @param principals
+     * @return
+     */
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+        // 身份得到的就是上一个方法的返回值的值 第一个参数activerUser
+        ActivierUser activerUser = (ActivierUser) principals.getPrimaryPrincipal();
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        return info;
+    }
 }

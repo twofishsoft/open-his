@@ -1,4 +1,5 @@
 package com.twofish.config.shiro;
+
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -27,6 +28,7 @@ import java.util.Map;
 
 /**
  * shiro配置
+ *
  * @Author: ccy
  */
 @Configuration
@@ -50,9 +52,9 @@ public class ShiroAutoConfiguration {
     @Bean
     public HashedCredentialsMatcher getHashedCredentialsMatcher() {
         HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
-        //注入散列算法名
+        // 注入散列算法名
         matcher.setHashAlgorithmName(shiroProperties.getHashAlgorithmName());
-        //注入散列次数
+        // 注入散列次数
         matcher.setHashIterations(shiroProperties.getHashIterations());
         return matcher;
     }
@@ -65,7 +67,7 @@ public class ShiroAutoConfiguration {
     @ConditionalOnClass(value = {UserRealm.class})
     public UserRealm getUserRealm(HashedCredentialsMatcher matcher) {
         UserRealm userRealm = new UserRealm();
-        //注入凭证匹配器
+        // 注入凭证匹配器
         userRealm.setCredentialsMatcher(matcher);
         return userRealm;
     }
@@ -90,15 +92,15 @@ public class ShiroAutoConfiguration {
     @Bean(value = SHIRO_FILTER_NAME)
     public ShiroFilterFactoryBean getShiroFilterFactoryBean(DefaultWebSecurityManager securityManager) {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
-        //注入安全管理器
+        // 注入安全管理器
         bean.setSecurityManager(securityManager);
-        //处理用户未认证访问要认证的地址的跳转问题   默认是跳转到shiroProperties.getLoginUrl()现在改成以json串形式返回
+        // 处理用户未认证访问要认证的地址的跳转问题   默认是跳转到shiroProperties.getLoginUrl()现在改成以json串形式返回
         Map<String, Filter> filters = new HashMap<>();
         filters.put("authc", new ShiroLoginFilter());
         bean.setFilters(filters);
 
         Map<String, String> map = new HashMap<>();
-        //配置不拦击的路径
+        // 配置不拦击的路径
         String[] anonUrls = shiroProperties.getAnonUrls();
         if (anonUrls != null && anonUrls.length > 0) {
             for (String anonUrl : anonUrls) {
@@ -122,11 +124,11 @@ public class ShiroAutoConfiguration {
      */
     @Bean
     public FilterRegistrationBean<DelegatingFilterProxy> registDelegatingFilterProxy() {
-        //创建注册器
+        // 创建注册器
         FilterRegistrationBean<DelegatingFilterProxy> bean = new FilterRegistrationBean<>();
-        //创建过滤器
+        // 创建过滤器
         DelegatingFilterProxy proxy = new DelegatingFilterProxy();
-        //注入过滤器
+        // 注入过滤器
         bean.setFilter(proxy);
         proxy.setTargetFilterLifecycle(true);
         proxy.setTargetBeanName(SHIRO_FILTER_NAME);
@@ -139,8 +141,8 @@ public class ShiroAutoConfiguration {
 
     /**
      * sessionManager 里面可以决定sessionDAO
-     * @param redisSessionDao
-     * defaultWebSessionManager来源com.sxt.system.config.TokenWebSessionManager
+     *
+     * @param redisSessionDao defaultWebSessionManager来源com.sxt.system.config.TokenWebSessionManager
      * @return
      */
     @Bean
@@ -157,18 +159,21 @@ public class ShiroAutoConfiguration {
     @Bean
     public RedisSessionDAO redisSessionDAO(IRedisManager redisManager) {
         RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
-        redisSessionDAO.setRedisManager(redisManager); //操作那个redis
-        redisSessionDAO.setExpire(7 * 24 * 3600); // 用户的登录信息保存多久？ 7 天
+        // 操作那个redis
+        redisSessionDAO.setRedisManager(redisManager);
+        // 用户的登录信息保存多久？ 7 天
+        redisSessionDAO.setExpire(7 * 24 * 3600);
         return redisSessionDAO;
     }
 
     /**
      * 因为分步式项目，所以使用redis去存我们的登陆Session
+     *
      * @return
      */
     @Bean
     public IRedisManager redisManager() {
-        //因为RedisManager要操作redis所以必须把Redis的客户端给RedisManager
+        // 因为RedisManager要操作redis所以必须把Redis的客户端给RedisManager
         RedisManager redisManager = new RedisManager();
         JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
         JedisPool jedisPool = new JedisPool(jedisPoolConfig, redisProperties.getHost(), redisProperties.getPort(), 5000, redisProperties.getPassword());

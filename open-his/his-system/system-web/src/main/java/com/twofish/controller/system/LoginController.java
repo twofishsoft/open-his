@@ -29,11 +29,12 @@ import java.util.List;
 
 /**
  * 登录接口
+ *
  * @author ccy
  */
 @RestController
 @Log4j2
-@Api(value = "系统登录接口",tags = "登录接口")
+@Api(value = "系统登录接口", tags = "登录接口")
 public class LoginController {
 
     @Autowired
@@ -41,51 +42,54 @@ public class LoginController {
 
     /**
      * 登录方法
+     *
      * @param loginBodyDto 前端登录vo对象
      * @return
      */
     @PostMapping("login/doLogin")
-    @ApiOperation(value = "登录方法",notes = "登录")
-    public AjaxResult login(@RequestBody @Validated LoginBodyDto loginBodyDto){
+    @ApiOperation(value = "登录方法", notes = "登录")
+    public AjaxResult login(@RequestBody @Validated LoginBodyDto loginBodyDto) {
         Subject subject = SecurityUtils.getSubject();
         AjaxResult ajax = AjaxResult.success();
-        UsernamePasswordToken token = new UsernamePasswordToken(loginBodyDto.getUsername(),loginBodyDto.getPassword());
+        UsernamePasswordToken token = new UsernamePasswordToken(loginBodyDto.getUsername(), loginBodyDto.getPassword());
         try {
             subject.login(token);
             Serializable webtoken = subject.getSession().getId();
-            ajax.put(Constants.TOKEN,webtoken);
-        }catch (Exception e){
-            log.error("登录错误信息："+e.getMessage());
-            ajax=AjaxResult.error(HttpStatus.ERROR,"用户名或密码错误");
+            ajax.put(Constants.TOKEN, webtoken);
+        } catch (Exception e) {
+            log.error("登录错误信息：" + e.getMessage());
+            ajax = AjaxResult.error(HttpStatus.ERROR, "用户名或密码错误");
         }
         return ajax;
     }
 
     /**
      * 登录后获取用户信息
+     *
      * @return
      */
     @GetMapping("login/getInfo")
-    @ApiOperation(value = "登录后获取用户信息",notes = "获取用户信息")
-    public AjaxResult getInfo(){
+    @ApiOperation(value = "登录后获取用户信息", notes = "获取用户信息")
+    public AjaxResult getInfo() {
         AjaxResult ajax = AjaxResult.success();
         Subject subject = SecurityUtils.getSubject();
-        ActivierUser activierUser =(ActivierUser)subject.getPrincipal();
-        System.out.println("activierUser"+activierUser);
-        ajax.put("username",activierUser.getUser().getUserName());
-        ajax.put("picture",activierUser.getUser().getPicture());
-        ajax.put("roles",activierUser.getRoles());
-        ajax.put("permissions",activierUser.getPermissions());
+        ActivierUser activierUser = (ActivierUser) subject.getPrincipal();
+        System.out.println("activierUser" + activierUser);
+        ajax.put("username", activierUser.getUser().getUserName());
+        ajax.put("picture", activierUser.getUser().getPicture());
+        ajax.put("roles", activierUser.getRoles());
+        ajax.put("permissions", activierUser.getPermissions());
         return ajax;
     }
 
     /**
      * 用户退出接口
+     *
      * @return
      */
     @GetMapping("login/logout")
-    @ApiOperation(value = "用户退出",notes = "用户退出")
-    public AjaxResult logout(){
+    @ApiOperation(value = "用户退出", notes = "用户退出")
+    public AjaxResult logout() {
         AjaxResult ajax = AjaxResult.success("用户退出成功");
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
@@ -94,29 +98,29 @@ public class LoginController {
 
     /**
      * 根据用户角色权限获取菜单
+     *
      * @return
      */
     @GetMapping("login/getMenus")
-    @ApiOperation(value = "获取菜单",notes = "获取菜单")
-    public AjaxResult getMenus(){
+    @ApiOperation(value = "获取菜单", notes = "获取菜单")
+    public AjaxResult getMenus() {
         AjaxResult ajax = AjaxResult.success();
         Subject subject = SecurityUtils.getSubject();
-        ActivierUser activierUser =(ActivierUser)subject.getPrincipal();
+        ActivierUser activierUser = (ActivierUser) subject.getPrincipal();
         boolean isAdmin = activierUser.getUser().getUserType().equals(Constants.USER_ADMIN);
-        SimpleUser simpleUser=null;
-        if(!isAdmin){
+        SimpleUser simpleUser = null;
+        if (!isAdmin) {
             //系统管理员 才用的到simpleUser
-            simpleUser=new SimpleUser(activierUser.getUser().getUserId(), activierUser.getUser().getUserName());
+            simpleUser = new SimpleUser(activierUser.getUser().getUserId(), activierUser.getUser().getUserName());
         }
-        List<Menu> menus = menuService.selectMenuTree(isAdmin,simpleUser);
+        List<Menu> menus = menuService.selectMenuTree(isAdmin, simpleUser);
         List<MenuTreeVo> menuTreeVos = new ArrayList<>();
         for (Menu menu : menus) {
-            menuTreeVos.add(new MenuTreeVo(menu.getMenuId().toString(),menu.getPath()));
+            menuTreeVos.add(new MenuTreeVo(menu.getMenuId().toString(), menu.getPath()));
         }
-        ajax.put("menuTreeVos",menuTreeVos);
+        ajax.put("menuTreeVos", menuTreeVos);
         return ajax;
     }
-
 
 
 }
