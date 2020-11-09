@@ -1,6 +1,9 @@
 package com.twofish.controller.system;
 
+import com.twofish.domain.Role;
+import com.twofish.domain.User;
 import com.twofish.dto.RoleDto;
+import com.twofish.service.DictDataService;
 import com.twofish.service.RoleService;
 import com.twofish.utils.ShiroSecurityUtils;
 import com.twofish.vo.AjaxResult;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * 角色数据接口
@@ -27,6 +31,8 @@ public class RoleController {
 
     @Resource
     private RoleService roleService;
+    @Resource
+    private DictDataService dictDataService;
 
     /**
      * 分页查询角色数据
@@ -37,6 +43,10 @@ public class RoleController {
     @ApiOperation(value = "分页查询角色数据", notes = "角色数据分页")
     public AjaxResult listForPage(RoleDto roleDto){
         DataGridView dataGridView = this.roleService.listPage(roleDto);
+        List<Role> data = (List<Role>) dataGridView.getData();
+        data.stream().forEach(role -> {
+            role.setStatusName(this.dictDataService.queryDataByTypeAndValue("sys_normal_disable", role.getStatus()));
+        });
         return AjaxResult.success("查询成功", dataGridView.getData(), dataGridView.getTotal());
     }
 
@@ -58,7 +68,7 @@ public class RoleController {
      */
     @PostMapping("addRole")
     @ApiOperation(value = "添加角色数据", notes = "添加角色数据")
-    public AjaxResult addDictData(@Validated RoleDto roleDto){
+    public AjaxResult addDictData(@RequestBody RoleDto roleDto){
         //设置添加人
         roleDto.setSimpleUser(ShiroSecurityUtils.getCurrentSimpleUser());
         return AjaxResult.toAjax(this.roleService.insertRole(roleDto));
@@ -82,7 +92,7 @@ public class RoleController {
      */
     @PutMapping("updateRole")
     @ApiOperation(value = "更新角色数据", notes = "更新角色数据")
-    public AjaxResult updateRole(@Validated RoleDto roleDto){
+    public AjaxResult updateRole(@RequestBody RoleDto roleDto){
         //设置修改人
         roleDto.setSimpleUser(ShiroSecurityUtils.getCurrentSimpleUser());
         return AjaxResult.toAjax(this.roleService.updateRole(roleDto));
@@ -106,7 +116,7 @@ public class RoleController {
      */
     @PutMapping("updateMenu")
     @ApiOperation(value = "更新角色菜单关系", notes = "更新角色菜单关系")
-    public AjaxResult updateMenu(@Validated RoleDto roleDto) {
+    public AjaxResult updateMenu(@RequestBody RoleDto roleDto) {
         return AjaxResult.toAjax(this.roleService.updateMenu(roleDto));
     }
 
@@ -120,5 +130,6 @@ public class RoleController {
     public AjaxResult getUserRole(@PathVariable @Validated @NotEmpty(message = "用户ID不能为空") Long userId) {
         return AjaxResult.success(this.roleService.getUserRole(userId));
     }
+
 
 }

@@ -93,4 +93,11 @@ public class RoleDto extends BaseDto {
      */
     @ApiModelProperty(value="角色菜单关系")
     private Long[] menuIds;
+
+    /**
+     * 多选角色
+     */
+    @ApiModelProperty(value="多选角色")
+    private Long[] roleIds;
+
 }

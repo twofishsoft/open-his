@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -52,8 +53,7 @@ public class UserController {
     public AjaxResult listForPage(UserDto userDto){
         DataGridView dataGridView = this.userService.listPage(userDto);
         List<User> data = (List<User>) dataGridView.getData();
-        for (int i = 0; i < data.size(); i++) {
-            User user = data.get(i);
+        data.stream().forEach(user -> {
             user.setStatusName(this.findDictDate("sys_normal_disable", user.getStatus()));
             user.setBackgroundName(this.findDictDate("sys_user_background", user.getBackground()));
             user.setLevelName(this.findDictDate("sys_user_level", user.getUserRank()));
@@ -63,7 +63,7 @@ public class UserController {
             if (null != dept) {
                 user.setDept(dept);
             }
-        }
+        });
         return AjaxResult.success("查询成功", dataGridView.getData(), dataGridView.getTotal());
     }
 
@@ -137,20 +137,20 @@ public class UserController {
         String hashAlgorithmName = shiroProperties.getHashAlgorithmName();
         Integer hashIterations = shiroProperties.getHashIterations();
         Long[] userIds = userDto.getUserIds();
-        int result = -1;
+        final int[] result = {-1};
         if (null != userIds && userIds.length != 0) {
-            for (Long userId : userIds) {
+            Arrays.stream(userIds).forEach(userId -> {
                 User user = this.userService.getOne(userId);
                 if (null != user) {
                     String psw = Md5.getPsw(hashAlgorithmName, hashIterations, userDto.getPassword(), user.getSalt());
                     user.setPassword(psw);
                     //设置修改人
                     user.setUpdateBy(ShiroSecurityUtils.getCurrentSimpleUser().getUserName());
-                    result = this.userService.resetPwd(user);
+                    result[0] = this.userService.resetPwd(user);
                 }
-            }
+            });
         }
-        return AjaxResult.toAjax(result);
+        return AjaxResult.toAjax(result[0]);
     }
 
     /**

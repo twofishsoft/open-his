@@ -18,9 +18,9 @@ export function allRole() {
 }
 
 // 查询角色详细
-export function getRole(roleId) {
+export function getOne(roleId) {
   return request({
-    url: '/system/role/' + roleId,
+    url: '/system/role/getOne/' + roleId,
     method: 'get'
   })
 }
@@ -28,7 +28,7 @@ export function getRole(roleId) {
 // 新增角色
 export function addRole(data) {
   return request({
-    url: '/system/role',
+    url: '/system/role/addRole',
     method: 'post',
     data: data
   })
@@ -37,16 +37,7 @@ export function addRole(data) {
 // 修改角色
 export function updateRole(data) {
   return request({
-    url: '/system/role',
-    method: 'put',
-    data: data
-  })
-}
-
-// 角色数据权限
-export function dataScope(data) {
-  return request({
-    url: '/system/role/dataScope',
+    url: '/system/role/updateRole',
     method: 'put',
     data: data
   })
@@ -55,8 +46,21 @@ export function dataScope(data) {
 // 删除角色
 export function delRole(roleId) {
   return request({
-    url: '/system/role/' + roleId,
+    url: '/system/role/deleteRoleByIds/' + roleId,
     method: 'delete'
+  })
+}
+
+// 更新角色菜单
+export function updateMenu(roleIds, menuIds) {
+  const data = {
+    roleIds,
+    menuIds
+  }
+  return request({
+    url: '/system/role/updateMenu',
+    method: 'put',
+    data: data
   })
 }
 

@@ -68,6 +68,10 @@ public class Role extends BaseEntity {
     @ApiModelProperty(value="角色状态（0正常 1停用）")
     private String status;
 
+    @TableField(exist = false)
+    @ApiModelProperty(value="状态名称")
+    private String statusName;
+
     /**
      * 创建时间
      */

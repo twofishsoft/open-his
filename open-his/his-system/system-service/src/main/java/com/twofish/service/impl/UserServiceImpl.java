@@ -12,7 +12,6 @@ import com.twofish.service.UserService;
 import com.twofish.vo.DataGridView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -93,25 +92,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updateRole(UserDto userDto) {
         Long[] userIds = userDto.getUserIds();
+        final int[] i = {-1};
         if (null != userIds && userIds.length != 0) {
-            for (Long userId : userIds) {
+            Arrays.stream(userIds).forEach(userId -> {
                 List<RoleUser> list = new ArrayList();
                 roleUserMapper.deleteRoleUserByUserId(userId);
                 Long[] roleIds = userDto.getRoleIds();
                 if (null != roleIds && roleIds.length != 0) {
-                    for (Long roleId : roleIds) {
+                    Arrays.stream(roleIds).forEach(roleId -> {
                         RoleUser ru = new RoleUser();
                         ru.setUserId(userId);
                         ru.setRoleId(roleId);
                         list.add(ru);
-                    }
+                    } );
                 }
                 if (list.size() > 0) {
-                    roleUserMapper.batchUserRole(list);
+                    i[0] = roleUserMapper.batchUserRole(list);
                 }
-            }
+            });
         }
-        return 1;
+        return i[0];
     }
 
 

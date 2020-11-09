@@ -2,6 +2,7 @@ package com.twofish.service;
 
 import com.twofish.domain.Menu;
 import com.twofish.domain.SimpleUser;
+import com.twofish.vo.TreeVo;
 
 import java.util.List;
 
@@ -15,6 +16,15 @@ public interface MenuService {
      * @param simpleUser 里面有用户id
      * @return
      */
-    public List<Menu> selectMenuTree(Boolean isAdmin, SimpleUser simpleUser);
+    List<Menu> selectMenuTree(Boolean isAdmin, SimpleUser simpleUser);
 
+    /**
+     * 查询所有的菜单
+     */
+    List<TreeVo> queryAllMenu();
+
+    /**
+     * 查询角色选中的菜单
+     */
+    Long[] roleCheckedMenus(Long roleId);
 }

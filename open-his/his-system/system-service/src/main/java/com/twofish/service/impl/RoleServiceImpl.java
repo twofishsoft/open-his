@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -56,21 +57,22 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public int insertRole(RoleDto RoleDto) {
-        Role Role = new Role();
-        BeanUtil.copyProperties(RoleDto, Role);
+    public int insertRole(RoleDto roleDto) {
+        Role role = new Role();
+        BeanUtil.copyProperties(roleDto, role);
         //设置创建人
-        Role.setCreateBy(RoleDto.getSimpleUser().getUserName());
-        return roleMapper.insert(Role);
+        role.setCreateBy(roleDto.getSimpleUser().getUserName());
+        role.setCreateTime(new Date());
+        return roleMapper.insert(role);
     }
 
     @Override
     public int updateRole(RoleDto roleDto) {
-        Role Role = new Role();
-        BeanUtil.copyProperties(roleDto, Role);
+        Role role = new Role();
+        BeanUtil.copyProperties(roleDto, role);
         //设置创建人
-        Role.setUpdateBy(roleDto.getSimpleUser().getUserName());
-        return roleMapper.updateById(Role);
+        role.setUpdateBy(roleDto.getSimpleUser().getUserName());
+        return roleMapper.updateById(role);
     }
 
     @Override
@@ -89,22 +91,24 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public int updateMenu(RoleDto roleDto) {
-        Long roleId = roleDto.getRoleId();
-        if (null != roleId) {
-            List<RoleMenu> list = new ArrayList();
-            roleMenuMapper.deleteRoleMenuByRoleId(roleId);
-            Long[] menuIds = roleDto.getMenuIds();
-            if (null != menuIds && menuIds.length != 0) {
-                for (Long menuId : menuIds) {
-                    RoleMenu roleMenu = new RoleMenu();
-                    roleMenu.setMenuId(menuId);
-                    roleMenu.setRoleId(roleId);
-                    list.add(roleMenu);
+        Long[] roleIds = roleDto.getRoleIds();
+        if (null != roleIds && roleIds.length != 0) {
+            Arrays.stream(roleIds).forEach(roleId -> {
+                List<RoleMenu> list = new ArrayList();
+                roleMenuMapper.deleteRoleMenuByRoleId(roleId);
+                Long[] menuIds = roleDto.getMenuIds();
+                if (null != menuIds && menuIds.length != 0) {
+                    Arrays.stream(menuIds).forEach(menuId -> {
+                        RoleMenu roleMenu = new RoleMenu();
+                        roleMenu.setMenuId(menuId);
+                        roleMenu.setRoleId(roleId);
+                        list.add(roleMenu);
+                    });
                 }
-            }
-            if (list.size() > 0) {
-                roleMenuMapper.batchRoleMenu(list);
-            }
+                if (list.size() > 0) {
+                    roleMenuMapper.batchRoleMenu(list);
+                }
+            });
         }
         return 1;
     }
