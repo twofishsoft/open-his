@@ -79,4 +79,5 @@ public class DictDataServiceImpl implements DictDataService{
         DictData dictData = dataMapper.queryDataByTypeAndValue(new DicDataDto(dictType, dictValue));
         return null != dictData ? dictData.getDictLabel() : "";
     }
+
 }
