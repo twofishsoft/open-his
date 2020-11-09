@@ -38,7 +38,7 @@ export function delUser(userId) {
 // 查询用户个人信息
 export function getOne(userId) {
   return request({
-    url: '/system/user/getOne/' + userId,
+    url: '/system/user/getUserById/' + userId,
     method: 'get'
   })
 }
@@ -50,22 +50,31 @@ export function resetUserPwd(userIds, password) {
     password
   }
   return request({
-    url: '/system/user/resetPass',
+    url: '/system/user/resetPwd',
     method: 'put',
     data: data
   })
 }
 
 // 更新用户角色
-export function updateRole(userIds, roleIds) {
+export function updateRole(userId, roleIds) {
   const data = {
-    userIds,
+    userId,
     roleIds
   }
   return request({
-    url: '/system/user/updateRole',
-    method: 'put',
+    url: '/system/user/saveUserRole',
+    method: 'post',
     data: data
+  })
+}
+
+// 查询需要排班的医生信息
+export function getUsersNeedScheduling(deptId) {
+  return request({
+    url: '/system/user/getUsersNeedScheduling',
+    method: 'get',
+    params: { deptId }
   })
 }
 

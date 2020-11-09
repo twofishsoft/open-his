@@ -55,7 +55,7 @@ public class RoleController {
      * @param roleDto
      * @return
      */
-    @GetMapping("allRole")
+    @GetMapping("selectAllRole")
     @ApiOperation(value = "查询所有角色数据", notes = "查询所有角色数据")
     public AjaxResult getAllRole(RoleDto roleDto){
         return AjaxResult.success(this.roleService.queryAllRole());
@@ -79,7 +79,7 @@ public class RoleController {
      * @param roleId
      * @return
      */
-    @GetMapping("getOne/{roleId}")
+    @GetMapping("getRoleById/{roleId}")
     @ApiOperation(value = "根据ID查询角色数据", notes = "根据ID查询角色数据")
     public AjaxResult getOne(@PathVariable @Validated @NotNull(message = "角色ID不能为空") Long roleId){
         return AjaxResult.success("查询成功", this.roleService.getOne(roleId));
@@ -111,13 +111,14 @@ public class RoleController {
 
     /**
      * 更新角色菜单关系
-     * @param roleDto
+     * @param roleId
+     * @param menuIds
      * @return
      */
-    @PutMapping("updateMenu")
+    @PostMapping("saveRoleMenu/{roleId}/{menuIds}")
     @ApiOperation(value = "更新角色菜单关系", notes = "更新角色菜单关系")
-    public AjaxResult updateMenu(@RequestBody RoleDto roleDto) {
-        return AjaxResult.toAjax(this.roleService.updateMenu(roleDto));
+    public AjaxResult saveRoleMenu(@PathVariable Long roleId, @PathVariable Long[] menuIds) {
+        return AjaxResult.toAjax(this.roleService.updateMenu(roleId, menuIds));
     }
 
     /**
@@ -125,7 +126,7 @@ public class RoleController {
      * @param userId
      * @return
      */
-    @GetMapping("getUserRole/{userId}")
+    @GetMapping("getRoleIdsByUserId/{userId}")
     @ApiOperation(value = "获取用户所对应的角色", notes = "获取用户所对应的角色")
     public AjaxResult getUserRole(@PathVariable @Validated @NotEmpty(message = "用户ID不能为空") Long userId) {
         return AjaxResult.success(this.roleService.getUserRole(userId));

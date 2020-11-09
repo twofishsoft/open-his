@@ -108,7 +108,7 @@
               icon="el-icon-thumb"
               size="mini"
               :disabled="isAdmin"
-              @click="openRoleDialog(false)"
+              @click="openRoleDialog"
             >分配角色</el-button>
           </el-col>
           <el-col :span="1.5">
@@ -164,7 +164,7 @@
                 size="mini"
                 type="text"
                 icon="el-icon-thumb"
-                @click="openRoleDialog(true, scope.row)"
+                @click="openRoleDialog(scope.row)"
               >分配角色</el-button>
             </template>
           </el-table-column>
@@ -311,8 +311,6 @@ export default {
       roleIds: [],
       // 分配角色选中的用户
       userId: '',
-      // 分配角色单用户标识
-      isSingle: false,
       // 非单个禁用
       single: true,
       // 是否管理员
@@ -465,8 +463,7 @@ export default {
       this.ids = selection.map(item => item.userId)
       this.single = selection.length != 1
       this.multiple = !selection.length
-      this.isAdmin = this.multiple || (this.ids.filter(item => item == '1')).length != 0
-      console.log(this.isAdmin)
+      this.isAdmin = this.single || (this.ids.filter(item => item == '1')).length != 0
     },
     // 多选框选中角色数据
     handleSelectionRoleChange(selection) {
@@ -554,36 +551,26 @@ export default {
         })
       })
     },
-    openRoleDialog(isSingle, row) {
-      if (!isSingle) {
-        const filter = this.ids.filter(item => item == '1')
-        if (filter.length != 0) {
-          return this.msgError('超级管理员不允许修改角色！')
-        }
-      }
-      this.isSingle = isSingle
+    openRoleDialog(row) {
       this.userId = row && row.userId
       allRole().then(response => {
         this.roleList = response.data
         this.roleLoading = false
       }).then(response => {
-        if (!this.isSingle && this.ids.length == 1) {
+        if (!this.userId) {
           this.userId = this.ids[0]
-          this.getUserRole()
-        } else if (this.isSingle) {
-          this.getUserRole()
         }
+        this.getUserRole()
         this.openUpdateRole = true
       })
     },
     updateUserRole() {
-      const userIds = this.isSingle ? [this.userId] : this.ids
-      updateRole(userIds, this.roleIds).then(response => {
+      this.userId = this.userId || this.ids
+      updateRole(this.userId, this.roleIds).then(response => {
         if (response.code == 200) {
           this.msgSuccess('分配角色成功')
           this.openUpdateRole = false
           this.userId = ''
-          this.isSingle = false
         }
       })
     }

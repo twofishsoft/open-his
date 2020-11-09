@@ -35,7 +35,7 @@ public class MenuController {
     private MenuService menuService;
 
     /**
-     * 获取所有的菜单
+     * 获取所有的菜单 和 角色选中的菜单
      * @return
      */
     @GetMapping("getAllMenu/{roleId}")
@@ -45,6 +45,17 @@ public class MenuController {
         success.put("data", this.menuService.queryAllMenu());
         success.put("checkedMenus", this.menuService.roleCheckedMenus(roleId));
         return success;
+    }
+
+    /**
+     * 根据角色ID查询已分配菜单ID[只查子节点]
+     * @param roleId
+     * @return
+     */
+    @GetMapping("getMenuIdsByRoleId/{roleId}")
+    @ApiOperation(value = "根据角色ID查询已分配菜单ID", notes = "根据角色ID查询已分配菜单ID")
+    public AjaxResult getMenuIdsByRoleId(@PathVariable Long roleId) {
+        return AjaxResult.success(this.menuService.roleCheckedMenus(roleId));
     }
 
 }

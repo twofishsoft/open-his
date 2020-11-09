@@ -12,7 +12,7 @@ export function listRole(query) {
 // 查询所有角色数据
 export function allRole() {
   return request({
-    url: '/system/role/allRole',
+    url: '/system/role/selectAllRole',
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function allRole() {
 // 查询角色详细
 export function getOne(roleId) {
   return request({
-    url: '/system/role/getOne/' + roleId,
+    url: '/system/role/getRoleById/' + roleId,
     method: 'get'
   })
 }
@@ -52,22 +52,18 @@ export function delRole(roleId) {
 }
 
 // 更新角色菜单
-export function updateMenu(roleIds, menuIds) {
-  const data = {
-    roleIds,
-    menuIds
-  }
+export function updateMenu(roleId, menuIds) {
   return request({
-    url: '/system/role/updateMenu',
-    method: 'put',
-    data: data
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
+    url: '/system/role/saveRoleMenu/' + roleId + '/' + menuIds,
+    method: 'post'
   })
 }
 
 // 获取用户角色
 export function getUserRole(userId) {
   return request({
-    url: '/system/role/getUserRole/' + userId,
+    url: '/system/role/getRoleIdsByUserId/' + userId,
     method: 'get'
   })
 }

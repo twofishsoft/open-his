@@ -90,25 +90,21 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public int updateMenu(RoleDto roleDto) {
-        Long[] roleIds = roleDto.getRoleIds();
-        if (null != roleIds && roleIds.length != 0) {
-            Arrays.stream(roleIds).forEach(roleId -> {
-                List<RoleMenu> list = new ArrayList();
-                roleMenuMapper.deleteRoleMenuByRoleId(roleId);
-                Long[] menuIds = roleDto.getMenuIds();
-                if (null != menuIds && menuIds.length != 0) {
-                    Arrays.stream(menuIds).forEach(menuId -> {
-                        RoleMenu roleMenu = new RoleMenu();
-                        roleMenu.setMenuId(menuId);
-                        roleMenu.setRoleId(roleId);
-                        list.add(roleMenu);
-                    });
-                }
-                if (list.size() > 0) {
-                    roleMenuMapper.batchRoleMenu(list);
-                }
-            });
+    public int updateMenu(Long roleId, Long[] menuIds) {
+        if (null != roleId) {
+            List<RoleMenu> list = new ArrayList();
+            roleMenuMapper.deleteRoleMenuByRoleId(roleId);
+            if (null != menuIds && menuIds.length != 0) {
+                Arrays.stream(menuIds).forEach(menuId -> {
+                    RoleMenu roleMenu = new RoleMenu();
+                    roleMenu.setMenuId(menuId);
+                    roleMenu.setRoleId(roleId);
+                    list.add(roleMenu);
+                });
+            }
+            if (list.size() > 0) {
+                roleMenuMapper.batchRoleMenu(list);
+            }
         }
         return 1;
     }
@@ -118,6 +114,13 @@ public class RoleServiceImpl implements RoleService {
         QueryWrapper<RoleUser> qw = new QueryWrapper<>();
         qw.eq(RoleUser.COL_USER_ID, userId);
         return roleUserMapper.selectList(qw);
+    }
+
+    @Override
+    public Role getRole(String roleCode) {
+        QueryWrapper<Role> qw = new QueryWrapper<>();
+        qw.eq(Role.COL_ROLE_CODE, roleCode);
+        return roleMapper.selectOne(qw);
     }
 
 }

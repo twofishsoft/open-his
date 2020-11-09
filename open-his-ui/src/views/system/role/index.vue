@@ -87,7 +87,7 @@
           type="warning"
           icon="el-icon-thumb"
           size="mini"
-          :disabled="multiple"
+          :disabled="single"
           @click="handleMenuData"
         >分配权限</el-button>
       </el-col>
@@ -364,7 +364,7 @@ export default {
     },
     /** 提交按钮（数据权限） */
     submitDataScope: function() {
-      const roleId = this.roleId != -1 ? [] : this.ids
+      const roleId = this.roleId || this.ids[0]
       if (roleId != undefined) {
         const menuIds = this.$refs.menu.getCheckedKeys()
         updateMenu(roleId, menuIds).then(response => {
@@ -384,10 +384,8 @@ export default {
     },
     /** 查询菜单树结构 和 角色选中的树*/
     getMenuTreeSelect() {
-      if (!this.roleId) {
-        this.roleId = this.ids.length == 1 ? this.ids[0] : -1
-      }
-      getAllMenu(this.roleId).then(response => {
+      const roleId = this.roleId || this.ids[0]
+      getAllMenu(roleId).then(response => {
         this.menuOptions = response.data
         this.$nextTick(() => {
           this.$refs.menu.setCheckedKeys(response.checkedMenus);

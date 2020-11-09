@@ -68,6 +68,26 @@ public class UserController {
     }
 
     /**
+     * 查询所有可用用户信息
+     * @return
+     */
+    @GetMapping("selectAllUser")
+    @ApiOperation(value = "查询所有可用用户信息", notes = "查询所有可用用户信息")
+    public AjaxResult selectAllUser() {
+        return AjaxResult.success(this.userService.selectAllUser());
+    }
+
+    /**
+     * 查询需要排班的医生信息
+     * @return
+     */
+    @GetMapping("getUsersNeedScheduling")
+    @ApiOperation(value = "查询需要排班的医生信息", notes = "查询需要排班的医生信息")
+    public AjaxResult getUsersNeedScheduling(Long deptId) {
+        return AjaxResult.success(this.userService.getUsersNeedScheduling(deptId));
+    }
+
+    /**
      * 添加用户数据
      * @param userDto
      * @return
@@ -120,7 +140,7 @@ public class UserController {
      * @param userId 用户ID
      * @return
      */
-    @GetMapping("getOne/{userId}")
+    @GetMapping("getUserById/{userId}")
     @ApiOperation(value = "根据ID查询用户数据", notes = "根据ID查询用户数据")
     public AjaxResult getOne(@PathVariable @Validated @NotNull(message = "用户ID不能为空") Long userId){
         return AjaxResult.success("查询成功", this.userService.getOne(userId));
@@ -131,7 +151,7 @@ public class UserController {
      * @param userDto
      * @return
      */
-    @PutMapping("resetPass")
+    @PutMapping("resetPwd")
     @ApiOperation(value = "更新用户密码", notes = "更新用户密码")
     public AjaxResult resetPwd(@RequestBody UserDto userDto) {
         String hashAlgorithmName = shiroProperties.getHashAlgorithmName();
@@ -158,7 +178,7 @@ public class UserController {
      * @param userDto
      * @return
      */
-    @PutMapping("updateRole")
+    @PostMapping("saveUserRole")
     @ApiOperation(value = "更新用户角色关系", notes = "更新用户角色关系")
     public AjaxResult updateRole(@RequestBody UserDto userDto) {
         return AjaxResult.toAjax(userService.updateRole(userDto));

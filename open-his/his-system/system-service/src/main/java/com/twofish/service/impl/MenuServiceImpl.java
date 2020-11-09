@@ -57,7 +57,7 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public Long[] roleCheckedMenus(Long roleId) {
-        if (-1 == roleId) {
+        if (null == roleId) {
             return new Long[0];
         }
         List<RoleMenu> roleMenus = this.roleMenuMapper.roleCheckedMenus(roleId);
