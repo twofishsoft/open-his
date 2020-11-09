@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -12,17 +13,17 @@
         <module name="his-commons" />
         <module name="erp-mapper" />
         <module name="doctor-mapper" />
-        <module name="doctor-domain" />
         <module name="statistics-service" />
         <module name="statistics-api" />
         <module name="system-api" />
-        <module name="system-service" />
+        <module name="erp-api" />
         <module name="statistics-mapper" />
         <module name="system-domain" />
+        <module name="doctor-service" />
         <module name="statistics-domain" />
         <module name="system-web" />
-        <module name="doctor-service" />
-        <module name="erp-api" />
+        <module name="doctor-domain" />
+        <module name="system-service" />
         <module name="erp-service" />
       </profile>
     </annotationProcessing>
