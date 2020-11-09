@@ -24,10 +24,6 @@ spring:
         deny:
         url-pattern: /druid/*
         enabled: true  #启用数据源监控
-  devtools:
-    restart:
-      enabled: true  #设置开启热部署
-
   #配置redis
   redis:
     port: 6390
