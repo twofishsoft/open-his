@@ -240,6 +240,17 @@ public class User extends BaseEntity {
     @ApiModelProperty(value="部门对象")
     private Dept dept;
 
+    @TableField(exist = false)
+    @ApiModelProperty(value="角色ID")
+    private Long roleId;
+
+    public User(String status, String schedulingFlag, Long deptId, Long roleId) {
+        this.status = status;
+        this.schedulingFlag = schedulingFlag;
+        this.deptId = deptId;
+        this.roleId = roleId;
+    }
+
     public static final String COL_USER_ID = "user_id";
 
     public static final String COL_DEPT_ID = "dept_id";

@@ -4,6 +4,8 @@ import com.twofish.domain.User;
 import com.twofish.dto.UserDto;
 import com.twofish.vo.DataGridView;
 
+import java.util.List;
+
 /**
  * @author Ytyy
  * @version 1.0
@@ -16,6 +18,18 @@ public interface UserService {
      * @return
      */
     DataGridView listPage(UserDto userDto);
+
+    /**
+     * 查询所有可用用户信息
+     * @return
+     */
+    List<User> selectAllUser();
+
+    /**
+     * 查询需要排班的医生信息
+     * @return
+     */
+    List<User> getUsersNeedScheduling(Long deptId);
 
     /**
      * 添加用户

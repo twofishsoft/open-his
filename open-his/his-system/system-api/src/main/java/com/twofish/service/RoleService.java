@@ -55,10 +55,11 @@ public interface RoleService {
 
     /**
      * 更改角色菜单关系
-     * @param roleDto
+     * @param roleId
+     * @param menuIds
      * @return
      */
-    int updateMenu(RoleDto roleDto);
+    int updateMenu(Long roleId, Long[] menuIds);
 
     /**
      * 获取用户所对应的角色
@@ -66,4 +67,11 @@ public interface RoleService {
      * @return
      */
     List<RoleUser> getUserRole(Long userId);
+
+    /**
+     * 查询单个用户
+     * @param roleCode
+     * @return
+     */
+    Role getRole(String roleCode);
 }

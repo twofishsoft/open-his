@@ -192,4 +192,5 @@ public class UserDto extends BaseDto {
      */
     @ApiModelProperty(value="多选用户ID")
     private Long[] userIds;
+
 }

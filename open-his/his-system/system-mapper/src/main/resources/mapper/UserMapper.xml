@@ -50,4 +50,17 @@
         on u.dept_id=d.dept_id
             ${ew.customSqlSegment}
     </select>
+
+    <select id="getUsersNeedScheduling" parameterType="com.twofish.domain.User" resultMap="BaseResultMap">
+        SELECT s.user_id, s.dept_id, s.user_name, s.user_type, s.sex, s.age, s.scheduling_flag
+        from sys_user s, sys_role_user b
+        where b.role_id = #{roleId}
+            and b.user_id = s.user_id
+            and s.scheduling_flag = #{schedulingFlag}
+            and s.status = #{status}
+        <if test="deptId != null and deptId != ''">
+            AND s.dept_id = #{deptId}
+        </if>
+    </select>
+
 </mapper>
