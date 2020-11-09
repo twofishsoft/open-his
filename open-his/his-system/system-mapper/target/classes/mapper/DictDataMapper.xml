@@ -18,7 +18,13 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    dict_code, dict_sort, dict_label, dict_value, dict_type, `status`, remark, create_by, 
-    create_time, update_by, update_time
+    select dict_code, dict_sort, dict_label, dict_value, dict_type, `status`, remark, create_by,
+    create_time, update_by, update_time from sys_dict_data
   </sql>
+
+  <select id="queryDataByTypeAndValue" parameterType="com.twofish.dto.DicDataDto" resultMap="BaseResultMap">
+    <include refid="Base_Column_List"/>
+    where dict_type = #{dictType} And dict_value = #{dictValue}
+  </select>
+
 </mapper>

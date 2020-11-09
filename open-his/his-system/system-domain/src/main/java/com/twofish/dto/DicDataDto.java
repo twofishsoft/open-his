@@ -94,4 +94,9 @@ public class DicDataDto extends BaseDto {
      */
     @ApiModelProperty(value="更新时间")
     private Date updateTime;
+
+    public DicDataDto(String dictType, String dictValue) {
+        this.dictType = dictType;
+        this.dictValue = dictValue;
+    }
 }

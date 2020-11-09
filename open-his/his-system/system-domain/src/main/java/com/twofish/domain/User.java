@@ -114,8 +114,7 @@ public class User extends BaseEntity {
     private String introduction;
 
     /**
-     * 
-医生级别sys_dict_type:sys_user_level
+     * 医生级别sys_dict_type:sys_user_level
      */
     @TableField(value = "user_rank")
     @ApiModelProperty(value=",医生级别sys_dict_type:sys_user_level")
@@ -143,10 +142,10 @@ public class User extends BaseEntity {
     private String lastLoginIp;
 
     /**
-     * 帐号状态（0正常 1停用）
+     * 用户状态（0正常 1停用）
      */
     @TableField(value = "status")
-    @ApiModelProperty(value="帐号状态（0正常 1停用）")
+    @ApiModelProperty(value="用户状态（0正常 1停用）")
     private String status;
 
     @TableField(value = "union_id")
@@ -208,6 +207,30 @@ public class User extends BaseEntity {
     @TableField(value = "scheduling_flag")
     @ApiModelProperty(value="是否需要参与排班0需要,1 不需要")
     private String schedulingFlag;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value="状态名称")
+    private String statusName;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value="背景名称")
+    private String backgroundName;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value="级别名称")
+    private String levelName;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value="性别名称")
+    private String sexName;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value="排班 0需要,1 不需要")
+    private String schedulingFlagName;
+
+    @TableField(exist = false)
+    @ApiModelProperty(value="部门对象")
+    private Dept dept;
 
     public static final String COL_USER_ID = "user_id";
 

@@ -12,7 +12,7 @@ public interface UserService {
     User querybyphone(String phone);
 
     /**
-     * 根据用户id查询用户
+     * 根据用户ID查询用户
      * @param userId
      * @return
      */

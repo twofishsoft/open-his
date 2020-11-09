@@ -54,4 +54,9 @@ public interface DictDataService {
      */
     List<DictData> querybydicttype(String dictType);
 
+    /**
+     * 根据类型查询单个字典数据数据
+     * @return
+     */
+    String queryDataByTypeAndValue(String dictType, String value);
 }

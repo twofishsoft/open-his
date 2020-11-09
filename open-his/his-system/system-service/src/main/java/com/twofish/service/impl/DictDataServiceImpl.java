@@ -73,4 +73,10 @@ public class DictDataServiceImpl implements DictDataService{
         qw.orderByAsc(DictData.COL_DICT_SORT);
         return dataMapper.selectList(qw);
     }
+
+    @Override
+    public String queryDataByTypeAndValue(String dictType, String dictValue) {
+        DictData dictData = dataMapper.queryDataByTypeAndValue(new DicDataDto(dictType, dictValue));
+        return null != dictData ? dictData.getDictLabel() : "";
+    }
 }

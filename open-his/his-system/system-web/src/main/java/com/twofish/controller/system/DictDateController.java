@@ -105,8 +105,4 @@ public class DictDateController {
         return AjaxResult.success(dictDataService.querybydicttype(dictType));
     }
 
-
-
-
-
 }
