@@ -274,7 +274,7 @@
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
-
+    <!-- 角色分配 -->
     <el-dialog title="分配角色" :visible.sync="openUpdateRole" center>
       <el-table ref="multipleTable" v-loading="roleLoading" :data="roleList" border @selection-change="handleSelectionRoleChange">
         <el-table-column type="selection" width="50" align="center" />
