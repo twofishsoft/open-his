@@ -9,9 +9,12 @@ import com.twofish.vo.DataGridView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.crypto.hash.Md5Hash;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -153,17 +156,25 @@ public class UserController {
      */
     @PostMapping(value = "/system/user/addUser", produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "添加用户信息", notes = "添加用户信息")
+    @Transactional
     public AjaxResult addUser(User user) {
         if (user == null) {
             return AjaxResult.fail("参数错误");
+        }
+        if (user.getPhone() == null) {
+            return AjaxResult.fail("参数手机号不存在");
         }
         // 判断手机号是否重复
         User queryByPhone = userService.querybyphone(user.getPhone());
         if (queryByPhone != null) {
             return AjaxResult.fail("手机号已存在");
         }
+        String pwd = user.getPhone().substring(5);
 
-        // TODO  未知的密码加密
+        String md5Pwd = String.valueOf(new Md5Hash(new Md5Hash(pwd).toString()));
+
+        user.setPassword(md5Pwd);
+
         Integer integer = userService.addUser(user);
         return AjaxResult.toAjax(integer);
     }
@@ -176,18 +187,23 @@ public class UserController {
      */
     @DeleteMapping(value = "/system/user/deleteUserByIds/{userIds}")
     @ApiOperation(value = "根据id删除用户", notes = "删除用户")
-    public AjaxResult deleteUserById(@PathVariable("userIds") Long userIds) {
+    @Transactional
+    public AjaxResult deleteUserById(@PathVariable("userIds") Long... userIds) {
         // 判断用户是否位空
         if (userIds == null) {
             return AjaxResult.fail("参数错误");
         }
+        log.info("删除的id：" + Arrays.toString(userIds));
 
-        Integer integer = userService.deleteUserById(userIds);
-        if (integer <= 0 ){
-            return AjaxResult.fail("删除的用户不存在");
+        for (Long userId : userIds) {
+            try {
+                Integer integer = userService.deleteUserById(userId);
+            } catch (Exception e) {
+                return AjaxResult.fail("删除失败，传入的id有误");
+            }
         }
-        log.info("删除用户的id：" + userIds + "; 影响行数 : " + integer);
-        return AjaxResult.toAjax(integer);
+
+        return AjaxResult.success();
     }
 
 }
