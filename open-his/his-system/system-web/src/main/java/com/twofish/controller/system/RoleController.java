@@ -1,7 +1,6 @@
 package com.twofish.controller.system;
 
 import com.twofish.dto.RoleDto;
-import com.twofish.dto.UserDto;
 import com.twofish.service.RoleService;
 import com.twofish.utils.ShiroSecurityUtils;
 import com.twofish.vo.AjaxResult;
