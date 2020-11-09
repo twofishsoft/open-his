@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twofish.mapper.RoleUserMapper">
+
+	<resultMap type="com.twofish.domain.RoleUser" id="BaseResultMap">
+		<result property="userId" jdbcType="BIGINT" column="user_id"/>
+		<result property="roleId" jdbcType="BIGINT" column="role_id"/>
+	</resultMap>
+
+	<delete id="deleteRoleUserByUserId" parameterType="Long">
+		delete from sys_role_user where user_id=#{userId}
+	</delete>
+
+	<insert id="batchUserRole">
+		insert into sys_role_user(user_id, role_id) values
+		<foreach item="item" index="index" collection="list" separator=",">
+			(#{item.userId},#{item.roleId})
+		</foreach>
+	</insert>
+
+</mapper>
