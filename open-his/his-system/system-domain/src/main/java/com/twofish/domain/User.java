@@ -13,8 +13,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
-    * 用户信息表
-    */
+ * 用户信息表
+ */
 @ApiModel(value="com-twofish-domain-User")
 @Data
 @EqualsAndHashCode(callSuper=true)
