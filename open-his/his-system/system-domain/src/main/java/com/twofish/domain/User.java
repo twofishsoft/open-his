@@ -13,8 +13,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
- * 用户信息表
- */
+    * 用户信息表
+    */
 @ApiModel(value="com-twofish-domain-User")
 @Data
 @EqualsAndHashCode(callSuper=true)
@@ -121,8 +121,8 @@ public class User extends BaseEntity {
     private String introduction;
 
     /**
-     *
-     医生级别sys_dict_type:sys_user_level
+     * 
+医生级别sys_dict_type:sys_user_level
      */
     @TableField(value = "user_rank")
     @ApiModelProperty(value=",医生级别sys_dict_type:sys_user_level")
