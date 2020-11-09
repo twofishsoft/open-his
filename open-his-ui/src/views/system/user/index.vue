@@ -98,7 +98,7 @@
               type="danger"
               icon="el-icon-delete"
               size="mini"
-              :disabled="multiple"
+              :disabled="isAdmin"
               @click="handleDelete"
             >删除</el-button>
           </el-col>
@@ -107,7 +107,7 @@
               type="warning"
               icon="el-icon-thumb"
               size="mini"
-              :disabled="multiple"
+              :disabled="isAdmin"
               @click="openRoleDialog(false)"
             >分配角色</el-button>
           </el-col>
@@ -315,6 +315,8 @@ export default {
       isSingle: false,
       // 非单个禁用
       single: true,
+      // 是否管理员
+      isAdmin: true,
       // 非多个禁用
       multiple: true,
       // 总条数
@@ -463,6 +465,8 @@ export default {
       this.ids = selection.map(item => item.userId)
       this.single = selection.length != 1
       this.multiple = !selection.length
+      this.isAdmin = this.multiple || (this.ids.filter(item => item == '1')).length != 0
+      console.log(this.isAdmin)
     },
     // 多选框选中角色数据
     handleSelectionRoleChange(selection) {
@@ -576,7 +580,7 @@ export default {
       const userIds = this.isSingle ? [this.userId] : this.ids
       updateRole(userIds, this.roleIds).then(response => {
         if (response.code == 200) {
-          this.msgSuccess('新增成功')
+          this.msgSuccess('分配角色成功')
           this.openUpdateRole = false
           this.userId = ''
           this.isSingle = false
