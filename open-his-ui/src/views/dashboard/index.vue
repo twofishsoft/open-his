@@ -16,6 +16,5 @@ export default {
       currentRole: 'adminDashboard'
     }
   }
-
 }
 </script>
