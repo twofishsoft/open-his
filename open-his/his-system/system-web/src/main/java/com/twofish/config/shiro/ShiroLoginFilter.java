@@ -9,8 +9,6 @@ import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -32,11 +30,11 @@ public class ShiroLoginFilter extends FormAuthenticationFilter {
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         httpServletResponse.setCharacterEncoding("UTF-8");
         httpServletResponse.setContentType("application/json");
-        AjaxResult ajaxResult=AjaxResult.fail();
+        AjaxResult ajaxResult= AjaxResult.fail();
         ajaxResult.put("code", HttpStatus.UNAUTHORIZED);
         ajaxResult.put("msg", "登录认证失效，请重新登录!");
         httpServletResponse.getWriter().write(JSON.toJSON(ajaxResult).toString());
-        return true;
+        return false;
     }
 }
 

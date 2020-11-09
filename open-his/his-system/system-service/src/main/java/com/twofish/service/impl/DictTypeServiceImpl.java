@@ -4,21 +4,20 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.twofish.constants.Constants;
-import com.twofish.domain.SimpleUser;
+import com.twofish.domain.DictType;
 import com.twofish.dto.DicTypeDto;
+import com.twofish.mapper.DictTypeMapper;
+import com.twofish.service.DictTypeService;
 import com.twofish.vo.DataGridView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
-import java.util.*;
 
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.twofish.mapper.DictTypeMapper;
-import com.twofish.domain.DictType;
-import com.twofish.service.DictTypeService;
+import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
-public class DictTypeServiceImpl implements DictTypeService{
+public class DictTypeServiceImpl implements DictTypeService {
     @Resource
     private DictTypeMapper dictTypeMapper;
 
@@ -27,11 +26,11 @@ public class DictTypeServiceImpl implements DictTypeService{
     public DataGridView listpage(DicTypeDto dicTypeDto) {
         Page<DictType> page = new Page<>(dicTypeDto.getPageNum(),dicTypeDto.getPageSize());
         QueryWrapper<DictType> wrapper = new QueryWrapper<>();
-        wrapper.like(StringUtils.isNotBlank(dicTypeDto.getDictName()),DictType.COL_DICT_NAME,dicTypeDto.getDictName());
-        wrapper.like(StringUtils.isNotBlank(dicTypeDto.getDictType()),DictType.COL_DICT_TYPE,dicTypeDto.getDictType());
-        wrapper.eq(StringUtils.isNotBlank(dicTypeDto.getStatus()),DictType.COL_STATUS,dicTypeDto.getStatus());
-        wrapper.ge(null!=dicTypeDto.getBeginTime(),DictType.COL_CREATE_TIME,dicTypeDto.getBeginTime());
-        wrapper.le(null!=dicTypeDto.getEndTime(),DictType.COL_CREATE_TIME,dicTypeDto.getEndTime());
+        wrapper.like(StringUtils.isNotBlank(dicTypeDto.getDictName()), DictType.COL_DICT_NAME,dicTypeDto.getDictName());
+        wrapper.like(StringUtils.isNotBlank(dicTypeDto.getDictType()), DictType.COL_DICT_TYPE,dicTypeDto.getDictType());
+        wrapper.eq(StringUtils.isNotBlank(dicTypeDto.getStatus()), DictType.COL_STATUS,dicTypeDto.getStatus());
+        wrapper.ge(null!=dicTypeDto.getBeginTime(), DictType.COL_CREATE_TIME,dicTypeDto.getBeginTime());
+        wrapper.le(null!=dicTypeDto.getEndTime(), DictType.COL_CREATE_TIME,dicTypeDto.getEndTime());
         this.dictTypeMapper.selectPage(page, wrapper);
         return new DataGridView(page.getTotal(),page.getRecords());
     }

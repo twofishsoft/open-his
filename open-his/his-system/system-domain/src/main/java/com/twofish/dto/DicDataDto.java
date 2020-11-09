@@ -1,8 +1,5 @@
 package com.twofish.dto;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.twofish.vo.BaseDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -94,4 +91,9 @@ public class DicDataDto extends BaseDto {
      */
     @ApiModelProperty(value="更新时间")
     private Date updateTime;
+
+    public DicDataDto(String dictType, String dictValue) {
+        this.dictType = dictType;
+        this.dictValue = dictValue;
+    }
 }

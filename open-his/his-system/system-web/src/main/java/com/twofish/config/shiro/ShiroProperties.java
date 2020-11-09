@@ -10,11 +10,17 @@ import org.springframework.stereotype.Component;
  */
 @ConfigurationProperties(prefix = "shiro")
 @Data
+@Component
 public class ShiroProperties {
+    /**
+     * 默认密码
+     */
+    private String psw = "123456";
+
     /**
      * 密码加密方式
      */
-    private String hashAlgorithmName="md5";
+    private String hashAlgorithmName="MD5";
     /**
      * 密码散列次数
      */

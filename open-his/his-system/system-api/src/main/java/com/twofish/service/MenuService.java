@@ -1,7 +1,6 @@
 package com.twofish.service;
 
 import com.twofish.domain.Menu;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.twofish.domain.SimpleUser;
 
 import java.util.List;

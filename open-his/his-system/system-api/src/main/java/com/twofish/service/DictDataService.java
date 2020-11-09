@@ -2,7 +2,6 @@ package com.twofish.service;
 
 import com.twofish.domain.DictData;
 import com.twofish.dto.DicDataDto;
-import com.twofish.dto.DicTypeDto;
 import com.twofish.vo.DataGridView;
 
 import java.util.List;
@@ -54,4 +53,9 @@ public interface DictDataService {
      */
     List<DictData> querybydicttype(String dictType);
 
+    /**
+     * 根据类型查询单个字典数据数据
+     * @return
+     */
+    String queryDataByTypeAndValue(String dictType, String value);
 }

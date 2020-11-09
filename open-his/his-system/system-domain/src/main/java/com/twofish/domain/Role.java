@@ -14,63 +14,45 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 /**
-    * 菜单权限表
-    */
-@ApiModel(value="com-twofish-domain-Menu")
+ * @author ww
+ * @description
+ * @create 2020/11/7 19:08
+ */
+@ApiModel(value="com-twofish-domain-Role")
 @Data
 @EqualsAndHashCode(callSuper=true)
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName(value = "sys_menu")
-public class Menu extends BaseEntity {
-    /**
-     * 菜单ID
-     */
-    @TableId(value = "menu_id", type = IdType.AUTO)
-    @ApiModelProperty(value="菜单ID")
-    private Long menuId;
+@TableName(value = "sys_role")
+public class Role extends BaseEntity {
 
     /**
-     * 父菜单ID
+     * 角色ID
      */
-    @TableField(value = "parent_id")
-    @ApiModelProperty(value="父菜单ID")
-    private Long parentId;
+    @TableId(value = "role_id", type = IdType.AUTO)
+    @ApiModelProperty(value="角色ID")
+    private Long roleId;
 
     /**
-     * 父节点ID集合
+     * 角色名称
      */
-    @TableField(value = "parent_ids")
-    @ApiModelProperty(value="父节点ID集合")
-    private String parentIds;
+    @TableField(value = "role_name")
+    @ApiModelProperty(value="角色名称")
+    private String roleName;
 
     /**
-     * 菜单名称
+     * 角色权限编码
      */
-    @TableField(value = "menu_name")
-    @ApiModelProperty(value="菜单名称")
-    private String menuName;
+    @TableField(value = "role_code")
+    @ApiModelProperty(value="角色权限编码")
+    private String roleCode;
 
     /**
-     * 菜单类型（M目录 C菜单 F按钮）
+     * 显示顺序
      */
-    @TableField(value = "menu_type")
-    @ApiModelProperty(value="菜单类型（M目录 C菜单 F按钮）")
-    private String menuType;
-
-    /**
-     * 权限标识
-     */
-    @TableField(value = "percode")
-    @ApiModelProperty(value="权限标识")
-    private String percode;
-
-    /**
-     * 路由地址
-     */
-    @TableField(value = "path")
-    @ApiModelProperty(value="路由地址")
-    private String path;
+    @TableField(value = "role_sort")
+    @ApiModelProperty(value="显示顺序")
+    private Integer roleSort;
 
     /**
      * 备注
@@ -80,10 +62,10 @@ public class Menu extends BaseEntity {
     private String remark;
 
     /**
-     * 菜单状态（0正常 1停用）
+     * 角色状态（0正常 1停用）
      */
     @TableField(value = "status")
-    @ApiModelProperty(value="菜单状态（0正常 1停用）")
+    @ApiModelProperty(value="角色状态（0正常 1停用）")
     private String status;
 
     /**
@@ -114,29 +96,14 @@ public class Menu extends BaseEntity {
     @ApiModelProperty(value="更新者")
     private String updateBy;
 
-    public static final String COL_MENU_ID = "menu_id";
-
-    public static final String COL_PARENT_ID = "parent_id";
-
-    public static final String COL_PARENT_IDS = "parent_ids";
-
-    public static final String COL_MENU_NAME = "menu_name";
-
-    public static final String COL_MENU_TYPE = "menu_type";
-
-    public static final String COL_PERCODE = "percode";
-
-    public static final String COL_PATH = "path";
-
+    public static final String COL_ROLE_ID = "role_id";
+    public static final String COL_ROLE_Name = "role_name";
+    public static final String COL_ROLE_CODE = "role_code";
+    public static final String COL_ROLE_SORT = "role_sort";
     public static final String COL_REMARK = "remark";
-
     public static final String COL_STATUS = "status";
-
     public static final String COL_CREATE_TIME = "create_time";
-
     public static final String COL_UPDATE_TIME = "update_time";
-
     public static final String COL_CREATE_BY = "create_by";
-
     public static final String COL_UPDATE_BY = "update_by";
 }

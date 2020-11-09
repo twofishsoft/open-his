@@ -4,20 +4,20 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.twofish.constants.Constants;
+import com.twofish.domain.DictData;
 import com.twofish.dto.DicDataDto;
+import com.twofish.mapper.DictDataMapper;
+import com.twofish.service.DictDataService;
 import com.twofish.vo.DataGridView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.Resource;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.twofish.domain.DictData;
-import com.twofish.mapper.DictDataMapper;
-import com.twofish.service.DictDataService;
+
 @Service
-public class DictDataServiceImpl implements DictDataService{
+public class DictDataServiceImpl implements DictDataService {
     @Resource
     private DictDataMapper dataMapper;
 
@@ -25,9 +25,9 @@ public class DictDataServiceImpl implements DictDataService{
     public DataGridView listpage(DicDataDto dicDataDto) {
         Page<DictData> page = new Page<>(dicDataDto.getPageNum(),dicDataDto.getPageSize());
         QueryWrapper<DictData> qw = new QueryWrapper<>();
-        qw.eq(StringUtils.isNotBlank(dicDataDto.getDictType()),DictData.COL_DICT_TYPE,dicDataDto.getDictType());
-        qw.like(StringUtils.isNotBlank(dicDataDto.getDictLabel()),DictData.COL_DICT_LABEL,dicDataDto.getDictLabel());
-        qw.eq(StringUtils.isNotBlank(dicDataDto.getStatus()),DictData.COL_STATUS,dicDataDto.getStatus());
+        qw.eq(StringUtils.isNotBlank(dicDataDto.getDictType()), DictData.COL_DICT_TYPE,dicDataDto.getDictType());
+        qw.like(StringUtils.isNotBlank(dicDataDto.getDictLabel()), DictData.COL_DICT_LABEL,dicDataDto.getDictLabel());
+        qw.eq(StringUtils.isNotBlank(dicDataDto.getStatus()), DictData.COL_STATUS,dicDataDto.getStatus());
         dataMapper.selectPage(page,qw);
         return new DataGridView(page.getTotal(),page.getRecords());
     }
@@ -73,4 +73,11 @@ public class DictDataServiceImpl implements DictDataService{
         qw.orderByAsc(DictData.COL_DICT_SORT);
         return dataMapper.selectList(qw);
     }
+
+    @Override
+    public String queryDataByTypeAndValue(String dictType, String dictValue) {
+        DictData dictData = dataMapper.queryDataByTypeAndValue(new DicDataDto(dictType, dictValue));
+        return null != dictData ? dictData.getDictLabel() : "";
+    }
+
 }

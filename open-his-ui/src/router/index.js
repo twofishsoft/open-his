@@ -40,12 +40,12 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/',
+    path: '',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/index',
     children: [
       {
-        path: 'dashboard',
+        path: 'index',
         component: () => import('@/views/dashboard/index'),
         name: '首页',
         meta: { title: '首页', icon: 'dashboard', affix: true }
@@ -77,7 +77,7 @@ export const asyncRoutes = [
       },
       {
         path: 'user',
-        component: () => import('@/views/error-page/404'),
+        component: () => import('@/views/system/user'),
         name: '/system/user',
         meta: {
           title: '用户管理',
@@ -86,7 +86,7 @@ export const asyncRoutes = [
       },
       {
         path: 'role',
-        component: () => import('@/views/error-page/404'),
+        component: () => import('@/views/system/role'),
         name: '/system/role',
         meta: {
           title: '角色管理',

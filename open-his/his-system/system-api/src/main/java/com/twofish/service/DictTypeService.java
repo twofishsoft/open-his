@@ -2,7 +2,6 @@ package com.twofish.service;
 
 
 import com.twofish.domain.DictType;
-import com.twofish.domain.SimpleUser;
 import com.twofish.dto.DicTypeDto;
 import com.twofish.vo.DataGridView;
 

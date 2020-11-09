@@ -1,29 +1,17 @@
 package com.twofish.controller.system;
 
-import com.twofish.constants.Constants;
-import com.twofish.constants.HttpStatus;
-import com.twofish.domain.DictType;
-import com.twofish.domain.Menu;
-import com.twofish.domain.SimpleUser;
 import com.twofish.dto.DicTypeDto;
 import com.twofish.service.DictTypeService;
-import com.twofish.service.MenuService;
 import com.twofish.utils.ShiroSecurityUtils;
-import com.twofish.vo.*;
+import com.twofish.vo.AjaxResult;
+import com.twofish.vo.DataGridView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**

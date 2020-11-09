@@ -1,6 +1,5 @@
 package com.twofish.controller.system;
 
-import com.twofish.domain.DictData;
 import com.twofish.dto.DicDataDto;
 import com.twofish.service.DictDataService;
 import com.twofish.utils.ShiroSecurityUtils;
@@ -9,14 +8,12 @@ import com.twofish.vo.DataGridView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 
 /**
@@ -104,9 +101,5 @@ public class DictDateController {
     public AjaxResult selectAllDictData(@PathVariable @Validated @NotNull(message = "字典类型不能为空") String dictType){
         return AjaxResult.success(dictDataService.querybydicttype(dictType));
     }
-
-
-
-
 
 }

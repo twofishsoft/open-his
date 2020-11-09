@@ -1,11 +1,11 @@
 package com.twofish.controller.system;
 
-import com.twofish.vo.ActivierUser;
 import com.twofish.constants.Constants;
 import com.twofish.constants.HttpStatus;
 import com.twofish.domain.Menu;
 import com.twofish.domain.SimpleUser;
 import com.twofish.service.MenuService;
+import com.twofish.vo.ActivierUser;
 import com.twofish.vo.AjaxResult;
 import com.twofish.vo.LoginBodyDto;
 import com.twofish.vo.MenuTreeVo;
@@ -56,7 +56,7 @@ public class LoginController {
             ajax.put(Constants.TOKEN,webtoken);
         }catch (Exception e){
             log.error("登录错误信息："+e.getMessage());
-            ajax=AjaxResult.error(HttpStatus.ERROR,"用户名或密码错误");
+            ajax= AjaxResult.error(HttpStatus.ERROR,"用户名或密码错误");
         }
         return ajax;
     }

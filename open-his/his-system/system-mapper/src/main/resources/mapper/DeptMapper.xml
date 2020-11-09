@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twofish.mapper.DeptMapper">
+  <resultMap id="BaseResultMap" type="com.twofish.domain.Dept">
+    <id column="dept_id" jdbcType="BIGINT" property="deptId" />
+    <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+    <result column="reg_number" jdbcType="INTEGER" property="regNumber" />
+    <result column="dept_number" jdbcType="VARCHAR" property="deptNumber" />
+    <result column="order_num" jdbcType="VARCHAR" property="orderNum" />
+    <result column="dept_leader" jdbcType="VARCHAR" property="deptLeader" />
+    <result column="leader_phone" jdbcType="VARCHAR" property="leaderPhone" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+</mapper>
