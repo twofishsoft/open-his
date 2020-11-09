@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  * 用户数据接口
- * @author ww
+ * @author Ytyy
  */
 @RestController
 @Log4j2
@@ -74,6 +74,11 @@ public class UserController {
     @PostMapping("addUser")
     @ApiOperation(value = "添加用户数据", notes = "添加用户数据")
     public AjaxResult addDictData(@RequestBody UserDto userDto){
+        // 判断手机号是否重复
+        User queryByPhone = userService.querybyphone(userDto.getPhone());
+        if (queryByPhone != null) {
+            return AjaxResult.fail("手机号已存在");
+        }
         //设置添加人
         userDto.setSimpleUser(ShiroSecurityUtils.getCurrentSimpleUser());
         String hashAlgorithmName = shiroProperties.getHashAlgorithmName();
@@ -158,7 +163,34 @@ public class UserController {
         return AjaxResult.toAjax(userService.updateRole(userDto));
     }
 
+    /**
+     * 根据用户手机号查询
+     *
+     * @param userPhone 用户id
+     * @return 单个用户信息
+     */
+    @GetMapping("/getUserByPhone/{userPhone}")
+    @ApiOperation(value = "根据用户ID查询用户信息", notes = "根据用户手机号查询用户信息")
+    public AjaxResult getUserByPhone(@PathVariable("userPhone") String userPhone) {
+        // 判断是否位空
+        if (userPhone == null) {
+            log.error("未接收到参数用户Phone，或参数错误");
+            return AjaxResult.fail("参数错误");
+        }
+        AjaxResult ajax = AjaxResult.success();
+        // 查询不为空返回，为空返回错误信息
+        User one = userService.querybyphone(userPhone);
+        log.debug("根据Phone查询用户的Phone：" + userPhone + "; 数据：" + one);
+        if (one != null) {
+            ajax.put("data", one);
+            return ajax;
+        } else {
+            return AjaxResult.fail("查询的用户不存在");
+        }
+    }
+
     public String findDictDate(String dictType, String dictValue) {
         return dictDataService.queryDataByTypeAndValue(dictType, dictValue);
     }
+
 }

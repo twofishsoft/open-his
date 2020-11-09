@@ -19,10 +19,11 @@ import com.twofish.mapper.UserMapper;
 import com.twofish.service.UserService;
 
 /**
- * 用户服务实现
+ * @author Ytyy
+ * @version 1.0
  */
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Resource
     private UserMapper userMapper;
@@ -74,7 +75,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public User querybyphone(String phone) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq(User.COL_PHONE,phone);
+        wrapper.eq(User.COL_PHONE, phone);
         return userMapper.selectOne(wrapper);
     }
 

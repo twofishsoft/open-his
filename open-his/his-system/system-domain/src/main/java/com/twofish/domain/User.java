@@ -37,6 +37,13 @@ public class User extends BaseEntity {
     private Long deptId;
 
     /**
+     * 部门名称
+     * 多表联查，没有为null
+     */
+    @TableField(value = "dept_name",exist = false)
+    private String deptName;
+
+    /**
      * 用户账号
      */
     @TableField(value = "user_name")
