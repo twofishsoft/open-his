@@ -96,8 +96,8 @@ public class UserController {
     @ApiOperation(value = "添加用户数据", notes = "添加用户数据")
     public AjaxResult addDictData(@RequestBody UserDto userDto){
         // 判断手机号是否重复
-        User queryByPhone = userService.querybyphone(userDto.getPhone());
-        if (queryByPhone != null) {
+        User user = userService.querybyphone(userDto.getPhone());
+        if (user != null) {
             return AjaxResult.fail("手机号已存在");
         }
         //设置添加人
@@ -119,6 +119,11 @@ public class UserController {
     @PutMapping("updateUser")
     @ApiOperation(value = "更新用户数据", notes = "更新用户数据")
     public AjaxResult updateUser(@RequestBody UserDto userDto){
+        // 判断手机号是否重复
+        User user = userService.querybyphone(userDto.getPhone());
+        if (user != null && !user.getUserId().equals(userDto.getUserId())) {
+            return AjaxResult.fail("手机号已存在");
+        }
         //设置修改人
         userDto.setSimpleUser(ShiroSecurityUtils.getCurrentSimpleUser());
         return AjaxResult.toAjax(this.userService.updateUser(userDto));
