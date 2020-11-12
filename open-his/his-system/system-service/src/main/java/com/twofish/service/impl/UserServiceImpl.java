@@ -1,6 +1,5 @@
 package com.twofish.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -65,25 +63,6 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
             );
         }
         return null;
-    }
-
-    @Override
-    public int insertUser(UserDto userDto) {
-        User user = new User();
-        BeanUtil.copyProperties(userDto, user);
-        //设置创建人
-        user.setCreateBy(userDto.getSimpleUser().getUserName());
-        user.setCreateTime(new Date());
-        return userMapper.insert(user);
-    }
-
-    @Override
-    public int updateUser(UserDto userDto) {
-        User user = new User();
-        BeanUtil.copyProperties(userDto, user);
-        //设置创建人
-        user.setUpdateBy(userDto.getSimpleUser().getUserName());
-        return userMapper.updateById(user);
     }
 
     @Override

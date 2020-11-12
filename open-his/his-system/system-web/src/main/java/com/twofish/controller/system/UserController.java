@@ -2,6 +2,7 @@ package com.twofish.controller.system;
 
 import com.twofish.config.shiro.ShiroProperties;
 import com.twofish.domain.Dept;
+import com.twofish.domain.SimpleUser;
 import com.twofish.domain.User;
 import com.twofish.dto.UserDto;
 import com.twofish.service.DeptService;
@@ -26,7 +27,7 @@ import java.util.List;
 
 /**
  * 用户数据接口
- * @author Ytyy
+ * @author ww
  */
 @RestController
 @Log4j2
@@ -101,14 +102,16 @@ public class UserController {
             return AjaxResult.fail("手机号已存在");
         }
         //设置添加人
-        userDto.setSimpleUser(ShiroSecurityUtils.getCurrentSimpleUser());
+        SimpleUser currentSimpleUser = ShiroSecurityUtils.getCurrentSimpleUser();
+        userDto.setSimpleUser(currentSimpleUser);
+        userDto.setCreateBy(currentSimpleUser.getUserName());
         String hashAlgorithmName = shiroProperties.getHashAlgorithmName();
         Integer hashIterations = shiroProperties.getHashIterations();
         String psw = shiroProperties.getPsw();
         String salt = Md5.getSalt();
         userDto.setSalt(salt);
         userDto.setPassword(Md5.getPswd(hashAlgorithmName, hashIterations, psw, salt));
-        return AjaxResult.toAjax(this.userService.insertUser(userDto));
+        return AjaxResult.toAjax(this.userService.insert(userDto));
     }
 
     /**
@@ -125,8 +128,10 @@ public class UserController {
             return AjaxResult.fail("手机号已存在");
         }
         //设置修改人
-        userDto.setSimpleUser(ShiroSecurityUtils.getCurrentSimpleUser());
-        return AjaxResult.toAjax(this.userService.updateUser(userDto));
+        SimpleUser currentSimpleUser = ShiroSecurityUtils.getCurrentSimpleUser();
+        userDto.setSimpleUser(currentSimpleUser);
+        userDto.setUpdateBy(currentSimpleUser.getUserName());
+        return AjaxResult.toAjax(this.userService.update(userDto));
     }
 
     /**

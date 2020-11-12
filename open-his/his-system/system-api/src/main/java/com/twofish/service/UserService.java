@@ -1,16 +1,16 @@
 package com.twofish.service;
 
+import com.twofish.base.BaseService;
 import com.twofish.domain.User;
 import com.twofish.dto.UserDto;
 import com.twofish.vo.DataGridView;
-
 import java.util.List;
 
 /**
  * @author Ytyy
  * @version 1.0
  */
-public interface UserService {
+public interface UserService extends BaseService<User> {
 
     /**
      * 分页查询用户数据
@@ -20,37 +20,10 @@ public interface UserService {
     DataGridView listPage(UserDto userDto);
 
     /**
-     * 查询所有可用用户信息
-     * @return
-     */
-    List<User> selectAll();
-
-    /**
      * 查询需要排班的医生信息
      * @return
      */
     List<User> getUsersNeedScheduling(Long deptId);
-
-    /**
-     * 添加用户
-     * @param userDto
-     * @return
-     */
-    int insertUser(UserDto userDto);
-
-    /**
-     * 修改用户
-     * @param userDto
-     * @return
-     */
-    int updateUser(UserDto userDto);
-
-    /**
-     * 删除用户数据(可批量删除)
-     * @param userIds
-     * @return
-     */
-    int deleteByIds(Long[] userIds);
 
     /**
      * 根据手机号查询用户
@@ -59,13 +32,6 @@ public interface UserService {
      * @return 单个用户实体
      */
     User querybyphone(String phone);
-
-    /**
-     * 根据用户ID查询用户
-     * @param userId
-     * @return
-     */
-    User getOne(Long userId);
 
     /**
      * 重置密码

@@ -1,6 +1,7 @@
 package com.twofish.vo;
 
 import com.twofish.domain.SimpleUser;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
