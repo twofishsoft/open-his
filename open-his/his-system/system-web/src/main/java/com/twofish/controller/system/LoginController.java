@@ -71,7 +71,6 @@ public class LoginController {
         AjaxResult ajax = AjaxResult.success();
         Subject subject = SecurityUtils.getSubject();
         ActivierUser activierUser =(ActivierUser)subject.getPrincipal();
-        System.out.println("activierUser"+activierUser);
         ajax.put("username",activierUser.getUser().getUserName());
         ajax.put("picture",activierUser.getUser().getPicture());
         ajax.put("roles",activierUser.getRoles());

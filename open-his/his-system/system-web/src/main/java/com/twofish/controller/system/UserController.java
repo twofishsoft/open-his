@@ -74,7 +74,7 @@ public class UserController {
     @GetMapping("selectAllUser")
     @ApiOperation(value = "查询所有可用用户信息", notes = "查询所有可用用户信息")
     public AjaxResult selectAllUser() {
-        return AjaxResult.success(this.userService.selectAllUser());
+        return AjaxResult.success(this.userService.selectAll());
     }
 
     /**
@@ -107,7 +107,7 @@ public class UserController {
         String psw = shiroProperties.getPsw();
         String salt = Md5.getSalt();
         userDto.setSalt(salt);
-        userDto.setPassword(Md5.getPsw(hashAlgorithmName, hashIterations, psw, salt));
+        userDto.setPassword(Md5.getPswd(hashAlgorithmName, hashIterations, psw, salt));
         return AjaxResult.toAjax(this.userService.insertUser(userDto));
     }
 

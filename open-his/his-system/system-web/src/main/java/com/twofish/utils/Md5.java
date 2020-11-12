@@ -1,7 +1,10 @@
 package com.twofish.utils;
 
+import org.apache.shiro.crypto.hash.DefaultHashService;
+import org.apache.shiro.crypto.hash.HashRequest;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
 
 import java.util.Random;
 
@@ -33,4 +36,14 @@ public class Md5 {
         }
         return val;
     }
+
+    //生成密码工具
+    public static String getPswd(String hashAlgorithmName, int hashIterations, String pass, String salt) {
+        DefaultHashService hashService = new DefaultHashService();
+        HashRequest request = new HashRequest.Builder().setAlgorithmName(hashAlgorithmName)
+                .setSource(ByteSource.Util.bytes(pass))
+                .setSalt(ByteSource.Util.bytes(salt)).setIterations(hashIterations).build();
+        return hashService.computeHash(request).toHex();
+    }
+    
 }

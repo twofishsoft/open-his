@@ -9,11 +9,10 @@ export function login(data) {
   })
 }
 // 登陆成功得到用户信息接口
-export function getInfo(token) {
+export function getInfo() {
   return request({
     url: '/login/getInfo',
-    method: 'get',
-    params: { token }
+    method: 'get'
   })
 }
 // 退出接口

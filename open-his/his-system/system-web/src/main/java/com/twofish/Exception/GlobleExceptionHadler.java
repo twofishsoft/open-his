@@ -27,6 +27,7 @@ public class GlobleExceptionHadler {
     //未指定异常 所有异常处理根方法
     @ExceptionHandler(Exception.class)
     public AjaxResult exception(Exception e){
+        e.printStackTrace();
         return AjaxResult.error(e.getMessage());
     }
 

@@ -2,6 +2,7 @@ package com.twofish.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.twofish.constants.Constants;
 import com.twofish.domain.Role;
@@ -12,6 +13,7 @@ import com.twofish.mapper.RoleUserMapper;
 import com.twofish.mapper.UserMapper;
 import com.twofish.service.RoleService;
 import com.twofish.service.UserService;
+import com.twofish.service.base.BaseService;
 import com.twofish.vo.DataGridView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,7 @@ import java.util.List;
  * @version 1.0
  */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends BaseService<User> implements UserService {
 
     @Resource
     private UserMapper userMapper;
@@ -34,6 +36,11 @@ public class UserServiceImpl implements UserService {
     private RoleUserMapper roleUserMapper;
     @Resource
     private RoleService roleService;
+
+    @Override
+    public BaseMapper getMapper() {
+        return userMapper;
+    }
 
     @Override
     public DataGridView listPage(UserDto userDto) {
@@ -49,20 +56,19 @@ public class UserServiceImpl implements UserService {
         return new DataGridView(page.getTotal(), page.getRecords());
     }
 
-    @Override
+    /*@Override
     public List<User> selectAllUser() {
         QueryWrapper<User> qw = new QueryWrapper<>();
         qw.eq(User.COL_STATUS, Constants.STATUS_TRUE);
         return userMapper.selectList(qw);
-    }
+    }*/
 
     @Override
     public List<User> getUsersNeedScheduling(Long deptId) {
         Role role = roleService.getRole(Constants.DOCTOR_CODE);
         if (null != role) {
-            Long roleId = role.getRoleId();
             return userMapper.getUsersNeedScheduling(
-                    new User(Constants.STATUS_TRUE, Constants.SCHEDULING_FLAG_TRUE, deptId, roleId)
+                    new User(Constants.STATUS_TRUE, Constants.SCHEDULING_FLAG_TRUE, deptId, role.getRoleId())
             );
         }
         return null;
@@ -87,14 +93,14 @@ public class UserServiceImpl implements UserService {
         return userMapper.updateById(user);
     }
 
-    @Override
+    /*@Override
     public int deleteUserByIds(Long[] userIds) {
         List<Long> ids = Arrays.asList(userIds);
         if(ids != null && ids.size() > 0){
             return userMapper.deleteBatchIds(ids);
         }
         return -1;
-    }
+    }*/
 
     @Override
     public User querybyphone(String phone) {
@@ -103,10 +109,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectOne(wrapper);
     }
 
-    @Override
+    /*@Override
     public User getOne(Long userId) {
         return userMapper.selectById(userId);
-    }
+    }*/
 
     @Override
     public int resetPwd(User user) {

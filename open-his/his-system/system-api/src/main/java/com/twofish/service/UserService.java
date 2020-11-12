@@ -23,7 +23,7 @@ public interface UserService {
      * 查询所有可用用户信息
      * @return
      */
-    List<User> selectAllUser();
+    List<User> selectAll();
 
     /**
      * 查询需要排班的医生信息
