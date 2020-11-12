@@ -58,7 +58,7 @@ public class RoleController {
     @GetMapping("selectAllRole")
     @ApiOperation(value = "查询所有角色数据", notes = "查询所有角色数据")
     public AjaxResult getAllRole(RoleDto roleDto){
-        return AjaxResult.success(this.roleService.queryAllRole());
+        return AjaxResult.success(this.roleService.selectAll());
     }
 
     /**
@@ -106,7 +106,7 @@ public class RoleController {
     @DeleteMapping("deleteRoleByIds/{roleIds}")
     @ApiOperation(value = "根据ID删除角色数据", notes = "根据ID删除角色数据")
     public AjaxResult deleteRoleByIds(@PathVariable @Validated @NotEmpty(message = "角色ID不能为空") Long[] roleIds) {
-        return AjaxResult.toAjax(this.roleService.deleteRoleByIds(roleIds));
+        return AjaxResult.toAjax(this.roleService.deleteByIds(roleIds));
     }
 
     /**

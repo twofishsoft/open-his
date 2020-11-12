@@ -17,7 +17,7 @@ public abstract class BaseService<T extends BaseEntity> {
     public abstract BaseMapper getMapper();
 
     /**
-     * 查找所有
+     * 查找所有有效数据
      * @return
      */
     public List<T> selectAll() {
@@ -31,7 +31,7 @@ public abstract class BaseService<T extends BaseEntity> {
      * @param userIds
      * @return
      */
-    public int deleteUserByIds(Long[] userIds) {
+    public int deleteByIds(Long[] userIds) {
         List<Long> ids = Arrays.asList(userIds);
         if(ids != null && ids.size() > 0){
             return getMapper().deleteBatchIds(ids);

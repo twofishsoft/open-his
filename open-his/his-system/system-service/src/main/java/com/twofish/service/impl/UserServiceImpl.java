@@ -56,13 +56,6 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
         return new DataGridView(page.getTotal(), page.getRecords());
     }
 
-    /*@Override
-    public List<User> selectAllUser() {
-        QueryWrapper<User> qw = new QueryWrapper<>();
-        qw.eq(User.COL_STATUS, Constants.STATUS_TRUE);
-        return userMapper.selectList(qw);
-    }*/
-
     @Override
     public List<User> getUsersNeedScheduling(Long deptId) {
         Role role = roleService.getRole(Constants.DOCTOR_CODE);
@@ -93,26 +86,12 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
         return userMapper.updateById(user);
     }
 
-    /*@Override
-    public int deleteUserByIds(Long[] userIds) {
-        List<Long> ids = Arrays.asList(userIds);
-        if(ids != null && ids.size() > 0){
-            return userMapper.deleteBatchIds(ids);
-        }
-        return -1;
-    }*/
-
     @Override
     public User querybyphone(String phone) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
         wrapper.eq(User.COL_PHONE, phone);
         return userMapper.selectOne(wrapper);
     }
-
-    /*@Override
-    public User getOne(Long userId) {
-        return userMapper.selectById(userId);
-    }*/
 
     @Override
     public int resetPwd(User user) {

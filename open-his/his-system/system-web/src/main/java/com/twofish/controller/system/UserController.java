@@ -137,7 +137,7 @@ public class UserController {
     @DeleteMapping("deleteUserByIds/{userIds}")
     @ApiOperation(value = "根据ID删除用户数据", notes = "根据ID删除用户数据")
     public AjaxResult deleteUserByIds(@PathVariable @Validated @NotEmpty(message = "用户ID不能为空") Long[] userIds){
-        return AjaxResult.toAjax(this.userService.deleteUserByIds(userIds));
+        return AjaxResult.toAjax(this.userService.deleteByIds(userIds));
     }
 
     /**

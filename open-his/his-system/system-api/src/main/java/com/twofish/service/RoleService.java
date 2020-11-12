@@ -23,7 +23,7 @@ public interface RoleService {
      * 查询所有角色数据
      * @return
      */
-    List<Role> queryAllRole();
+    List<Role> selectAll();
 
     /**
      * 添加角色
@@ -44,7 +44,7 @@ public interface RoleService {
       * @param roleIds
      * @return
      */
-    int deleteRoleByIds(Long[] roleIds);
+    int deleteByIds(Long[] roleIds);
 
     /**
      * 根据角色ID查询角色

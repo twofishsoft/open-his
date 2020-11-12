@@ -2,6 +2,7 @@ package com.twofish.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.twofish.constants.Constants;
 import com.twofish.domain.Dept;
@@ -13,6 +14,7 @@ import com.twofish.mapper.RoleMapper;
 import com.twofish.mapper.RoleMenuMapper;
 import com.twofish.mapper.RoleUserMapper;
 import com.twofish.service.RoleService;
+import com.twofish.service.base.BaseService;
 import com.twofish.vo.DataGridView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -27,7 +29,7 @@ import java.util.List;
  * 角色服务实现
  */
 @Service
-public class RoleServiceImpl implements RoleService {
+public class RoleServiceImpl extends BaseService<Role> implements RoleService {
 
     @Resource
     private RoleMapper roleMapper;
@@ -35,6 +37,11 @@ public class RoleServiceImpl implements RoleService {
     private RoleMenuMapper roleMenuMapper;
     @Resource
     private RoleUserMapper roleUserMapper;
+
+    @Override
+    public BaseMapper getMapper() {
+        return roleMapper;
+    }
 
     @Override
     public DataGridView listPage(RoleDto RoleDto) {
@@ -47,13 +54,6 @@ public class RoleServiceImpl implements RoleService {
         qw.le(null != RoleDto.getEndTime(), Role.COL_CREATE_TIME, RoleDto.getEndTime());
         roleMapper.selectPage(page, qw);
         return new DataGridView(page.getTotal(), page.getRecords());
-    }
-
-    @Override
-    public List<Role> queryAllRole() {
-        QueryWrapper<Role> qw = new QueryWrapper();
-        qw.eq(Dept.COL_STATUS, Constants.STATUS_TRUE);
-        return roleMapper.selectList(qw);
     }
 
     @Override
@@ -73,20 +73,6 @@ public class RoleServiceImpl implements RoleService {
         //设置创建人
         role.setUpdateBy(roleDto.getSimpleUser().getUserName());
         return roleMapper.updateById(role);
-    }
-
-    @Override
-    public int deleteRoleByIds(Long[] roleIds) {
-        List<Long> ids = Arrays.asList(roleIds);
-        if(ids != null && ids.size() > 0){
-            return roleMapper.deleteBatchIds(ids);
-        }
-        return -1;
-    }
-
-    @Override
-    public Role getOne(Long roleId) {
-        return roleMapper.selectById(roleId);
     }
 
     @Override

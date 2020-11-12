@@ -50,7 +50,7 @@ public interface UserService {
      * @param userIds
      * @return
      */
-    int deleteUserByIds(Long[] userIds);
+    int deleteByIds(Long[] userIds);
 
     /**
      * 根据手机号查询用户
