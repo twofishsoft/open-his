@@ -124,6 +124,28 @@ public class UserController {
     }
 
     /**
+     * 更新用户角色关系
+     * @param userDto
+     * @return
+     */
+    @PostMapping("saveUserRole")
+    @ApiOperation(value = "更新用户角色关系", notes = "更新用户角色关系")
+    public AjaxResult updateRole(@RequestBody UserDto userDto) {
+        return AjaxResult.toAjax(userService.updateRole(userDto));
+    }
+
+    /**
+     * 根据用户手机号查询
+     * @param userPhone 用户手机
+     * @return 单个用户信息
+     */
+    @GetMapping("/getUserByPhone/{userPhone}")
+    @ApiOperation(value = "根据用户ID查询用户信息", notes = "根据用户手机号查询用户信息")
+    public AjaxResult getUserByPhone(@PathVariable String userPhone) {
+        return AjaxResult.success(userService.queryByPhone(userPhone));
+    }
+
+    /**
      * 修改用户密码
      * @param userDto
      * @return
@@ -145,28 +167,6 @@ public class UserController {
             });
         }
         return AjaxResult.toAjax(result[0]);
-    }
-
-    /**
-     * 更新用户角色关系
-     * @param userDto
-     * @return
-     */
-    @PostMapping("saveUserRole")
-    @ApiOperation(value = "更新用户角色关系", notes = "更新用户角色关系")
-    public AjaxResult updateRole(@RequestBody UserDto userDto) {
-        return AjaxResult.toAjax(userService.updateRole(userDto));
-    }
-
-    /**
-     * 根据用户手机号查询
-     * @param userPhone 用户手机
-     * @return 单个用户信息
-     */
-    @GetMapping("/getUserByPhone/{userPhone}")
-    @ApiOperation(value = "根据用户ID查询用户信息", notes = "根据用户手机号查询用户信息")
-    public AjaxResult getUserByPhone(@PathVariable String userPhone) {
-        return AjaxResult.success(userService.queryByPhone(userPhone));
     }
 
 }
