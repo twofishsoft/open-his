@@ -98,7 +98,7 @@
               type="danger"
               icon="el-icon-delete"
               size="mini"
-              :disabled="isAdmin"
+              :disabled="isAdminM"
               @click="handleDelete"
             >删除</el-button>
           </el-col>
@@ -107,7 +107,7 @@
               type="warning"
               icon="el-icon-thumb"
               size="mini"
-              :disabled="isAdmin"
+              :disabled="isAdminS"
               @click="openRoleDialog"
             >分配角色</el-button>
           </el-col>
@@ -138,7 +138,11 @@
               <el-tag :type="row.status == 0 ? 'success' : 'danger'">{{ row.statusName }}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column label="创建时间" align="center" prop="createTime" width="170" />
+          <el-table-column label="创建时间" align="center" prop="createTime" width="170">
+            <template v-slot="scope">
+              <span>{{ parseTime(scope.row.createTime) }}</span>
+            </template>
+          </el-table-column>
           <el-table-column
             label="操作"
             align="center"
@@ -314,7 +318,8 @@ export default {
       // 非单个禁用
       single: true,
       // 是否管理员
-      isAdmin: true,
+      isAdminS: true,
+      isAdminM: true,
       // 非多个禁用
       multiple: true,
       // 总条数
@@ -463,7 +468,8 @@ export default {
       this.ids = selection.map(item => item.userId)
       this.single = selection.length != 1
       this.multiple = !selection.length
-      this.isAdmin = this.single || (this.ids.filter(item => item == '1')).length != 0
+      this.isAdminS = this.single || (this.ids.filter(item => item == '1')).length != 0
+      this.isAdminM = this.multiple || (this.ids.filter(item => item == '1')).length != 0
     },
     // 多选框选中角色数据
     handleSelectionRoleChange(selection) {

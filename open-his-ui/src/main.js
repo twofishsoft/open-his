@@ -20,7 +20,7 @@ import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
 import { getDicts } from '@/api/system/dict/data'
-import { addDateRange, resetForm } from '@/utils'
+import { parseTime, addDateRange, resetForm } from '@/utils'
 
 import Pagination from '@/components/Pagination'
 
@@ -52,6 +52,7 @@ Vue.config.productionTip = false
 Vue.prototype.getDicts = getDicts
 Vue.prototype.addDateRange = addDateRange
 Vue.prototype.resetForm = resetForm
+Vue.prototype.parseTime = parseTime
 
 // 全局组件挂载
 Vue.component('Pagination', Pagination)
