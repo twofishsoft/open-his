@@ -35,13 +35,6 @@ public class User extends BaseEntity {
     private Long deptId;
 
     /**
-     * 部门名称
-     * 多表联查，没有为null
-     */
-    @TableField(value = "dept_name",exist = false)
-    private String deptName;
-
-    /**
      * 用户账号
      */
     @TableField(value = "user_name")
@@ -174,7 +167,7 @@ public class User extends BaseEntity {
     /**
      * 更新时间
      */
-    @TableField(value = "update_time", fill = FieldFill.INSERT_UPDATE)
+    @TableField(value = "update_time", fill = FieldFill.UPDATE)
     @ApiModelProperty(value="更新时间")
     private Date updateTime;
 

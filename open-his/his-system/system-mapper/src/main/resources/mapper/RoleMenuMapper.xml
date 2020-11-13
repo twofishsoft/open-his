@@ -7,7 +7,7 @@
 		<result property="menuId" jdbcType="BIGINT" column="menu_id"/>
 	</resultMap>
 
-	<delete id="deleteRoleMenuByRoleId" parameterType="Long">
+	<delete id="deleteRoleMenuByRoleId" parameterType="java.lang.Long">
 		delete from sys_role_menu where role_id=#{roleId}
 	</delete>
 
@@ -18,11 +18,12 @@
 		</foreach>
 	</insert>
 
-	<select id="roleCheckedMenus" parameterType="Long" resultMap="BaseResultMap">
+	<select id="roleCheckedMenus" parameterType="java.lang.Long" resultMap="BaseResultMap">
 		select m.menu_id
 		from sys_menu m
             left join sys_role_menu rm on m.menu_id = rm.menu_id
         where rm.role_id = #{roleId}
         	and m.menu_id not in (select m.parent_id from sys_menu m inner join sys_role_menu rm on m.menu_id = rm.menu_id and rm.role_id = #{roleId})
 	</select>
+
 </mapper>
