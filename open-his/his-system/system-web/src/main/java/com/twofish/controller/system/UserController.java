@@ -140,7 +140,7 @@ public class UserController {
                 User user = this.userService.getOneById(userId);
                 if (null != user) {
                     user.setPassword(Md5.getPsw(hashAlgorithmName, hashIterations, userDto.getPassword(), user.getSalt()));
-                    result[0] = this.userService.updateById(user);
+                    result[0] = this.userService.update(user);
                 }
             });
         }

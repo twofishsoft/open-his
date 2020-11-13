@@ -69,7 +69,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> {
         return getMapper().updateById(user);
     }
 
-    public int updateById(T t) {
+    public int update(T t) {
         return getMapper().updateById(t);
     }
 

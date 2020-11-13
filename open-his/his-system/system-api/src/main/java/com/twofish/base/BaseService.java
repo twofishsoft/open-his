@@ -35,7 +35,7 @@ public interface BaseService<T> {
      * @param t
      * @return
      */
-    int updateById(T t);
+    int update(T t);
 
     /**
      * 删除数据(可批量删除)
