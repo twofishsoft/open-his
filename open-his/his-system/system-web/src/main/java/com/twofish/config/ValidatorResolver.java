@@ -46,12 +46,15 @@ public class ValidatorResolver implements HandlerMethodArgumentResolver {
         }
         Object object = JSON.parseObject(sb.toString(), clazz);
         SimpleUser currentSimpleUser = ShiroSecurityUtils.getCurrentSimpleUser();
+
         Field field = clazz.getSuperclass().getDeclaredField("simpleUser");
         field.setAccessible(true);
         field.set(object, currentSimpleUser);
+
         field = clazz.getDeclaredField(currUser.name());
         field.setAccessible(true);
         field.set(object, currentSimpleUser.getUserName());
+
         return object;
     }
 
