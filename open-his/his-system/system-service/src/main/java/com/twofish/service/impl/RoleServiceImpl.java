@@ -23,7 +23,7 @@ import java.util.List;
  * 角色服务实现
  */
 @Service
-public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleService {
+public class RoleServiceImpl extends BaseServiceImpl<Role, RoleDto> implements RoleService {
 
     @Resource
     private RoleMapper roleMapper;

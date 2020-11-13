@@ -41,16 +41,6 @@ public class RoleController {
     }
 
     /**
-     * 查询所有角色数据
-     * @return
-     */
-    @GetMapping("selectAllRole")
-    @ApiOperation(value = "查询所有角色数据", notes = "查询所有角色数据")
-    public AjaxResult getAllRole(){
-        return AjaxResult.success(this.roleService.selectAll());
-    }
-
-    /**
      * 添加角色数据
      * @param roleDto
      * @return
@@ -59,17 +49,6 @@ public class RoleController {
     @ApiOperation(value = "添加角色数据", notes = "添加角色数据")
     public AjaxResult addDictData(@CurrUser RoleDto roleDto){
         return AjaxResult.toAjax(this.roleService.insert(roleDto));
-    }
-
-    /**
-     * 根据ID查询角色数据
-     * @param roleId
-     * @return
-     */
-    @GetMapping("getRoleById/{roleId}")
-    @ApiOperation(value = "根据ID查询角色数据", notes = "根据ID查询角色数据")
-    public AjaxResult getOne(@PathVariable Long roleId){
-        return AjaxResult.success("查询成功", this.roleService.getOneById(roleId));
     }
 
     /**
@@ -92,6 +71,27 @@ public class RoleController {
     @ApiOperation(value = "根据ID删除角色数据", notes = "根据ID删除角色数据")
     public AjaxResult deleteRoleByIds(@PathVariable Long[] roleIds) {
         return AjaxResult.toAjax(this.roleService.deleteByIds(roleIds));
+    }
+
+    /**
+     * 查询所有角色数据
+     * @return
+     */
+    @GetMapping("selectAllRole")
+    @ApiOperation(value = "查询所有角色数据", notes = "查询所有角色数据")
+    public AjaxResult getAllRole(){
+        return AjaxResult.success(this.roleService.selectAll());
+    }
+
+    /**
+     * 根据ID查询角色数据
+     * @param roleId
+     * @return
+     */
+    @GetMapping("getRoleById/{roleId}")
+    @ApiOperation(value = "根据ID查询角色数据", notes = "根据ID查询角色数据")
+    public AjaxResult getOne(@PathVariable Long roleId){
+        return AjaxResult.success("查询成功", this.roleService.getOneById(roleId));
     }
 
     /**

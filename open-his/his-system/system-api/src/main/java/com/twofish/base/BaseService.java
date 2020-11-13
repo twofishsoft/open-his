@@ -1,6 +1,7 @@
 package com.twofish.base;
 
 import com.twofish.vo.BaseDto;
+import com.twofish.vo.DataGridView;
 import java.util.List;
 
 /**
@@ -8,7 +9,14 @@ import java.util.List;
  * @description
  * @create 2020/11/12 23:27
  */
-public interface BaseService<T> {
+public interface BaseService<T, D extends BaseDto> {
+
+    /**
+     * 分页查询用户数据
+     * @param baseDto
+     * @return
+     */
+    DataGridView listPage(D baseDto);
 
     /**
      * 查询所有可用信息
@@ -21,14 +29,14 @@ public interface BaseService<T> {
      * @param baseDto
      * @return
      */
-    int insert(BaseDto baseDto);
+    int insert(D baseDto);
 
     /**
      * 修改
      * @param baseDto
      * @return
      */
-    int update(BaseDto baseDto);
+    int update(D baseDto);
 
     /**
      * 根据ID修改

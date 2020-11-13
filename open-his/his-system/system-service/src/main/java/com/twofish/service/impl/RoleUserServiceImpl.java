@@ -2,6 +2,7 @@ package com.twofish.service.impl;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.twofish.domain.RoleUser;
+import com.twofish.dto.RoleUserDto;
 import com.twofish.mapper.RoleUserMapper;
 import com.twofish.service.RoleService;
 import com.twofish.service.RoleUserService;
@@ -13,7 +14,7 @@ import javax.annotation.Resource;
  * 用户角色服务实现
  */
 @Service
-public class RoleUserServiceImpl extends BaseServiceImpl<RoleUser> implements RoleUserService {
+public class RoleUserServiceImpl extends BaseServiceImpl<RoleUser, RoleUserDto> implements RoleUserService {
 
     @Resource
     private RoleUserMapper roleUserMapper;

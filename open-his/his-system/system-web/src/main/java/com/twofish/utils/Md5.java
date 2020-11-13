@@ -5,13 +5,11 @@ import org.apache.shiro.crypto.hash.HashRequest;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
-
 import java.util.Random;
 
 /**
  * @author ww
  * @description
- * @create 2018-08-08 11:16
  **/
 public class Md5 {
 

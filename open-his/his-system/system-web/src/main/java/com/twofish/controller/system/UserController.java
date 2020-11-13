@@ -1,6 +1,8 @@
 package com.twofish.controller.system;
 
 import com.twofish.annotation.CurrUser;
+import com.twofish.base.BaseController;
+import com.twofish.base.BaseService;
 import com.twofish.config.shiro.ShiroProperties;
 import com.twofish.domain.User;
 import com.twofish.dto.UserDto;
@@ -41,26 +43,6 @@ public class UserController {
     public AjaxResult listForPage(UserDto userDto){
         DataGridView dataGridView = this.userService.listPage(userDto);
         return AjaxResult.success("查询成功", dataGridView.getData(), dataGridView.getTotal());
-    }
-
-    /**
-     * 查询所有可用用户信息
-     * @return
-     */
-    @GetMapping("selectAllUser")
-    @ApiOperation(value = "查询所有可用用户信息", notes = "查询所有可用用户信息")
-    public AjaxResult selectAllUser() {
-        return AjaxResult.success(this.userService.selectAll());
-    }
-
-    /**
-     * 查询需要排班的医生信息
-     * @return
-     */
-    @GetMapping("getUsersNeedScheduling")
-    @ApiOperation(value = "查询需要排班的医生信息", notes = "查询需要排班的医生信息")
-    public AjaxResult getUsersNeedScheduling(Long deptId) {
-        return AjaxResult.success(this.userService.getUsersNeedScheduling(deptId));
     }
 
     /**
@@ -121,6 +103,26 @@ public class UserController {
     @ApiOperation(value = "根据ID查询用户数据", notes = "根据ID查询用户数据")
     public AjaxResult getOne(@PathVariable Long userId){
         return AjaxResult.success("查询成功", this.userService.getOneById(userId));
+    }
+
+    /**
+     * 查询所有可用用户信息
+     * @return
+     */
+    @GetMapping("selectAllUser")
+    @ApiOperation(value = "查询所有可用用户信息", notes = "查询所有可用用户信息")
+    public AjaxResult selectAllUser() {
+        return AjaxResult.success(this.userService.selectAll());
+    }
+
+    /**
+     * 查询需要排班的医生信息
+     * @return
+     */
+    @GetMapping("getUsersNeedScheduling")
+    @ApiOperation(value = "查询需要排班的医生信息", notes = "查询需要排班的医生信息")
+    public AjaxResult getUsersNeedScheduling(Long deptId) {
+        return AjaxResult.success(this.userService.getUsersNeedScheduling(deptId));
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.twofish.dto;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.twofish.vo.BaseDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -193,4 +194,16 @@ public class UserDto extends BaseDto {
     @ApiModelProperty(value="多选用户ID")
     private Long[] userIds;
 
+    /**
+     * 角色ID
+     */
+    @ApiModelProperty(value="角色ID")
+    private Long roleId;
+
+    public UserDto(String status, String schedulingFlag, Long deptId, Long roleId) {
+        this.status = status;
+        this.schedulingFlag = schedulingFlag;
+        this.deptId = deptId;
+        this.roleId = roleId;
+    }
 }

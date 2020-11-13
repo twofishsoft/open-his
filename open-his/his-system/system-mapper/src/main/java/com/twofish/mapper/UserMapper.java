@@ -18,5 +18,5 @@ public interface UserMapper extends BaseMapper<User> {
      */
     Page<User> getUserAndDeptNamePage(Page page, @Param("ew") Wrapper wrapper);
 
-    List<User> getUsersNeedScheduling(User user);
+    List<User> getUsersNeedScheduling(UserDto userDto);
 }

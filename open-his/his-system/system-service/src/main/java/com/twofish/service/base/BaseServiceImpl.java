@@ -3,10 +3,13 @@ package com.twofish.service.base;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.twofish.constants.Constants;
 import com.twofish.domain.BaseEntity;
 import com.twofish.domain.User;
 import com.twofish.vo.BaseDto;
+import com.twofish.vo.DataGridView;
+
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Arrays;
@@ -17,7 +20,7 @@ import java.util.List;
  * @description
  * @create 2020/11/12 18:01
  */
-public abstract class BaseServiceImpl<T extends BaseEntity> {
+public abstract class BaseServiceImpl<T extends BaseEntity, D extends BaseDto> {
 
     public abstract BaseMapper getMapper();
 
@@ -36,6 +39,18 @@ public abstract class BaseServiceImpl<T extends BaseEntity> {
     }
 
     /**
+     * 分页查询
+     * @param baseDto
+     * @return
+     */
+    public DataGridView listPage(D baseDto) {
+        Page<T> page = new Page<>(baseDto.getPageNum(), baseDto.getPageSize());
+        QueryWrapper<T> qw = new QueryWrapper<>();
+        getMapper().selectPage(page, qw);
+        return new DataGridView(page.getTotal(), page.getRecords());
+    }
+
+    /**
      * 查找所有有效数据
      * @return
      */
@@ -50,7 +65,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> {
      * @param baseDto
      * @return
      */
-    public int insert(BaseDto baseDto) {
+    public int insert(D baseDto) {
         T t = getClazz();
         BeanUtil.copyProperties(baseDto, t);
         return getMapper().insert(t);
@@ -61,7 +76,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> {
      * @param baseDto
      * @return
      */
-    public int update(BaseDto baseDto) {
+    public int update(D baseDto) {
         T t = getClazz();
         BeanUtil.copyProperties(baseDto, t);
         return getMapper().updateById(t);

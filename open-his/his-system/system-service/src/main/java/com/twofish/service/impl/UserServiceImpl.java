@@ -16,6 +16,7 @@ import com.twofish.service.DictDataService;
 import com.twofish.service.RoleService;
 import com.twofish.service.UserService;
 import com.twofish.service.base.BaseServiceImpl;
+import com.twofish.vo.BaseDto;
 import com.twofish.vo.DataGridView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ import java.util.List;
  * @author ww
  */
 @Service
-public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
+public class UserServiceImpl extends BaseServiceImpl<User, UserDto> implements UserService {
 
     @Resource
     private UserMapper userMapper;
@@ -76,7 +77,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         Role role = roleService.getOneByAttr(Role.COL_ROLE_CODE, Constants.DOCTOR_CODE);
         if (null != role) {
             return userMapper.getUsersNeedScheduling(
-                    new User(Constants.STATUS_TRUE, Constants.SCHEDULING_FLAG_TRUE, deptId, role.getRoleId())
+                    new UserDto(Constants.STATUS_TRUE, Constants.SCHEDULING_FLAG_TRUE, deptId, role.getRoleId())
             );
         }
         return null;
