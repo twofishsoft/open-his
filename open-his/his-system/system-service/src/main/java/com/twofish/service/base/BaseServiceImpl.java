@@ -29,9 +29,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> {
         }
         try {
             return tClass.newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -64,9 +62,9 @@ public abstract class BaseServiceImpl<T extends BaseEntity> {
      * @return
      */
     public int update(BaseDto baseDto) {
-        User user = new User();
-        BeanUtil.copyProperties(baseDto, user);
-        return getMapper().updateById(user);
+        T t = getClazz();
+        BeanUtil.copyProperties(baseDto, t);
+        return getMapper().updateById(t);
     }
 
     public int update(T t) {
@@ -101,7 +99,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> {
      * @param attrValue 字段值
      * @return
      */
-    public List<T> findByAttr(String attr, Object attrValue) {
+    public List<T> findByAttrList(String attr, Object attrValue) {
         QueryWrapper<T> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return getMapper().selectList(qw);

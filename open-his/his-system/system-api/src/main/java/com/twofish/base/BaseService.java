@@ -57,7 +57,7 @@ public interface BaseService<T> {
      * @param attrValue 字段值
      * @return
      */
-    List<T> findByAttr(String attr, Object attrValue);
+    List<T> findByAttrList(String attr, Object attrValue);
 
     /**
      * 根据对象中的某个属性，查询数据，返回单个数据
