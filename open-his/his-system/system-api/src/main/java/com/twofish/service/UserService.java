@@ -7,8 +7,7 @@ import com.twofish.vo.DataGridView;
 import java.util.List;
 
 /**
- * @author Ytyy
- * @version 1.0
+ * @author ww
  */
 public interface UserService extends BaseService<User> {
 
@@ -31,14 +30,7 @@ public interface UserService extends BaseService<User> {
      * @param phone 用户手机号
      * @return 单个用户实体
      */
-    User querybyphone(String phone);
-
-    /**
-     * 重置密码
-     * @param user
-     * @return
-     */
-    int resetPwd(User user);
+    User queryByPhone(String phone);
 
     /**
      * 更改用户角色

@@ -11,6 +11,7 @@ import java.lang.annotation.Target;
  **/
 @Target({ElementType.METHOD,ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Validator {
+public @interface CurrUser {
     Class<?>[] value() default {};
+    String name() default "createBy";
 }

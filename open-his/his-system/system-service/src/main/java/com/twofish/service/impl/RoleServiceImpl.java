@@ -1,42 +1,36 @@
 package com.twofish.service.impl;
 
-import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.twofish.constants.Constants;
-import com.twofish.domain.Dept;
 import com.twofish.domain.Role;
 import com.twofish.domain.RoleMenu;
-import com.twofish.domain.RoleUser;
 import com.twofish.dto.RoleDto;
 import com.twofish.mapper.RoleMapper;
 import com.twofish.mapper.RoleMenuMapper;
-import com.twofish.mapper.RoleUserMapper;
+import com.twofish.service.DictDataService;
 import com.twofish.service.RoleService;
-import com.twofish.service.base.BaseService;
+import com.twofish.service.base.BaseServiceImpl;
 import com.twofish.vo.DataGridView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 /**
  * 角色服务实现
  */
 @Service
-public class RoleServiceImpl extends BaseService<Role> implements RoleService {
+public class RoleServiceImpl extends BaseServiceImpl<Role> implements RoleService {
 
     @Resource
     private RoleMapper roleMapper;
     @Resource
     private RoleMenuMapper roleMenuMapper;
     @Resource
-    private RoleUserMapper roleUserMapper;
+    private DictDataService dictDataService;
 
     @Override
     public BaseMapper getMapper() {
@@ -53,26 +47,10 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
         qw.ge(null != RoleDto.getBeginTime(), Role.COL_CREATE_TIME, RoleDto.getBeginTime());
         qw.le(null != RoleDto.getEndTime(), Role.COL_CREATE_TIME, RoleDto.getEndTime());
         roleMapper.selectPage(page, qw);
+        page.getRecords().stream().forEach(role -> {
+            role.setStatusName(dictDataService.queryDataByTypeAndValue("sys_normal_disable", role.getStatus()));
+        });
         return new DataGridView(page.getTotal(), page.getRecords());
-    }
-
-    @Override
-    public int insertRole(RoleDto roleDto) {
-        Role role = new Role();
-        BeanUtil.copyProperties(roleDto, role);
-        //设置创建人
-        role.setCreateBy(roleDto.getSimpleUser().getUserName());
-        role.setCreateTime(new Date());
-        return roleMapper.insert(role);
-    }
-
-    @Override
-    public int updateRole(RoleDto roleDto) {
-        Role role = new Role();
-        BeanUtil.copyProperties(roleDto, role);
-        //设置创建人
-        role.setUpdateBy(roleDto.getSimpleUser().getUserName());
-        return roleMapper.updateById(role);
     }
 
     @Override
@@ -93,20 +71,6 @@ public class RoleServiceImpl extends BaseService<Role> implements RoleService {
             }
         }
         return 1;
-    }
-
-    @Override
-    public List<RoleUser> getUserRole(Long userId) {
-        QueryWrapper<RoleUser> qw = new QueryWrapper<>();
-        qw.eq(RoleUser.COL_USER_ID, userId);
-        return roleUserMapper.selectList(qw);
-    }
-
-    @Override
-    public Role getRole(String roleCode) {
-        QueryWrapper<Role> qw = new QueryWrapper<>();
-        qw.eq(Role.COL_ROLE_CODE, roleCode);
-        return roleMapper.selectOne(qw);
     }
 
 }

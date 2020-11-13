@@ -17,7 +17,7 @@ import java.util.List;
  * @description
  * @create 2020/11/12 18:01
  */
-public abstract class BaseService<T extends BaseEntity> {
+public abstract class BaseServiceImpl<T extends BaseEntity> {
 
     public abstract BaseMapper getMapper();
 
@@ -69,6 +69,10 @@ public abstract class BaseService<T extends BaseEntity> {
         return getMapper().updateById(user);
     }
 
+    public int updateById(T t) {
+        return getMapper().updateById(t);
+    }
+
     /**
      * 批量删除
      * @param userIds
@@ -87,8 +91,31 @@ public abstract class BaseService<T extends BaseEntity> {
      * @param id
      * @return
      */
-    public T getOne(Long id) {
+    public T getOneById(Long id) {
         return (T) getMapper().selectById(id);
     }
 
+    /**
+     * 根据对象中的某个属性，查询数据，返回集合
+     * @param attr 对象中的某个字段
+     * @param attrValue 字段值
+     * @return
+     */
+    public List<T> findByAttr(String attr, Object attrValue) {
+        QueryWrapper<T> qw = new QueryWrapper<>();
+        qw.eq(attr, attrValue);
+        return getMapper().selectList(qw);
+    }
+
+    /**
+     * 根据对象中的某个属性，查询数据，返回单个数据
+     * @param attr 对象中的某个字段
+     * @param attrValue 字段值
+     * @return
+     */
+    public T getOneByAttr(String attr, Object attrValue) {
+        QueryWrapper<T> qw = new QueryWrapper<>();
+        qw.eq(attr, attrValue);
+        return (T) getMapper().selectOne(qw);
+    }
 }

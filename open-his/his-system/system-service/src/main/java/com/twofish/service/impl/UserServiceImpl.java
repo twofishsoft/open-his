@@ -4,15 +4,18 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.twofish.constants.Constants;
+import com.twofish.domain.Dept;
 import com.twofish.domain.Role;
 import com.twofish.domain.RoleUser;
 import com.twofish.domain.User;
 import com.twofish.dto.UserDto;
 import com.twofish.mapper.RoleUserMapper;
 import com.twofish.mapper.UserMapper;
+import com.twofish.service.DeptService;
+import com.twofish.service.DictDataService;
 import com.twofish.service.RoleService;
 import com.twofish.service.UserService;
-import com.twofish.service.base.BaseService;
+import com.twofish.service.base.BaseServiceImpl;
 import com.twofish.vo.DataGridView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -22,11 +25,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author Ytyy
- * @version 1.0
+ * @author ww
  */
 @Service
-public class UserServiceImpl extends BaseService<User> implements UserService {
+public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
 
     @Resource
     private UserMapper userMapper;
@@ -34,6 +36,10 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
     private RoleUserMapper roleUserMapper;
     @Resource
     private RoleService roleService;
+    @Resource
+    private DictDataService dictDataService;
+    @Resource
+    private DeptService deptService;
 
     @Override
     public BaseMapper getMapper() {
@@ -51,12 +57,23 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
         qw.ge(null != userDto.getBeginTime(), User.COL_CREATE_TIME, userDto.getBeginTime());
         qw.le(null != userDto.getEndTime(), User.COL_CREATE_TIME, userDto.getEndTime());
         userMapper.selectPage(page, qw);
+        page.getRecords().stream().forEach(user -> {
+            user.setStatusName(dictDataService.queryDataByTypeAndValue("sys_normal_disable", user.getStatus()));
+            user.setBackgroundName(dictDataService.queryDataByTypeAndValue("sys_user_background", user.getBackground()));
+            user.setLevelName(dictDataService.queryDataByTypeAndValue("sys_user_level", user.getUserRank()));
+            user.setSexName(dictDataService.queryDataByTypeAndValue("sys_user_sex", user.getSex()));
+            user.setSchedulingFlagName(dictDataService.queryDataByTypeAndValue("his_scheduling_flag", user.getSchedulingFlag()));
+            Dept dept = deptService.getOneById(user.getDeptId());
+            if (null != dept) {
+                user.setDept(dept);
+            }
+        });
         return new DataGridView(page.getTotal(), page.getRecords());
     }
 
     @Override
     public List<User> getUsersNeedScheduling(Long deptId) {
-        Role role = roleService.getRole(Constants.DOCTOR_CODE);
+        Role role = roleService.getOneByAttr(Role.COL_ROLE_CODE, Constants.DOCTOR_CODE);
         if (null != role) {
             return userMapper.getUsersNeedScheduling(
                     new User(Constants.STATUS_TRUE, Constants.SCHEDULING_FLAG_TRUE, deptId, role.getRoleId())
@@ -66,15 +83,8 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
     }
 
     @Override
-    public User querybyphone(String phone) {
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq(User.COL_PHONE, phone);
-        return userMapper.selectOne(wrapper);
-    }
-
-    @Override
-    public int resetPwd(User user) {
-        return userMapper.updateById(user);
+    public User queryByPhone(String phone) {
+        return this.getOneByAttr(User.COL_PHONE, phone);
     }
 
     @Override
@@ -99,6 +109,5 @@ public class UserServiceImpl extends BaseService<User> implements UserService {
         }
         return i;
     }
-
 
 }

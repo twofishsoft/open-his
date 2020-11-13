@@ -18,6 +18,7 @@ import java.util.List;
 
 @Service
 public class DictDataServiceImpl implements DictDataService {
+
     @Resource
     private DictDataMapper dataMapper;
 
@@ -76,7 +77,10 @@ public class DictDataServiceImpl implements DictDataService {
 
     @Override
     public String queryDataByTypeAndValue(String dictType, String dictValue) {
-        DictData dictData = dataMapper.queryDataByTypeAndValue(new DicDataDto(dictType, dictValue));
+        QueryWrapper<DictData> qw = new QueryWrapper<>();
+        qw.eq(DictData.COL_DICT_TYPE, dictType);
+        qw.eq(DictData.COL_DICT_VALUE, dictValue);
+        DictData dictData = dataMapper.selectOne(qw);
         return null != dictData ? dictData.getDictLabel() : "";
     }
 

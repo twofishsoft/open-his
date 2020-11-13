@@ -6,5 +6,4 @@ import com.twofish.dto.DicDataDto;
 
 public interface DictDataMapper extends BaseMapper<DictData> {
 
-    DictData queryDataByTypeAndValue(DicDataDto dicDataDto);
 }

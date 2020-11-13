@@ -1,6 +1,5 @@
 package com.twofish.base;
 
-import com.twofish.domain.User;
 import com.twofish.vo.BaseDto;
 import java.util.List;
 
@@ -32,6 +31,13 @@ public interface BaseService<T> {
     int update(BaseDto baseDto);
 
     /**
+     * 根据ID修改
+     * @param t
+     * @return
+     */
+    int updateById(T t);
+
+    /**
      * 删除数据(可批量删除)
      * @param ids
      * @return
@@ -43,5 +49,21 @@ public interface BaseService<T> {
      * @param id
      * @return
      */
-    User getOne(Long id);
+    T getOneById(Long id);
+
+    /**
+     * 根据对象中的某个属性，查询数据，返回集合
+     * @param attr 对象中的某个字段
+     * @param attrValue 字段值
+     * @return
+     */
+    List<T> findByAttr(String attr, Object attrValue);
+
+    /**
+     * 根据对象中的某个属性，查询数据，返回单个数据
+     * @param attr 对象中的某个字段
+     * @param attrValue 字段值
+     * @return
+     */
+    T getOneByAttr(String attr, Object attrValue);
 }

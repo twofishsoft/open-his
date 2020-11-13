@@ -1,25 +1,21 @@
 package com.twofish.config;
 
-import cn.hutool.core.util.ReflectUtil;
-import com.github.xiaoymin.swaggerbootstrapui.conf.Consts;
-import com.twofish.annotation.Validator;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
+import com.alibaba.fastjson.JSON;
+import com.twofish.annotation.CurrUser;
+import com.twofish.domain.SimpleUser;
+import com.twofish.utils.ShiroSecurityUtils;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
 import java.lang.reflect.Field;
-import java.math.BigDecimal;
-import java.util.Date;
 
 /**
  * @author ww
- * @description 自定义参数解析器
  **/
-@Slf4j
 public class ValidatorResolver implements HandlerMethodArgumentResolver {
 
     /**
@@ -28,7 +24,7 @@ public class ValidatorResolver implements HandlerMethodArgumentResolver {
      */
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(Validator.class);
+        return parameter.hasParameterAnnotation(CurrUser.class);
     }
 
     /**
@@ -38,8 +34,24 @@ public class ValidatorResolver implements HandlerMethodArgumentResolver {
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         //获取参数的class
         Class clazz = parameter.getParameterType();
-        //实例化参数对象
-        Object object = BeanUtils.instantiate(clazz);
+        HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
+        CurrUser currUser = parameter.getParameterAnnotation(CurrUser.class);
+        // 把reqeust的body读取到StringBuilder
+        BufferedReader reader = request.getReader();
+        StringBuilder sb = new StringBuilder();
+        char[] buf = new char[1024];
+        int rd;
+        while((rd = reader.read(buf)) != -1){
+            sb.append(buf, 0, rd);
+        }
+        Object object = JSON.parseObject(sb.toString(), clazz);
+        SimpleUser currentSimpleUser = ShiroSecurityUtils.getCurrentSimpleUser();
+        Field field = clazz.getSuperclass().getDeclaredField("simpleUser");
+        field.setAccessible(true);
+        field.set(object, currentSimpleUser);
+        field = clazz.getDeclaredField(currUser.name());
+        field.setAccessible(true);
+        field.set(object, currentSimpleUser.getUserName());
         return object;
     }
 
