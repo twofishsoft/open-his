@@ -1,8 +1,9 @@
 package com.twofish.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.twofish.constants.Constants;
 import com.twofish.domain.Role;
 import com.twofish.domain.RoleMenu;
 import com.twofish.dto.RoleDto;
@@ -10,7 +11,6 @@ import com.twofish.mapper.RoleMapper;
 import com.twofish.mapper.RoleMenuMapper;
 import com.twofish.service.DictDataService;
 import com.twofish.service.RoleService;
-import com.twofish.service.base.BaseServiceImpl;
 import com.twofish.vo.DataGridView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -23,7 +23,7 @@ import java.util.List;
  * 角色服务实现
  */
 @Service
-public class RoleServiceImpl extends BaseServiceImpl<Role, RoleDto> implements RoleService {
+public class RoleServiceImpl implements RoleService {
 
     @Resource
     private RoleMapper roleMapper;
@@ -31,11 +31,6 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, RoleDto> implements R
     private RoleMenuMapper roleMenuMapper;
     @Resource
     private DictDataService dictDataService;
-
-    @Override
-    public BaseMapper getMapper() {
-        return roleMapper;
-    }
 
     @Override
     public DataGridView listPage(RoleDto RoleDto) {
@@ -51,6 +46,88 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, RoleDto> implements R
             role.setStatusName(dictDataService.queryDataByTypeAndValue("sys_normal_disable", role.getStatus()));
         });
         return new DataGridView(page.getTotal(), page.getRecords());
+    }
+
+    /**
+     * 查找所有有效数据
+     * @return
+     */
+    public List<Role> selectAll() {
+        QueryWrapper<Role> qw = new QueryWrapper<>();
+        qw.eq(Constants.STATUS, Constants.STATUS_TRUE);
+        return roleMapper.selectList(qw);
+    }
+
+    /**
+     * 添加数据
+     * @param roleDto
+     * @return
+     */
+    public int insert(RoleDto roleDto) {
+        Role role = new Role();
+        BeanUtil.copyProperties(roleDto, role);
+        return roleMapper.insert(role);
+    }
+
+    /**
+     * 修改数据
+     * @param roleDto
+     * @return
+     */
+    public int update(RoleDto roleDto) {
+        Role role = new Role();
+        BeanUtil.copyProperties(roleDto, role);
+        return roleMapper.updateById(role);
+    }
+
+    public int update(Role role) {
+        return roleMapper.updateById(role);
+    }
+
+    /**
+     * 批量删除
+     * @param userIds
+     * @return
+     */
+    public int deleteByIds(Long[] userIds) {
+        List<Long> ids = Arrays.asList(userIds);
+        if(ids != null && ids.size() > 0){
+            return roleMapper.deleteBatchIds(ids);
+        }
+        return -1;
+    }
+
+    /**
+     * 查找单条数据
+     * @param id
+     * @return
+     */
+    public Role getOneById(Long id) {
+        return roleMapper.selectById(id);
+    }
+
+    /**
+     * 根据对象中的某个属性，查询数据，返回集合
+     * @param attr 对象中的某个字段
+     * @param attrValue 字段值
+     * @return
+     */
+    public List<Role> findByAttrList(String attr, Object attrValue) {
+        QueryWrapper<Role> qw = new QueryWrapper<>();
+        qw.eq(attr, attrValue);
+        return roleMapper.selectList(qw);
+    }
+
+    /**
+     * 根据对象中的某个属性，查询数据，返回单个数据
+     * @param attr 对象中的某个字段
+     * @param attrValue 字段值
+     * @return
+     */
+    public Role getOneByAttr(String attr, Object attrValue) {
+        QueryWrapper<Role> qw = new QueryWrapper<>();
+        qw.eq(attr, attrValue);
+        return roleMapper.selectOne(qw);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.twofish.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.twofish.constants.Constants;
 import com.twofish.domain.Dept;
@@ -15,8 +15,6 @@ import com.twofish.service.DeptService;
 import com.twofish.service.DictDataService;
 import com.twofish.service.RoleService;
 import com.twofish.service.UserService;
-import com.twofish.service.base.BaseServiceImpl;
-import com.twofish.vo.BaseDto;
 import com.twofish.vo.DataGridView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -29,7 +27,7 @@ import java.util.List;
  * @author ww
  */
 @Service
-public class UserServiceImpl extends BaseServiceImpl<User, UserDto> implements UserService {
+public class UserServiceImpl implements UserService {
 
     @Resource
     private UserMapper userMapper;
@@ -41,11 +39,6 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserDto> implements U
     private DictDataService dictDataService;
     @Resource
     private DeptService deptService;
-
-    @Override
-    public BaseMapper getMapper() {
-        return userMapper;
-    }
 
     @Override
     public DataGridView listPage(UserDto userDto) {
@@ -70,6 +63,87 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserDto> implements U
             }
         });
         return new DataGridView(page.getTotal(), page.getRecords());
+    }
+
+    /**
+     * 查找所有有效数据
+     * @return
+     */
+    public List<User> selectAll() {
+        QueryWrapper<User> qw = new QueryWrapper<>();
+        qw.eq(Constants.STATUS, Constants.STATUS_TRUE);
+        return userMapper.selectList(qw);
+    }
+
+    /**
+     * 添加数据
+     * @param userDto
+     * @return
+     */
+    public int insert(UserDto userDto) {
+        User user = new User();
+        BeanUtil.copyProperties(userDto, user);
+        return userMapper.insert(user);
+    }
+
+    /**
+     * 修改数据
+     * @return
+     */
+    public int update(UserDto userDto) {
+        User user = new User();
+        BeanUtil.copyProperties(userDto, user);
+        return userMapper.updateById(user);
+    }
+
+    public int update(User user) {
+        return userMapper.updateById(user);
+    }
+
+    /**
+     * 批量删除
+     * @param userIds
+     * @return
+     */
+    public int deleteByIds(Long[] userIds) {
+        List<Long> ids = Arrays.asList(userIds);
+        if(ids != null && ids.size() > 0){
+            return userMapper.deleteBatchIds(ids);
+        }
+        return -1;
+    }
+
+    /**
+     * 查找单条数据
+     * @param id
+     * @return
+     */
+    public User getOneById(Long id) {
+        return userMapper.selectById(id);
+    }
+
+    /**
+     * 根据对象中的某个属性，查询数据，返回集合
+     * @param attr 对象中的某个字段
+     * @param attrValue 字段值
+     * @return
+     */
+    public List<User> findByAttrList(String attr, Object attrValue) {
+        QueryWrapper<User> qw = new QueryWrapper<>();
+        qw.eq(attr, attrValue);
+        return userMapper.selectList(qw);
+    }
+
+    /**
+     * 根据对象中的某个属性，查询数据，返回单个数据
+     * @param attr 对象中的某个字段
+     * @param attrValue 字段值
+     * @return
+     */
+    public User getOneByAttr(String attr, Object attrValue) {
+        QueryWrapper<User> qw = new QueryWrapper<>();
+        qw.eq(attr, attrValue);
+        return userMapper.selectOne(qw);
     }
 
     @Override

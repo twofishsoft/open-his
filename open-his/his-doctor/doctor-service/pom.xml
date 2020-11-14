@@ -18,7 +18,7 @@
         </dependency>
         <dependency>
             <groupId>com.twofish</groupId>
-            <artifactId>erp-api</artifactId>
+            <artifactId>doctor-api</artifactId>
             <version>1.0</version>
         </dependency>
         <!--mysql-->
