@@ -29,6 +29,11 @@ public class NoticeController {
     @Resource
     private NoticeService noticeService;
 
+    /**
+     * 分页查询通知公告
+     * @param noticeDto
+     * @return
+     */
     @GetMapping(value = "listNoticeForPage")
     @ApiOperation(value = "分页查询通知公告", notes = "通知公告分页")
     public AjaxResult listNoticeForPage(NoticeDto noticeDto) {
@@ -39,6 +44,11 @@ public class NoticeController {
         return AjaxResult.success("查询成功", gridView.getData(), gridView.getTotal());
     }
 
+    /**
+     * 添加公告通知
+     * @param noticeDto
+     * @return
+     */
     @PostMapping(value = "addNotice")
     @ApiOperation(value = "添加公告通知", notes = "添加公告通知")
     public AjaxResult addNotice(@Validated NoticeDto noticeDto) {
@@ -47,6 +57,11 @@ public class NoticeController {
         return AjaxResult.toAjax(this.noticeService.insertNotice(noticeDto));
     }
 
+    /**
+     * 根据id查询单个公告通知
+     * @param noticeId
+     * @return
+     */
     @GetMapping(value = "getNoticeById/{noticeId}")
     @ApiOperation(value = "根据id查询单个公告通知", notes = "查询单个公告通知")
     public AjaxResult getNoticeById(@PathVariable @Validated @NotNull Long noticeId) {
@@ -57,6 +72,11 @@ public class NoticeController {
         return AjaxResult.fail("查询的数据不存在");
     }
 
+    /**
+     * 修改公告通知
+     * @param noticeDto
+     * @return
+     */
     @PutMapping(value = "updateNotice")
     @ApiOperation(value = "修改公告通知", notes = "修改公告通知")
     public AjaxResult updateNotice(@Validated NoticeDto noticeDto) {
@@ -65,6 +85,11 @@ public class NoticeController {
         return AjaxResult.toAjax(this.noticeService.updateNotice(noticeDto));
     }
 
+    /**
+     * 根据id批量删除公告通知
+     * @param noticeId
+     * @return
+     */
     @DeleteMapping(value = "deleteNoticeByIds/{noticeId}")
     @ApiOperation(value = "根据id批量删除公告通知", notes = "批量删除公告通知")
     public AjaxResult deleteNoticeByIds(@PathVariable @Validated @NotEmpty Long[] noticeId) {
