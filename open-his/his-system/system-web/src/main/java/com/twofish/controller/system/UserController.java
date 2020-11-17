@@ -5,7 +5,6 @@ import com.twofish.config.shiro.ShiroProperties;
 import com.twofish.domain.User;
 import com.twofish.dto.UserDto;
 import com.twofish.service.UserService;
-import com.twofish.utils.HttpUtils;
 import com.twofish.utils.Md5;
 import com.twofish.vo.AjaxResult;
 import com.twofish.vo.DataGridView;
@@ -31,11 +30,6 @@ public class UserController {
     private UserService userService;
     @Autowired
     private ShiroProperties shiroProperties;
-
-    @GetMapping("list")
-    public String lists(UserDto userDto){
-        return HttpUtils.sendGet("http://127.0.0.1:8081/system/user/listForPage", "pageNum=1&pageSize=10");
-    }
 
     /**
      * 分页查询用户数据
