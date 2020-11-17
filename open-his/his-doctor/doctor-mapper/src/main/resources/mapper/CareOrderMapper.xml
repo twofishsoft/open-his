@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twofish.mapper.CareOrderMapper">
+	<!-- 基本resultMap -->
+	<resultMap type="com.twofish.domain.CareOrder" id="BaseResultMap">
+		<id column="co_id" property="coId"/>
+		<result column="co_type" property="coType"/>
+		<result column="user_id" property="userId"/>
+		<result column="patient_id" property="patientId"/>
+		<result column="patient_name" property="patientName"/>
+		<result column="ch_id" property="chId"/>
+		<result column="all_amount" property="allAmount"/>
+		<result column="create_by" property="createBy"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_by" property="updateBy"/>
+		<result column="update_time" property="updateTime"/>
+	</resultMap>
+
+	<sql id="Base_Query">
+		SELECT
+		t.co_id,t.co_type,t.user_id,t.patient_id,t.patient_name,t.ch_id,t.all_amount,t.create_by,
+			t.create_time,t.update_by,t.update_time
+		FROM
+		his_care_order t
+	</sql>
+
+</mapper>

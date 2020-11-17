@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twofish.mapper.CareHistoryMapper">
+	<!-- 基本resultMap -->
+	<resultMap type="com.twofish.domain.CareHistory" id="BaseResultMap">
+		<id column="ch_id" property="chId"/>
+		<result column="user_id" property="userId"/>
+		<result column="user_name" property="userName"/>
+		<result column="patient_id" property="patientId"/>
+		<result column="patient_name" property="patientName"/>
+		<result column="dept_id" property="deptId"/>
+		<result column="dept_name" property="deptName"/>
+		<result column="receive_type" property="receiveType"/>
+		<result column="is_contagious" property="isContagious"/>
+		<result column="care_time" property="careTime"/>
+		<result column="case_date" property="caseDate"/>
+		<result column="reg_id" property="regId"/>
+		<result column="case_title" property="caseTitle"/>
+		<result column="case_result" property="caseResult"/>
+		<result column="doctor_tips" property="doctorTips"/>
+		<result column="remark" property="remark"/>
+	</resultMap>
+
+	<sql id="Base_Query">
+		SELECT
+		t.ch_id,t.user_id,t.user_name,t.patient_id,t.patient_name,t.dept_id,t.dept_name,t.receive_type,
+			t.is_contagious,t.care_time,t.case_date,t.reg_id,t.case_title,t.case_result,t.doctor_tips,t.remark
+		FROM
+		his_care_history t
+	</sql>
+
+</mapper>

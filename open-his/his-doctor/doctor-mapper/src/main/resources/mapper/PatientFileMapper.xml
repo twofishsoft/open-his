@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twofish.mapper.PatientFileMapper">
+	<!-- 基本resultMap -->
+	<resultMap type="com.twofish.domain.PatientFile" id="BaseResultMap">
+		<id column="patient_id" property="patientId"/>
+		<result column="emergency_contact_name" property="emergencyContactName"/>
+		<result column="emergency_contact_phone" property="emergencyContactPhone"/>
+		<result column="emergency_contact_relation" property="emergencyContactRelation"/>
+		<result column="left_ear_hearing" property="leftEarHearing"/>
+		<result column="right_ear_hearing" property="rightEarHearing"/>
+		<result column="left_vision" property="leftVision"/>
+		<result column="right_vision" property="rightVision"/>
+		<result column="height" property="height"/>
+		<result column="weight" property="weight"/>
+		<result column="blood_type" property="bloodType"/>
+		<result column="personal_info" property="personalInfo"/>
+		<result column="family_info" property="familyInfo"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+	</resultMap>
+
+	<sql id="Base_Query">
+		SELECT
+		t.patient_id,t.emergency_contact_name,t.emergency_contact_phone,t.emergency_contact_relation,t.left_ear_hearing,t.right_ear_hearing,t.left_vision,t.right_vision,
+			t.height,t.weight,t.blood_type,t.personal_info,t.family_info,t.create_time,t.update_time
+		FROM
+		his_patient_file t
+	</sql>
+
+</mapper>

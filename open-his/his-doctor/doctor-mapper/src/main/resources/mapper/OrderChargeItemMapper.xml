@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twofish.mapper.OrderChargeItemMapper">
+	<!-- 基本resultMap -->
+	<resultMap type="com.twofish.domain.OrderChargeItem" id="BaseResultMap">
+		<id column="item_id" property="itemId"/>
+		<result column="co_id" property="coId"/>
+		<result column="item_name" property="itemName"/>
+		<result column="item_price" property="itemPrice"/>
+		<result column="item_num" property="itemNum"/>
+		<result column="item_amount" property="itemAmount"/>
+		<result column="order_id" property="orderId"/>
+		<result column="item_type" property="itemType"/>
+		<result column="status" property="status"/>
+	</resultMap>
+
+	<sql id="Base_Query">
+		SELECT
+		t.item_id,t.co_id,t.item_name,t.item_price,t.item_num,t.item_amount,t.order_id,t.item_type,
+			t.status
+		FROM
+		his_order_charge_item t
+	</sql>
+
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twofish.mapper.OrderBackfeeMapper">
+	<!-- 基本resultMap -->
+	<resultMap type="com.twofish.domain.OrderBackfee" id="BaseResultMap">
+		<id column="back_id" property="backId"/>
+		<result column="back_amount" property="backAmount"/>
+		<result column="ch_id" property="chId"/>
+		<result column="reg_id" property="regId"/>
+		<result column="patient_name" property="patientName"/>
+		<result column="back_status" property="backStatus"/>
+		<result column="back_type" property="backType"/>
+		<result column="order_id" property="orderId"/>
+		<result column="back_platform_id" property="backPlatformId"/>
+		<result column="back_time" property="backTime"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="create_by" property="createBy"/>
+		<result column="update_by" property="updateBy"/>
+	</resultMap>
+
+	<sql id="Base_Query">
+		SELECT
+		t.back_id,t.back_amount,t.ch_id,t.reg_id,t.patient_name,t.back_status,t.back_type,t.order_id,
+			t.back_platform_id,t.back_time,t.create_time,t.update_time,t.create_by,t.update_by
+		FROM
+		his_order_backfee t
+	</sql>
+
+</mapper>

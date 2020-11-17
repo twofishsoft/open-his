@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twofish.mapper.CheckResultMapper">
+	<!-- 基本resultMap -->
+	<resultMap type="com.twofish.domain.CheckResult" id="BaseResultMap">
+		<id column="coc_id" property="cocId"/>
+		<result column="check_item_id" property="checkItemId"/>
+		<result column="check_item_name" property="checkItemName"/>
+		<result column="price" property="price"/>
+		<result column="result_msg" property="resultMsg"/>
+		<result column="result_img" property="resultImg"/>
+		<result column="patient_id" property="patientId"/>
+		<result column="patient_name" property="patientName"/>
+		<result column="result_status" property="resultStatus"/>
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"/>
+		<result column="create_by" property="createBy"/>
+		<result column="update_by" property="updateBy"/>
+	</resultMap>
+
+	<sql id="Base_Query">
+		SELECT
+		t.coc_id,t.check_item_id,t.check_item_name,t.price,t.result_msg,t.result_img,t.patient_id,t.patient_name,
+			t.result_status,t.create_time,t.update_time,t.create_by,t.update_by
+		FROM
+		his_check_result t
+	</sql>
+
+</mapper>

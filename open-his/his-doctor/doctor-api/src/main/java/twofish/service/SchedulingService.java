@@ -1,0 +1,78 @@
+package twofish.service;
+
+import com.twofish.domain.Scheduling;
+import com.twofish.dto.SchedulingDto;
+import com.twofish.vo.DataGridView;
+import java.util.List;
+
+/**
+ * @author ww
+ * @description 【排班信息表】业务逻辑接口
+ * @date 2020-11-17 16:35:08
+ **/
+public interface SchedulingService {
+
+    /**
+     * 分页查询用户数据
+     * @param schedulingDto
+     * @return
+     */
+    DataGridView listPage(SchedulingDto schedulingDto);
+
+    /**
+     * 查询所有可用信息
+     * @return
+     */
+    List<Scheduling> selectAll();
+
+    /**
+     * 添加
+     * @param schedulingDto
+     * @return
+     */
+    int insert(SchedulingDto schedulingDto);
+
+    /**
+     * 修改
+     * @param schedulingDto
+     * @return
+     */
+    int update(SchedulingDto schedulingDto);
+
+    /**
+     * 根据ID修改
+     * @param scheduling
+     * @return
+     */
+    int update(Scheduling scheduling);
+
+    /**
+     * 删除数据(可批量删除)
+     * @param ids
+     * @return
+     */
+    int deleteByIds(Long[] ids);
+
+    /**
+     * 根据ID查询数据
+     * @param id
+     * @return
+     */
+    Scheduling getOneById(Long id);
+
+    /**
+     * 根据对象中的某个属性，查询数据，返回集合
+     * @param attr 对象中的某个字段
+     * @param attrValue 字段值
+     * @return
+     */
+    List<Scheduling> findByAttrList(String attr, Object attrValue);
+
+    /**
+     * 根据对象中的某个属性，查询数据，返回单个数据
+     * @param attr 对象中的某个字段
+     * @param attrValue 字段值
+     * @return
+     */
+    Scheduling getOneByAttr(String attr, Object attrValue);
+}

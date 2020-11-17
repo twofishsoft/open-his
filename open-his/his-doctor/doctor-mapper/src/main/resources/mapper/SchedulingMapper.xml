@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.twofish.mapper.SchedulingMapper">
+	<!-- 基本resultMap -->
+	<resultMap type="com.twofish.domain.Scheduling" id="BaseResultMap">
+		<id column="user_id" property="userId"/>
+		<result column="dept_id" property="deptId"/>
+		<result column="scheduling_day" property="schedulingDay"/>
+		<result column="subsection_type" property="subsectionType"/>
+		<result column="scheduling_type" property="schedulingType"/>
+		<result column="create_time" property="createTime"/>
+		<result column="create_by" property="createBy"/>
+	</resultMap>
+
+	<sql id="Base_Query">
+		SELECT
+		t.user_id,t.dept_id,t.scheduling_day,t.subsection_type,t.scheduling_type,t.create_time,t.create_by
+		FROM
+		his_scheduling t
+	</sql>
+
+</mapper>
