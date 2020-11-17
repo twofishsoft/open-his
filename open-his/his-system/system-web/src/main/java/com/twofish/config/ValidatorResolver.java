@@ -51,7 +51,11 @@ public class ValidatorResolver implements HandlerMethodArgumentResolver {
         field.setAccessible(true);
         field.set(object, currentSimpleUser);
 
-        field = clazz.getDeclaredField(currUser.name());
+        field = clazz.getDeclaredField("createBy");
+        field.setAccessible(true);
+        field.set(object, currentSimpleUser.getUserName());
+
+        field = clazz.getDeclaredField("updateBy");
         field.setAccessible(true);
         field.set(object, currentSimpleUser.getUserName());
 

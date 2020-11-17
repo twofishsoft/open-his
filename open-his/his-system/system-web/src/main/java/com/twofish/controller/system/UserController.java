@@ -72,7 +72,7 @@ public class UserController {
      */
     @PutMapping("updateUser")
     @ApiOperation(value = "更新用户数据", notes = "更新用户数据")
-    public AjaxResult updateUser(@CurrUser(name = "updateBy") UserDto userDto){
+    public AjaxResult updateUser(@CurrUser UserDto userDto){
         // 判断手机号是否重复
         User user = userService.queryByPhone(userDto.getPhone());
         if (user != null && !user.getUserId().equals(userDto.getUserId())) {
@@ -152,7 +152,7 @@ public class UserController {
      */
     @PutMapping("resetPwd")
     @ApiOperation(value = "更新用户密码", notes = "更新用户密码")
-    public AjaxResult resetPwd(@CurrUser(name = "updateBy") UserDto userDto) {
+    public AjaxResult resetPwd(@CurrUser UserDto userDto) {
         String hashAlgorithmName = shiroProperties.getHashAlgorithmName();
         Integer hashIterations = shiroProperties.getHashIterations();
         Long[] userIds = userDto.getUserIds();
@@ -162,6 +162,7 @@ public class UserController {
                 User user = this.userService.getOneById(userId);
                 if (null != user) {
                     user.setPassword(Md5.getPsw(hashAlgorithmName, hashIterations, userDto.getPassword(), user.getSalt()));
+                    user.setUpdateBy(userDto.getUpdateBy());
                     result[0] = this.userService.update(user);
                 }
             });
