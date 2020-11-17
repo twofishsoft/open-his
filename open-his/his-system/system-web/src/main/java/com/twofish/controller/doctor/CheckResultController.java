@@ -19,7 +19,7 @@ import javax.annotation.Resource;
 @RestController
 @Log4j2
 @Api(value = "检查结果数据接口",tags = "检查结果数据接口")
-@RequestMapping("/system/checkResult/")
+@RequestMapping("/doctor/checkResult/")
 public class CheckResultController {
 
 	@Resource

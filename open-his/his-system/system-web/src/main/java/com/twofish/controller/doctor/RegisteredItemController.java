@@ -19,7 +19,7 @@ import javax.annotation.Resource;
 @RestController
 @Log4j2
 @Api(value = "挂号项目数据接口",tags = "挂号项目数据接口")
-@RequestMapping("/system/registeredItem/")
+@RequestMapping("/doctor/registeredItem/")
 public class RegisteredItemController {
 
 	@Resource

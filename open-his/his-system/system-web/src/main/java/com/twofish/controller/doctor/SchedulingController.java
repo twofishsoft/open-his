@@ -19,7 +19,7 @@ import javax.annotation.Resource;
 @RestController
 @Log4j2
 @Api(value = "排班信息表数据接口",tags = "排班信息表数据接口")
-@RequestMapping("/system/scheduling/")
+@RequestMapping("/doctor/scheduling/")
 public class SchedulingController {
 
 	@Resource

@@ -75,4 +75,11 @@ public interface SchedulingService {
      * @return
      */
     Scheduling getOneByAttr(String attr, Object attrValue);
+
+    /**
+     * 根据条件查询有号的部门
+     * @param schedulingDto
+     * @return
+     */
+    List<Scheduling> listDeptForScheduling(SchedulingDto schedulingDto);
 }

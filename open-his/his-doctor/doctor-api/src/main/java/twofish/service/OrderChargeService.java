@@ -75,4 +75,12 @@ public interface OrderChargeService {
      * @return
      */
     OrderCharge getOneByAttr(String attr, Object attrValue);
+
+    /**
+     * 挂号收费
+     * @param regId
+     * @param orderChargeDto
+     * @return
+     */
+    int collectFee(Long regId, OrderChargeDto orderChargeDto);
 }

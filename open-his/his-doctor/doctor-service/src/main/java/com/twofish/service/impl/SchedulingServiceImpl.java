@@ -81,6 +81,11 @@ public class SchedulingServiceImpl implements SchedulingService {
     }
 
     @Override
+    public List<Scheduling> listDeptForScheduling(SchedulingDto schedulingDto) {
+        return schedulingMapper.listDeptForScheduling(schedulingDto);
+    }
+
+    @Override
     public Scheduling getOneByAttr(String attr, Object attrValue) {
         QueryWrapper<Scheduling> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);

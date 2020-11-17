@@ -19,7 +19,7 @@ import javax.annotation.Resource;
 @RestController
 @Log4j2
 @Api(value = "支付订单详情表数据接口",tags = "支付订单详情表数据接口")
-@RequestMapping("/system/orderChargeItem/")
+@RequestMapping("/doctor/orderChargeItem/")
 public class OrderChargeItemController {
 
 	@Resource

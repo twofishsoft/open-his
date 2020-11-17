@@ -19,4 +19,22 @@
 		his_scheduling t
 	</sql>
 
+	<select id="listDeptForScheduling" parameterType="com.twofish.domain.Scheduling" resultMap="BaseResultMap">
+		SELECT s.dept_id,s.dept_name,s.reg_number,s.dept_number,s.order_num,s.dept_leader,s.leader_phone,
+		s.status,s.create_by,s.create_time,s.update_by,s.update_time
+		FROM his_scheduling t, sys_dept s WHERE t.dept_id = s.dept_id AND s.status = '0'
+		<if test="schedulingDay != null and schedulingDay != ''">
+			AND s.scheduling_day = #{schedulingDay}
+		</if>
+		<if test="subsectionType != null and subsectionType != ''">
+			AND s.subsectionType = #{subsectionType}
+		</if>
+		<if test="schedulingType != null and schedulingType != ''">
+			AND s.scheduling_type = #{schedulingType}
+		</if>
+		<if test="deptId != null and deptId != ''">
+			AND s.dept_id = #{deptId}
+		</if>
+	</select>
+
 </mapper>

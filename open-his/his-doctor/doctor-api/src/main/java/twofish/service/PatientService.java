@@ -75,4 +75,11 @@ public interface PatientService {
      * @return
      */
     Patient getOneByAttr(String attr, Object attrValue);
+
+    /**
+     * 根据身份证号查询患者信息
+     * @param idCard
+     * @return
+     */
+    Patient getPatientByIdCard(String idCard);
 }

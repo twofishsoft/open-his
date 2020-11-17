@@ -3,15 +3,23 @@ package com.twofish.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import com.twofish.constants.Constants;
+import com.twofish.domain.CareHistory;
 import com.twofish.domain.OrderCharge;
+import com.twofish.domain.Registration;
 import com.twofish.dto.OrderChargeDto;
 import com.twofish.mapper.OrderChargeMapper;
 import com.twofish.vo.DataGridView;
+import io.netty.util.Constant;
 import org.springframework.stereotype.Service;
+import twofish.service.CareHistoryService;
 import twofish.service.OrderChargeService;
+import twofish.service.RegistrationService;
+
 import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +32,10 @@ public class OrderChargeServiceImpl implements OrderChargeService {
 
     @Resource
     private OrderChargeMapper orderChargeMapper;
+    @Resource
+    private RegistrationService registrationService;
+    @Resource
+    private CareHistoryService careHistoryService;
 
     @Override
     public DataGridView listPage(OrderChargeDto orderChargeDto) {
@@ -87,4 +99,23 @@ public class OrderChargeServiceImpl implements OrderChargeService {
         return orderChargeMapper.selectOne(qw);
     }
 
+    @Override
+    public int collectFee(Long regId, OrderChargeDto orderChargeDto) {
+        Registration registration = registrationService.getOneById(regId);
+        if (null != registration) {
+            CareHistory careHistory = careHistoryService.getOneByAttr(CareHistory.COL_REG_ID, regId);
+            orderChargeDto.setOrderAmount(registration.getRegistrationAmount());
+            orderChargeDto.setRegId(regId.toString());
+            orderChargeDto.setPatientName(registration.getPatientName());
+            orderChargeDto.setPayPlatformId(System.currentTimeMillis() + "");
+            orderChargeDto.setPayTime(new Date());
+            orderChargeDto.setPayType(Constants.PAY_TYPE_0);
+            orderChargeDto.setOrderStatus(Constants.ORDER_STATUS_1);
+            if (null != careHistory) {
+                orderChargeDto.setChId(careHistory.getChId());
+            }
+            insert(orderChargeDto);
+        }
+        return 0;
+    }
 }

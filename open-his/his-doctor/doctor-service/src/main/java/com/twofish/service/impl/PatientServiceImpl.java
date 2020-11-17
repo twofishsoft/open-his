@@ -87,4 +87,10 @@ public class PatientServiceImpl implements PatientService {
         return patientMapper.selectOne(qw);
     }
 
+    @Override
+    public Patient getPatientByIdCard(String idCard) {
+        QueryWrapper<Patient> qw = new QueryWrapper<>();
+        qw.eq(Patient.COL_ID_CARD, idCard);
+        return patientMapper.selectOne(qw);
+    }
 }

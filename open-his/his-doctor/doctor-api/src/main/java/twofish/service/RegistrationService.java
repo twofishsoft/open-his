@@ -1,7 +1,10 @@
 package twofish.service;
 
+import com.twofish.domain.Patient;
 import com.twofish.domain.Registration;
+import com.twofish.domain.Scheduling;
 import com.twofish.dto.RegistrationDto;
+import com.twofish.dto.SchedulingDto;
 import com.twofish.vo.DataGridView;
 import java.util.List;
 
@@ -75,4 +78,19 @@ public interface RegistrationService {
      * @return
      */
     Registration getOneByAttr(String attr, Object attrValue);
+
+    /**
+     * 作废【根据挂号单号】
+     * @param regId
+     * @return
+     */
+    int doInvalid(Long regId);
+
+    /**
+     * 退号【根据挂号单号】
+     * @param regId
+     * @return
+     */
+    int doReturn(Long regId);
+
 }

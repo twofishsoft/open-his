@@ -19,7 +19,7 @@ import javax.annotation.Resource;
 @RestController
 @Log4j2
 @Api(value = "患者档案数据接口",tags = "患者档案数据接口")
-@RequestMapping("/system/patientFile/")
+@RequestMapping("/doctor/patientFile/")
 public class PatientFileController {
 
 	@Resource
