@@ -13,7 +13,7 @@ import java.util.List;
 public interface OrderChargeItemService {
 
     /**
-     * 分页查询用户数据
+     * 分页查询支付订单详情表数据
      * @param orderChargeItemDto
      * @return
      */

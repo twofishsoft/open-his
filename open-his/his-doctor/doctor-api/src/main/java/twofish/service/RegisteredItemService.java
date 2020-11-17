@@ -13,7 +13,7 @@ import java.util.List;
 public interface RegisteredItemService {
 
     /**
-     * 分页查询用户数据
+     * 分页查询挂号项目数据
      * @param registeredItemDto
      * @return
      */

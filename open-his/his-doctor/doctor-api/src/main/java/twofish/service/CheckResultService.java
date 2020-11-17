@@ -13,7 +13,7 @@ import java.util.List;
 public interface CheckResultService {
 
     /**
-     * 分页查询用户数据
+     * 分页查询检查结果数据
      * @param checkResultDto
      * @return
      */

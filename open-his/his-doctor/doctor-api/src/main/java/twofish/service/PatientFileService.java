@@ -13,7 +13,7 @@ import java.util.List;
 public interface PatientFileService {
 
     /**
-     * 分页查询用户数据
+     * 分页查询患者档案数据
      * @param patientFileDto
      * @return
      */

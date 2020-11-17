@@ -13,7 +13,7 @@ import java.util.List;
 public interface OrderBackfeeItemService {
 
     /**
-     * 分页查询用户数据
+     * 分页查询退费订单详情表数据
      * @param orderBackfeeItemDto
      * @return
      */

@@ -13,7 +13,7 @@ import java.util.List;
 public interface SchedulingService {
 
     /**
-     * 分页查询用户数据
+     * 分页查询排班信息表数据
      * @param schedulingDto
      * @return
      */

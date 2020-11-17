@@ -13,7 +13,7 @@ import java.util.List;
 public interface CareHistoryService {
 
     /**
-     * 分页查询用户数据
+     * 分页查询病例表数据
      * @param careHistoryDto
      * @return
      */

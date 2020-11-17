@@ -13,7 +13,7 @@ import java.util.List;
 public interface CareOrderService {
 
     /**
-     * 分页查询用户数据
+     * 分页查询药用处方表数据
      * @param careOrderDto
      * @return
      */
