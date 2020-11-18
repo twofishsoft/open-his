@@ -58,7 +58,7 @@ public interface CareHistoryService {
      * @param id
      * @return
      */
-    CareHistory getOneById(Long id);
+    CareHistory getOneById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合
@@ -75,4 +75,11 @@ public interface CareHistoryService {
      * @return
      */
     CareHistory getOneByAttr(String attr, Object attrValue);
+
+    /**
+     * 根据患者ID查询患者所有信息【基础，档案，病例】
+     * @param patientId
+     * @return
+     */
+    List<CareHistory> getPatientAllMessageByPatientId(Long patientId);
 }

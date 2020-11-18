@@ -58,7 +58,7 @@ public interface OrderChargeItemService {
      * @param id
      * @return
      */
-    OrderChargeItem getOneById(Long id);
+    OrderChargeItem getOneById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合

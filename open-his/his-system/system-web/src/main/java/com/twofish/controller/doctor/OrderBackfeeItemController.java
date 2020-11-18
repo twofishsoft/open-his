@@ -44,7 +44,7 @@ public class OrderBackfeeItemController {
 	 */
 	@PostMapping("addOrderBackfeeItem")
 	@ApiOperation(value = "添加退费订单详情表数据", notes = "添加退费订单详情表数据")
-	public AjaxResult addDictData(@CurrUser OrderBackfeeItemDto orderBackfeeItemDto){
+	public AjaxResult addOrderBackfeeItem(@CurrUser OrderBackfeeItemDto orderBackfeeItemDto){
 		return AjaxResult.toAjax(orderBackfeeItemService.insert(orderBackfeeItemDto));
 	}
 
@@ -55,7 +55,7 @@ public class OrderBackfeeItemController {
 	 */
 	@PutMapping("updateOrderBackfeeItem")
 	@ApiOperation(value = "更新退费订单详情表数据", notes = "更新退费订单详情表数据")
-	public AjaxResult updateUser(@CurrUser OrderBackfeeItemDto orderBackfeeItemDto){
+	public AjaxResult updateOrderBackfeeItem(@CurrUser OrderBackfeeItemDto orderBackfeeItemDto){
 		return AjaxResult.toAjax(orderBackfeeItemService.update(orderBackfeeItemDto));
 	}
 
@@ -66,18 +66,18 @@ public class OrderBackfeeItemController {
 	 */
 	@DeleteMapping("deleteOrderBackfeeItemByIds/{orderBackfeeItemIds}")
 	@ApiOperation(value = "根据ID退费订单详情表数据", notes = "根据ID删除退费订单详情表数据")
-	public AjaxResult deleteUserByIds(@PathVariable Long[] orderBackfeeItemIds){
+	public AjaxResult deleteOrderBackfeeItemByIds(@PathVariable Long[] orderBackfeeItemIds){
 		return AjaxResult.toAjax(orderBackfeeItemService.deleteByIds(orderBackfeeItemIds));
 	}
 
 	/**
 	 * 根据ID查询退费订单详情表数据
-	 * @param {orderBackfeeItemId
+	 * @param orderBackfeeItemId
 	 * @return
 	 */
 	@GetMapping("getOrderBackfeeItemById/{orderBackfeeItemId}")
 	@ApiOperation(value = "根据ID查询退费订单详情表数据", notes = "根据ID查询退费订单详情表数据")
-	public AjaxResult getOne(@PathVariable Long orderBackfeeItemId){
+	public AjaxResult getOne(@PathVariable String orderBackfeeItemId){
 		return AjaxResult.success("查询成功", orderBackfeeItemService.getOneById(orderBackfeeItemId));
 	}
 

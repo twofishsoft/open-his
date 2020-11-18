@@ -44,7 +44,7 @@ public class CareOrderController {
 	 */
 	@PostMapping("addCareOrder")
 	@ApiOperation(value = "添加药用处方表数据", notes = "添加药用处方表数据")
-	public AjaxResult addDictData(@CurrUser CareOrderDto careOrderDto){
+	public AjaxResult addCareOrder(@CurrUser CareOrderDto careOrderDto){
 		return AjaxResult.toAjax(careOrderService.insert(careOrderDto));
 	}
 
@@ -55,7 +55,7 @@ public class CareOrderController {
 	 */
 	@PutMapping("updateCareOrder")
 	@ApiOperation(value = "更新药用处方表数据", notes = "更新药用处方表数据")
-	public AjaxResult updateUser(@CurrUser CareOrderDto careOrderDto){
+	public AjaxResult updateCareOrder(@CurrUser CareOrderDto careOrderDto){
 		return AjaxResult.toAjax(careOrderService.update(careOrderDto));
 	}
 
@@ -66,18 +66,18 @@ public class CareOrderController {
 	 */
 	@DeleteMapping("deleteCareOrderByIds/{careOrderIds}")
 	@ApiOperation(value = "根据ID药用处方表数据", notes = "根据ID删除药用处方表数据")
-	public AjaxResult deleteUserByIds(@PathVariable Long[] careOrderIds){
+	public AjaxResult deleteCareOrderByIds(@PathVariable Long[] careOrderIds){
 		return AjaxResult.toAjax(careOrderService.deleteByIds(careOrderIds));
 	}
 
 	/**
 	 * 根据ID查询药用处方表数据
-	 * @param {careOrderId
+	 * @param careOrderId
 	 * @return
 	 */
 	@GetMapping("getCareOrderById/{careOrderId}")
 	@ApiOperation(value = "根据ID查询药用处方表数据", notes = "根据ID查询药用处方表数据")
-	public AjaxResult getOne(@PathVariable Long careOrderId){
+	public AjaxResult getOne(@PathVariable String careOrderId){
 		return AjaxResult.success("查询成功", careOrderService.getOneById(careOrderId));
 	}
 

@@ -1,6 +1,8 @@
 package twofish.service;
 
 import com.twofish.domain.CheckResult;
+import com.twofish.dto.CareOrderItemDto;
+import com.twofish.dto.CheckItemDto;
 import com.twofish.dto.CheckResultDto;
 import com.twofish.vo.DataGridView;
 import java.util.List;
@@ -58,7 +60,7 @@ public interface CheckResultService {
      * @param id
      * @return
      */
-    CheckResult getOneById(Long id);
+    CheckResult getOneById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合
@@ -75,4 +77,31 @@ public interface CheckResultService {
      * @return
      */
     CheckResult getOneByAttr(String attr, Object attrValue);
+
+    /**
+     * 检查完成
+     * @param checkResultDto
+     * @return
+     */
+    int completeCheckResult(CheckResultDto checkResultDto);
+
+    /**
+     * 开始检查
+     * @param itemId
+     * @return
+     */
+    int startCheck(Long itemId);
+
+    /**
+     * 查询所有检查中的项目
+     * @param checkResultDto
+     * @return
+     */
+    DataGridView queryAllCheckingResultForPage(CheckResultDto checkResultDto);
+
+    /**
+     * 根据检查单号查询要检查的项目详情
+     * @param itemId
+     */
+    CheckItemDto queryCheckItemByItemId(String itemId);
 }

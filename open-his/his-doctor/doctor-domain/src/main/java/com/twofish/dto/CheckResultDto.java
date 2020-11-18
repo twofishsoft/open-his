@@ -3,6 +3,9 @@ package com.twofish.dto;
 import java.util.Date;
 import java.math.BigDecimal;
 
+import com.twofish.domain.CareHistory;
+import com.twofish.domain.CareOrder;
+import com.twofish.domain.CareOrderItem;
 import com.twofish.vo.BaseDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -102,4 +105,5 @@ public class CheckResultDto extends BaseDto {
 	@ApiModelProperty(value="更新者")
 	private String updateBy;
 
+	private Integer[] checkItemIds;
 }

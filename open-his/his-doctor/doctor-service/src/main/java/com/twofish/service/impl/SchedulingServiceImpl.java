@@ -69,7 +69,7 @@ public class SchedulingServiceImpl implements SchedulingService {
     }
 
     @Override
-    public Scheduling getOneById(Long id) {
+    public Scheduling getOneById(String id) {
         return schedulingMapper.selectById(id);
     }
 

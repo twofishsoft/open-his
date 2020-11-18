@@ -44,7 +44,7 @@ public class OrderChargeItemController {
 	 */
 	@PostMapping("addOrderChargeItem")
 	@ApiOperation(value = "添加支付订单详情表数据", notes = "添加支付订单详情表数据")
-	public AjaxResult addDictData(@CurrUser OrderChargeItemDto orderChargeItemDto){
+	public AjaxResult addOrderChargeItem(@CurrUser OrderChargeItemDto orderChargeItemDto){
 		return AjaxResult.toAjax(orderChargeItemService.insert(orderChargeItemDto));
 	}
 
@@ -55,7 +55,7 @@ public class OrderChargeItemController {
 	 */
 	@PutMapping("updateOrderChargeItem")
 	@ApiOperation(value = "更新支付订单详情表数据", notes = "更新支付订单详情表数据")
-	public AjaxResult updateUser(@CurrUser OrderChargeItemDto orderChargeItemDto){
+	public AjaxResult updateOrderChargeItem(@CurrUser OrderChargeItemDto orderChargeItemDto){
 		return AjaxResult.toAjax(orderChargeItemService.update(orderChargeItemDto));
 	}
 
@@ -66,18 +66,18 @@ public class OrderChargeItemController {
 	 */
 	@DeleteMapping("deleteOrderChargeItemByIds/{orderChargeItemIds}")
 	@ApiOperation(value = "根据ID支付订单详情表数据", notes = "根据ID删除支付订单详情表数据")
-	public AjaxResult deleteUserByIds(@PathVariable Long[] orderChargeItemIds){
+	public AjaxResult deleteOrderChargeItemByIds(@PathVariable Long[] orderChargeItemIds){
 		return AjaxResult.toAjax(orderChargeItemService.deleteByIds(orderChargeItemIds));
 	}
 
 	/**
 	 * 根据ID查询支付订单详情表数据
-	 * @param {orderChargeItemId
+	 * @param orderChargeItemId
 	 * @return
 	 */
 	@GetMapping("getOrderChargeItemById/{orderChargeItemId}")
 	@ApiOperation(value = "根据ID查询支付订单详情表数据", notes = "根据ID查询支付订单详情表数据")
-	public AjaxResult getOne(@PathVariable Long orderChargeItemId){
+	public AjaxResult getOne(@PathVariable String orderChargeItemId){
 		return AjaxResult.success("查询成功", orderChargeItemService.getOneById(orderChargeItemId));
 	}
 

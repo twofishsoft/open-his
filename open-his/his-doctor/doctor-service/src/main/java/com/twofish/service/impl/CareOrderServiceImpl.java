@@ -5,10 +5,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.twofish.constants.Constants;
 import com.twofish.domain.CareOrder;
+import com.twofish.domain.CareOrderItem;
 import com.twofish.dto.CareOrderDto;
 import com.twofish.mapper.CareOrderMapper;
 import com.twofish.vo.DataGridView;
 import org.springframework.stereotype.Service;
+import twofish.service.CareOrderItemService;
 import twofish.service.CareOrderService;
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -24,6 +26,8 @@ public class CareOrderServiceImpl implements CareOrderService {
 
     @Resource
     private CareOrderMapper careOrderMapper;
+    @Resource
+    private CareOrderItemService careOrderItemService;
 
     @Override
     public DataGridView listPage(CareOrderDto careOrderDto) {
@@ -69,7 +73,7 @@ public class CareOrderServiceImpl implements CareOrderService {
     }
 
     @Override
-    public CareOrder getOneById(Long id) {
+    public CareOrder getOneById(String id) {
         return careOrderMapper.selectById(id);
     }
 
@@ -87,4 +91,14 @@ public class CareOrderServiceImpl implements CareOrderService {
         return careOrderMapper.selectOne(qw);
     }
 
+    @Override
+    public List<CareOrder> getCareOrderItem(String chId) {
+        List<CareOrder> list = this.findByAttrList(CareOrder.COL_CH_ID, chId);
+        if (null != list && list.size() != 0) {
+            list.forEach(item -> {
+                item.setCareOrderItems(careOrderItemService.findByAttrList(CareOrderItem.COL_CO_ID, item.getCoId()));
+            });
+        }
+        return list;
+    }
 }

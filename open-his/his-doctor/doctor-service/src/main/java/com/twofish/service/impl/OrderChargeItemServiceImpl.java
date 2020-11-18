@@ -69,7 +69,7 @@ public class OrderChargeItemServiceImpl implements OrderChargeItemService {
     }
 
     @Override
-    public OrderChargeItem getOneById(Long id) {
+    public OrderChargeItem getOneById(String id) {
         return orderChargeItemMapper.selectById(id);
     }
 

@@ -61,7 +61,7 @@ public interface RegistrationService {
      * @param id
      * @return
      */
-    Registration getOneById(Long id);
+    Registration getOneById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合
@@ -84,13 +84,13 @@ public interface RegistrationService {
      * @param regId
      * @return
      */
-    int doInvalid(Long regId);
+    int doInvalid(String regId);
 
     /**
      * 退号【根据挂号单号】
      * @param regId
      * @return
      */
-    int doReturn(Long regId);
+    int doReturn(String regId);
 
 }

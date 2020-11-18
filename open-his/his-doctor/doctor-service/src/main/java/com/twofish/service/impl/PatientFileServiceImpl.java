@@ -69,7 +69,7 @@ public class PatientFileServiceImpl implements PatientFileService {
     }
 
     @Override
-    public PatientFile getOneById(Long id) {
+    public PatientFile getOneById(String id) {
         return patientFileMapper.selectById(id);
     }
 

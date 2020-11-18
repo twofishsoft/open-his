@@ -1,15 +1,11 @@
 package com.twofish.domain;
 
 import java.util.Date;
-
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import java.util.Date;
 
 /**
  * @author ww
@@ -28,7 +24,7 @@ public class Scheduling extends BaseEntity {
 	 * 医生ID
 	 */
 	@ApiModelProperty(value="医生ID")
-	@TableId(value = "user_id", type = IdType.AUTO)
+	@TableField(value = "user_id")
 	private Integer userId;
 
 	/**

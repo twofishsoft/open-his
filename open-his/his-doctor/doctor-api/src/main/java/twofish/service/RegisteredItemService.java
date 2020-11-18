@@ -58,7 +58,7 @@ public interface RegisteredItemService {
      * @param id
      * @return
      */
-    RegisteredItem getOneById(Long id);
+    RegisteredItem getOneById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合

@@ -1,7 +1,9 @@
 package twofish.service;
 
 import com.twofish.domain.CareOrderItem;
+import com.twofish.domain.CheckResult;
 import com.twofish.dto.CareOrderItemDto;
+import com.twofish.dto.CheckResultDto;
 import com.twofish.vo.DataGridView;
 import java.util.List;
 
@@ -58,7 +60,7 @@ public interface CareOrderItemService {
      * @param id
      * @return
      */
-    CareOrderItem getOneById(Long id);
+    CareOrderItem getOneById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合
@@ -75,4 +77,11 @@ public interface CareOrderItemService {
      * @return
      */
     CareOrderItem getOneByAttr(String attr, Object attrValue);
+
+    /**
+     * 根据挂号单号和项目IDS查询要检查的项目
+     * @param careOrderItemDto
+     * @return
+     */
+    List<CareOrderItem> queryNeedCheckItem(CareOrderItemDto careOrderItemDto);
 }

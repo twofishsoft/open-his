@@ -69,7 +69,7 @@ public class OrderBackfeeItemServiceImpl implements OrderBackfeeItemService {
     }
 
     @Override
-    public OrderBackfeeItem getOneById(Long id) {
+    public OrderBackfeeItem getOneById(String id) {
         return orderBackfeeItemMapper.selectById(id);
     }
 
@@ -87,4 +87,18 @@ public class OrderBackfeeItemServiceImpl implements OrderBackfeeItemService {
         return orderBackfeeItemMapper.selectOne(qw);
     }
 
+    @Override
+    public int batchOrderBackfeeItem(List<OrderBackfeeItemDto> list) {
+        final int[] i = {-1};
+        list.forEach(item -> {
+            item.setStatus(Constants.ORDER_DETAILS_STATUS_2);
+            i[0] = insert(item);
+        });
+        return i[0];
+    }
+
+    @Override
+    public List<OrderBackfeeItem> queryOrderBackfeeItemByBackId(Long backId) {
+        return findByAttrList(OrderBackfeeItem.COL_BACK_ID, backId);
+    }
 }

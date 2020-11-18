@@ -44,7 +44,7 @@ public class PatientFileController {
 	 */
 	@PostMapping("addPatientFile")
 	@ApiOperation(value = "添加患者档案数据", notes = "添加患者档案数据")
-	public AjaxResult addDictData(@CurrUser PatientFileDto patientFileDto){
+	public AjaxResult addPatientFile(@CurrUser PatientFileDto patientFileDto){
 		return AjaxResult.toAjax(patientFileService.insert(patientFileDto));
 	}
 
@@ -55,7 +55,7 @@ public class PatientFileController {
 	 */
 	@PutMapping("updatePatientFile")
 	@ApiOperation(value = "更新患者档案数据", notes = "更新患者档案数据")
-	public AjaxResult updateUser(@CurrUser PatientFileDto patientFileDto){
+	public AjaxResult updatePatientFile(@CurrUser PatientFileDto patientFileDto){
 		return AjaxResult.toAjax(patientFileService.update(patientFileDto));
 	}
 
@@ -66,18 +66,18 @@ public class PatientFileController {
 	 */
 	@DeleteMapping("deletePatientFileByIds/{patientFileIds}")
 	@ApiOperation(value = "根据ID患者档案数据", notes = "根据ID删除患者档案数据")
-	public AjaxResult deleteUserByIds(@PathVariable Long[] patientFileIds){
+	public AjaxResult deletePatientFileByIds(@PathVariable Long[] patientFileIds){
 		return AjaxResult.toAjax(patientFileService.deleteByIds(patientFileIds));
 	}
 
 	/**
 	 * 根据ID查询患者档案数据
-	 * @param {patientFileId
+	 * @param patientFileId
 	 * @return
 	 */
 	@GetMapping("getPatientFileById/{patientFileId}")
 	@ApiOperation(value = "根据ID查询患者档案数据", notes = "根据ID查询患者档案数据")
-	public AjaxResult getOne(@PathVariable Long patientFileId){
+	public AjaxResult getOne(@PathVariable String patientFileId){
 		return AjaxResult.success("查询成功", patientFileService.getOneById(patientFileId));
 	}
 

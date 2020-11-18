@@ -44,7 +44,7 @@ public class SchedulingController {
 	 */
 	@PostMapping("addScheduling")
 	@ApiOperation(value = "添加排班信息表数据", notes = "添加排班信息表数据")
-	public AjaxResult addDictData(@CurrUser SchedulingDto schedulingDto){
+	public AjaxResult addScheduling(@CurrUser SchedulingDto schedulingDto){
 		return AjaxResult.toAjax(schedulingService.insert(schedulingDto));
 	}
 
@@ -55,7 +55,7 @@ public class SchedulingController {
 	 */
 	@PutMapping("updateScheduling")
 	@ApiOperation(value = "更新排班信息表数据", notes = "更新排班信息表数据")
-	public AjaxResult updateUser(@CurrUser SchedulingDto schedulingDto){
+	public AjaxResult updateScheduling(@CurrUser SchedulingDto schedulingDto){
 		return AjaxResult.toAjax(schedulingService.update(schedulingDto));
 	}
 
@@ -66,18 +66,18 @@ public class SchedulingController {
 	 */
 	@DeleteMapping("deleteSchedulingByIds/{schedulingIds}")
 	@ApiOperation(value = "根据ID排班信息表数据", notes = "根据ID删除排班信息表数据")
-	public AjaxResult deleteUserByIds(@PathVariable Long[] schedulingIds){
+	public AjaxResult deleteSchedulingByIds(@PathVariable Long[] schedulingIds){
 		return AjaxResult.toAjax(schedulingService.deleteByIds(schedulingIds));
 	}
 
 	/**
 	 * 根据ID查询排班信息表数据
-	 * @param {schedulingId
+	 * @param schedulingId
 	 * @return
 	 */
 	@GetMapping("getSchedulingById/{schedulingId}")
 	@ApiOperation(value = "根据ID查询排班信息表数据", notes = "根据ID查询排班信息表数据")
-	public AjaxResult getOne(@PathVariable Long schedulingId){
+	public AjaxResult getOne(@PathVariable String schedulingId){
 		return AjaxResult.success("查询成功", schedulingService.getOneById(schedulingId));
 	}
 
@@ -90,5 +90,16 @@ public class SchedulingController {
 	public AjaxResult selectAllScheduling() {
 		return AjaxResult.success(schedulingService.selectAll());
 	}
+
+	/**
+	 * 查询要排班的医生信息
+	 * @return
+	 */
+	@GetMapping("queryUsersNeedScheduling")
+	@ApiOperation(value = "查询要排班的医生信息", notes = "查询要排班的医生信息")
+	public AjaxResult queryUsersNeedScheduling() {
+		return AjaxResult.success(schedulingService.selectAll());
+	}
+
 
 }

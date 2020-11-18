@@ -58,7 +58,7 @@ public interface CareOrderService {
      * @param id
      * @return
      */
-    CareOrder getOneById(Long id);
+    CareOrder getOneById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合
@@ -75,4 +75,11 @@ public interface CareOrderService {
      * @return
      */
     CareOrder getOneByAttr(String attr, Object attrValue);
+
+    /**
+     * 根据病例获取所有的药用处方和明细
+     * @param chId
+     * @return
+     */
+    List<CareOrder> getCareOrderItem(String chId);
 }

@@ -83,7 +83,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public Registration getOneById(Long id) {
+    public Registration getOneById(String id) {
         return registrationMapper.selectById(id);
     }
 
@@ -102,7 +102,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public int doInvalid(Long regId) {
+    public int doInvalid(String regId) {
         Registration registration = getOneById(regId);
         if (null != registration) {
             registration.setRegistrationStatus(Constants.REG_STATUS_5);
@@ -112,7 +112,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public int doReturn(Long regId) {
+    public int doReturn(String regId) {
         Registration registration = getOneById(regId);
         if (null != registration) {
             registration.setRegistrationStatus(Constants.REG_STATUS_4);

@@ -90,4 +90,6 @@ public class CareOrderItemDto extends BaseDto {
 	@ApiModelProperty(value="创建时间")
 	private Date createTime;
 
+	private String regId;
+	private Integer[] checkItemIds;
 }

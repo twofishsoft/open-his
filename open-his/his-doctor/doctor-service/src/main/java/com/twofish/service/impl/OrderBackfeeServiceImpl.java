@@ -4,15 +4,22 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.twofish.constants.Constants;
-import com.twofish.domain.OrderBackfee;
+import com.twofish.domain.*;
+import com.twofish.dto.ChargedCareHistoryDto;
 import com.twofish.dto.OrderBackfeeDto;
+import com.twofish.dto.OrderBackfeeItemDto;
+import com.twofish.dto.OrderBackfeeWithCashDto;
 import com.twofish.mapper.OrderBackfeeMapper;
 import com.twofish.vo.DataGridView;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import twofish.service.OrderBackfeeService;
+import twofish.service.*;
+
 import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author ww
@@ -24,11 +31,21 @@ public class OrderBackfeeServiceImpl implements OrderBackfeeService {
 
     @Resource
     private OrderBackfeeMapper orderBackfeeMapper;
+    @Resource
+    private CareHistoryService careHistoryService;
+    @Resource
+    private CareOrderService careOrderService;
+    @Resource
+    private OrderChargeService orderChargeService;
+    @Resource
+    private OrderBackfeeItemService orderBackfeeItemService;
 
     @Override
     public DataGridView listPage(OrderBackfeeDto orderBackfeeDto) {
         Page<OrderBackfee> page = new Page<>(orderBackfeeDto.getPageNum(), orderBackfeeDto.getPageSize());
         QueryWrapper<OrderBackfee> qw = new QueryWrapper<>();
+        qw.eq(StringUtils.isNotBlank(orderBackfeeDto.getPatientName()), OrderBackfee.COL_PATIENT_NAME, orderBackfeeDto.getPatientName());
+        qw.eq(StringUtils.isNotBlank(orderBackfeeDto.getRegId()), OrderBackfee.COL_REG_ID, orderBackfeeDto.getRegId());
         orderBackfeeMapper.selectPage(page, qw);
         return new DataGridView(page.getTotal(), page.getRecords());
     }
@@ -69,7 +86,7 @@ public class OrderBackfeeServiceImpl implements OrderBackfeeService {
     }
 
     @Override
-    public OrderBackfee getOneById(Long id) {
+    public OrderBackfee getOneById(String id) {
         return orderBackfeeMapper.selectById(id);
     }
 
@@ -85,6 +102,40 @@ public class OrderBackfeeServiceImpl implements OrderBackfeeService {
         QueryWrapper<OrderBackfee> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return orderBackfeeMapper.selectOne(qw);
+    }
+
+    @Override
+    public ChargedCareHistoryDto getChargedCareHistoryByRegId(String regId) {
+        ChargedCareHistoryDto chargedCareHistoryDto = new ChargedCareHistoryDto();
+        CareHistory careHistory = careHistoryService.getOneByAttr(CareHistory.COL_REG_ID, regId);
+        if (null != careHistory) {
+            List<CareOrder> list = careOrderService.getCareOrderItem(careHistory.getChId());
+            chargedCareHistoryDto.setCareHistory(careHistory);
+            chargedCareHistoryDto.setCareOrders(list);
+        }
+        return chargedCareHistoryDto;
+    }
+
+    @Override
+    public int createOrderBackfeeWithCash(OrderBackfeeWithCashDto orderBackfeeDto, String type) {
+        SimpleUser simpleUser = orderBackfeeDto.getSimpleUser();
+        OrderBackfeeDto obj = orderBackfeeDto.getOrderBackfeeDto();
+        List<OrderBackfeeItemDto> list = orderBackfeeDto.getOrderBackfeeItemDtoList();
+
+        OrderBackfee orderBackfee = new OrderBackfee();
+        BeanUtil.copyProperties(obj, orderBackfee);
+        orderBackfee.setBackStatus(Constants.ORDER_BACKFEE_STATUS_1);
+        orderBackfee.setBackType(type);
+        orderBackfee.setBackTime(new Date());
+        orderBackfee.setBackPlatformId(UUID.randomUUID().toString().replace("_", ""));
+        orderBackfee.setCreateBy(simpleUser.getUserName());
+        orderBackfee.setUpdateBy(simpleUser.getUserName());
+        OrderCharge orderCharge = orderChargeService.queryByChIdAndRegId(obj.getChId(), obj.getRegId());
+        if (null != orderCharge) {
+            orderBackfee.setOrderId(orderCharge.getOrderId());
+        }
+        orderBackfeeItemService.batchOrderBackfeeItem(list);
+        return orderBackfeeMapper.insert(orderBackfee);
     }
 
 }

@@ -58,7 +58,7 @@ public interface PatientService {
      * @param id
      * @return
      */
-    Patient getOneById(Long id);
+    Patient getOneById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合
@@ -82,4 +82,5 @@ public interface PatientService {
      * @return
      */
     Patient getPatientByIdCard(String idCard);
+
 }

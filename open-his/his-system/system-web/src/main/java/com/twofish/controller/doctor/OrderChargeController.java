@@ -44,7 +44,7 @@ public class OrderChargeController {
 	 */
 	@PostMapping("addOrderCharge")
 	@ApiOperation(value = "添加收费表数据", notes = "添加收费表数据")
-	public AjaxResult addDictData(@CurrUser OrderChargeDto orderChargeDto){
+	public AjaxResult addOrderCharge(@CurrUser OrderChargeDto orderChargeDto){
 		return AjaxResult.toAjax(orderChargeService.insert(orderChargeDto));
 	}
 
@@ -55,7 +55,7 @@ public class OrderChargeController {
 	 */
 	@PutMapping("updateOrderCharge")
 	@ApiOperation(value = "更新收费表数据", notes = "更新收费表数据")
-	public AjaxResult updateUser(@CurrUser OrderChargeDto orderChargeDto){
+	public AjaxResult updateOrderCharge(@CurrUser OrderChargeDto orderChargeDto){
 		return AjaxResult.toAjax(orderChargeService.update(orderChargeDto));
 	}
 
@@ -66,18 +66,18 @@ public class OrderChargeController {
 	 */
 	@DeleteMapping("deleteOrderChargeByIds/{orderChargeIds}")
 	@ApiOperation(value = "根据ID收费表数据", notes = "根据ID删除收费表数据")
-	public AjaxResult deleteUserByIds(@PathVariable Long[] orderChargeIds){
+	public AjaxResult deleteOrderChargeByIds(@PathVariable Long[] orderChargeIds){
 		return AjaxResult.toAjax(orderChargeService.deleteByIds(orderChargeIds));
 	}
 
 	/**
 	 * 根据ID查询收费表数据
-	 * @param {orderChargeId
+	 * @param orderChargeId
 	 * @return
 	 */
 	@GetMapping("getOrderChargeById/{orderChargeId}")
 	@ApiOperation(value = "根据ID查询收费表数据", notes = "根据ID查询收费表数据")
-	public AjaxResult getOne(@PathVariable Long orderChargeId){
+	public AjaxResult getOne(@PathVariable String orderChargeId){
 		return AjaxResult.success("查询成功", orderChargeService.getOneById(orderChargeId));
 	}
 

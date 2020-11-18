@@ -44,7 +44,7 @@ public class CareOrderItemController {
 	 */
 	@PostMapping("addCareOrderItem")
 	@ApiOperation(value = "添加开诊细表数据", notes = "添加开诊细表数据")
-	public AjaxResult addDictData(@CurrUser CareOrderItemDto careOrderItemDto){
+	public AjaxResult addCareOrderItem(@CurrUser CareOrderItemDto careOrderItemDto){
 		return AjaxResult.toAjax(careOrderItemService.insert(careOrderItemDto));
 	}
 
@@ -55,7 +55,7 @@ public class CareOrderItemController {
 	 */
 	@PutMapping("updateCareOrderItem")
 	@ApiOperation(value = "更新开诊细表数据", notes = "更新开诊细表数据")
-	public AjaxResult updateUser(@CurrUser CareOrderItemDto careOrderItemDto){
+	public AjaxResult updateCareOrderItem(@CurrUser CareOrderItemDto careOrderItemDto){
 		return AjaxResult.toAjax(careOrderItemService.update(careOrderItemDto));
 	}
 
@@ -66,18 +66,18 @@ public class CareOrderItemController {
 	 */
 	@DeleteMapping("deleteCareOrderItemByIds/{careOrderItemIds}")
 	@ApiOperation(value = "根据ID开诊细表数据", notes = "根据ID删除开诊细表数据")
-	public AjaxResult deleteUserByIds(@PathVariable Long[] careOrderItemIds){
+	public AjaxResult deleteCareOrderItemByIds(@PathVariable Long[] careOrderItemIds){
 		return AjaxResult.toAjax(careOrderItemService.deleteByIds(careOrderItemIds));
 	}
 
 	/**
 	 * 根据ID查询开诊细表数据
-	 * @param {careOrderItemId
+	 * @param careOrderItemId
 	 * @return
 	 */
 	@GetMapping("getCareOrderItemById/{careOrderItemId}")
 	@ApiOperation(value = "根据ID查询开诊细表数据", notes = "根据ID查询开诊细表数据")
-	public AjaxResult getOne(@PathVariable Long careOrderItemId){
+	public AjaxResult getOne(@PathVariable String careOrderItemId){
 		return AjaxResult.success("查询成功", careOrderItemService.getOneById(careOrderItemId));
 	}
 

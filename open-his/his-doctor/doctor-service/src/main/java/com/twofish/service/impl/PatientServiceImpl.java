@@ -8,6 +8,7 @@ import com.twofish.domain.Patient;
 import com.twofish.dto.PatientDto;
 import com.twofish.mapper.PatientMapper;
 import com.twofish.vo.DataGridView;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import twofish.service.PatientService;
 import javax.annotation.Resource;
@@ -29,6 +30,11 @@ public class PatientServiceImpl implements PatientService {
     public DataGridView listPage(PatientDto patientDto) {
         Page<Patient> page = new Page<>(patientDto.getPageNum(), patientDto.getPageSize());
         QueryWrapper<Patient> qw = new QueryWrapper<>();
+        qw.like(StringUtils.isNotBlank(patientDto.getName()), Patient.COL_NAME, patientDto.getName());
+        qw.eq(StringUtils.isNotBlank(patientDto.getIdCard()), Patient.COL_ID_CARD, patientDto.getIdCard());
+        qw.eq(StringUtils.isNotBlank(patientDto.getPhone()), Patient.COL_PHONE, patientDto.getPhone());
+        qw.ge(null != patientDto.getBeginTime(), Patient.COL_CREATE_TIME, patientDto.getBeginTime());
+        qw.le(null != patientDto.getEndTime(), Patient.COL_CREATE_TIME, patientDto.getEndTime());
         patientMapper.selectPage(page, qw);
         return new DataGridView(page.getTotal(), page.getRecords());
     }
@@ -69,7 +75,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Patient getOneById(Long id) {
+    public Patient getOneById(String id) {
         return patientMapper.selectById(id);
     }
 

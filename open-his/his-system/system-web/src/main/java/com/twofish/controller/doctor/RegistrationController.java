@@ -58,7 +58,7 @@ public class RegistrationController {
 	 */
 	@PostMapping("addRegistration")
 	@ApiOperation(value = "添加患者PC端挂号", notes = "添加患者PC端挂号")
-	public AjaxResult addDictData(@CurrUser RegistrationDto registrationDto){
+	public AjaxResult addRegistration(@CurrUser RegistrationDto registrationDto){
 		return AjaxResult.toAjax(registrationService.insert(registrationDto));
 	}
 
@@ -69,7 +69,7 @@ public class RegistrationController {
 	 */
 	@PutMapping("updateRegistration")
 	@ApiOperation(value = "更新挂号信息数据", notes = "更新挂号信息数据")
-	public AjaxResult updateUser(@CurrUser RegistrationDto registrationDto){
+	public AjaxResult updateRegistration(@CurrUser RegistrationDto registrationDto){
 		return AjaxResult.toAjax(registrationService.update(registrationDto));
 	}
 
@@ -80,7 +80,7 @@ public class RegistrationController {
 	 */
 	@DeleteMapping("deleteRegistrationByIds/{registrationIds}")
 	@ApiOperation(value = "根据ID挂号信息数据", notes = "根据ID删除挂号信息数据")
-	public AjaxResult deleteUserByIds(@PathVariable Long[] registrationIds){
+	public AjaxResult deleteRegistrationByIds(@PathVariable Long[] registrationIds){
 		return AjaxResult.toAjax(registrationService.deleteByIds(registrationIds));
 	}
 
@@ -91,7 +91,7 @@ public class RegistrationController {
 	 */
 	@GetMapping("getRegistrationById/{registrationId}")
 	@ApiOperation(value = "根据ID查询挂号信息数据", notes = "根据ID查询挂号信息数据")
-	public AjaxResult getOne(@PathVariable Long registrationId){
+	public AjaxResult getOne(@PathVariable String registrationId){
 		return AjaxResult.success("查询成功", registrationService.getOneById(registrationId));
 	}
 
@@ -134,7 +134,7 @@ public class RegistrationController {
 	 */
 	@PostMapping("collectFee/{regId}")
 	@ApiOperation(value = "挂号收费", notes = "挂号收费")
-	public AjaxResult collectFee(@PathVariable Long regId, @CurrUser OrderChargeDto orderChargeDto) {
+	public AjaxResult collectFee(@PathVariable String regId, @CurrUser OrderChargeDto orderChargeDto) {
 		return AjaxResult.toAjax(orderChargeService.collectFee(regId, orderChargeDto));
 	}
 
@@ -145,7 +145,7 @@ public class RegistrationController {
 	 */
 	@PostMapping("doInvalid/{regId}")
 	@ApiOperation(value = "单号作废", notes = "单号作废")
-	public AjaxResult doInvalid(@PathVariable Long regId) {
+	public AjaxResult doInvalid(@PathVariable String regId) {
 		return AjaxResult.toAjax(registrationService.doInvalid(regId));
 	}
 
@@ -156,7 +156,7 @@ public class RegistrationController {
 	 */
 	@PostMapping("doReturn/{regId}")
 	@ApiOperation(value = "单号作废", notes = "单号作废")
-	public AjaxResult doReturn(@PathVariable Long regId) {
+	public AjaxResult doReturn(@PathVariable String regId) {
 		return AjaxResult.toAjax(registrationService.doReturn(regId));
 	}
 

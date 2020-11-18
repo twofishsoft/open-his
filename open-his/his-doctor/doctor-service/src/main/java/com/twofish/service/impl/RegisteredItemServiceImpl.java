@@ -69,7 +69,7 @@ public class RegisteredItemServiceImpl implements RegisteredItemService {
     }
 
     @Override
-    public RegisteredItem getOneById(Long id) {
+    public RegisteredItem getOneById(String id) {
         return registeredItemMapper.selectById(id);
     }
 

@@ -58,7 +58,7 @@ public interface OrderChargeService {
      * @param id
      * @return
      */
-    OrderCharge getOneById(Long id);
+    OrderCharge getOneById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合
@@ -76,11 +76,20 @@ public interface OrderChargeService {
      */
     OrderCharge getOneByAttr(String attr, Object attrValue);
 
+    OrderCharge queryByChIdAndRegId(String chId, String regId);
+
     /**
      * 挂号收费
      * @param regId
      * @param orderChargeDto
      * @return
      */
-    int collectFee(Long regId, OrderChargeDto orderChargeDto);
+    int collectFee(String regId, OrderChargeDto orderChargeDto);
+
+    /**
+     * 根据挂号ID查询已支付的处方信息
+     * @param regId
+     * @return
+     */
+    OrderChargeDto getChargedCareHistoryByRegId(String regId);
 }

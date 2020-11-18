@@ -1,6 +1,7 @@
 package com.twofish.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -9,7 +10,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import java.util.Date;
 
 /**
  * @author ww
@@ -135,6 +135,10 @@ public class CareHistory extends BaseEntity {
 	@ApiModelProperty(value="备注")
 	@TableField(value = "remark")
 	private String remark;
+
+	@ApiModelProperty(value="药用处方表")
+	@TableField(value = "careOrders", exist = false)
+	private List<CareOrder> careOrders;
 
 	public static final String COL_CH_ID = "ch_id";
 	public static final String COL_USER_ID = "user_id";

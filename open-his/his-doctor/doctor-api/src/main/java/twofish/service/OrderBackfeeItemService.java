@@ -58,7 +58,7 @@ public interface OrderBackfeeItemService {
      * @param id
      * @return
      */
-    OrderBackfeeItem getOneById(Long id);
+    OrderBackfeeItem getOneById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合
@@ -75,4 +75,18 @@ public interface OrderBackfeeItemService {
      * @return
      */
     OrderBackfeeItem getOneByAttr(String attr, Object attrValue);
+
+    /**
+     * 批量添加
+     * @param list
+     * @return
+     */
+    int batchOrderBackfeeItem(List<OrderBackfeeItemDto> list);
+
+    /**
+     * 根据退费单ID查询退费单详情
+     * @param backId
+     * @return
+     */
+    List<OrderBackfeeItem> queryOrderBackfeeItemByBackId(Long backId);
 }

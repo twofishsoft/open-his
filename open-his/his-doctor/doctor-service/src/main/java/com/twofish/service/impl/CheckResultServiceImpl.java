@@ -4,11 +4,20 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.twofish.constants.Constants;
+import com.twofish.domain.CareHistory;
+import com.twofish.domain.CareOrder;
+import com.twofish.domain.CareOrderItem;
 import com.twofish.domain.CheckResult;
+import com.twofish.dto.CareOrderItemDto;
+import com.twofish.dto.CheckItemDto;
 import com.twofish.dto.CheckResultDto;
 import com.twofish.mapper.CheckResultMapper;
 import com.twofish.vo.DataGridView;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import twofish.service.CareHistoryService;
+import twofish.service.CareOrderItemService;
+import twofish.service.CareOrderService;
 import twofish.service.CheckResultService;
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -24,11 +33,21 @@ public class CheckResultServiceImpl implements CheckResultService {
 
     @Resource
     private CheckResultMapper checkResultMapper;
+    @Resource
+    private CareOrderItemService careOrderItemService;
+    @Resource
+    private CareOrderService careOrderService;
+    @Resource
+    private CareHistoryService careHistoryService;
 
     @Override
     public DataGridView listPage(CheckResultDto checkResultDto) {
+        String patientName = checkResultDto.getPatientName();
+        Integer[] checkItemIds = checkResultDto.getCheckItemIds();
         Page<CheckResult> page = new Page<>(checkResultDto.getPageNum(), checkResultDto.getPageSize());
         QueryWrapper<CheckResult> qw = new QueryWrapper<>();
+        qw.like(StringUtils.isNotBlank(patientName), CheckResult.COL_PATIENT_NAME, patientName);
+        qw.in(checkItemIds.length != 0, CheckResult.COL_CHECK_ITEM_ID, checkItemIds);
         checkResultMapper.selectPage(page, qw);
         return new DataGridView(page.getTotal(), page.getRecords());
     }
@@ -69,7 +88,7 @@ public class CheckResultServiceImpl implements CheckResultService {
     }
 
     @Override
-    public CheckResult getOneById(Long id) {
+    public CheckResult getOneById(String id) {
         return checkResultMapper.selectById(id);
     }
 
@@ -85,6 +104,59 @@ public class CheckResultServiceImpl implements CheckResultService {
         QueryWrapper<CheckResult> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return checkResultMapper.selectOne(qw);
+    }
+
+    @Override
+    public int completeCheckResult(CheckResultDto checkResultDto) {
+        Integer checkItemId = checkResultDto.getCheckItemId();
+        CheckResult checkResult = getOneByAttr(CheckResult.COL_CHECK_ITEM_ID, checkItemId);
+        if (null != checkResult) {
+            checkResult.setResultImg(checkResultDto.getResultImg());
+            checkResult.setResultMsg(checkResultDto.getResultMsg());
+            checkResult.setResultStatus(Constants.RESULT_STATUS_1);
+            checkResult.setUpdateBy(checkResultDto.getUpdateBy());
+            return update(checkResult);
+        }
+        return -1;
+    }
+
+    @Override
+    public int startCheck(Long itemId) {
+        CheckResult checkResult = getOneByAttr(CheckResult.COL_CHECK_ITEM_ID, itemId);
+        if (null != checkResult) {
+            checkResult.setResultStatus(Constants.RESULT_STATUS_0);
+            return update(checkResult);
+        }
+        return -1;
+    }
+
+    @Override
+    public DataGridView queryAllCheckingResultForPage(CheckResultDto checkResultDto) {
+        String patientName = checkResultDto.getPatientName();
+        Integer[] checkItemIds = checkResultDto.getCheckItemIds();
+        Page<CheckResult> page = new Page<>(checkResultDto.getPageNum(), checkResultDto.getPageSize());
+        QueryWrapper<CheckResult> qw = new QueryWrapper<>();
+        qw.like(StringUtils.isNotBlank(patientName), CheckResult.COL_PATIENT_NAME, patientName);
+        qw.in(checkItemIds.length != 0, CheckResult.COL_CHECK_ITEM_ID, checkItemIds);
+        qw.eq( CheckResult.COL_RESULT_STATUS, Constants.RESULT_STATUS_0);
+        checkResultMapper.selectPage(page, qw);
+        return new DataGridView(page.getTotal(), page.getRecords());
+    }
+
+    @Override
+    public CheckItemDto queryCheckItemByItemId(String itemId) {
+        CheckItemDto checkItemDto = new CheckItemDto();
+        CareOrderItem careOrderItem = careOrderItemService.getOneById(itemId);
+        if (null != careOrderItem) {
+            checkItemDto.setItem(careOrderItem);
+            CareOrder careOrder = careOrderService.getOneById(careOrderItem.getCoId());
+            if (null != careOrder) {
+                checkItemDto.setCareOrder(careOrder);
+                CareHistory careHistory = careHistoryService.getOneById(careOrder.getChId());
+                checkItemDto.setCareHistory(careHistory);
+            }
+        }
+        return checkItemDto;
     }
 
 }

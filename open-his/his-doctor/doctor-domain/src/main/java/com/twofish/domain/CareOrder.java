@@ -1,8 +1,6 @@
 package com.twofish.domain;
 
-import java.util.Date;
 import java.math.BigDecimal;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -11,6 +9,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author ww
@@ -101,6 +100,10 @@ public class CareOrder extends BaseEntity {
 	@ApiModelProperty(value="更新时间")
 	@TableField(value = "update_time")
 	private Date updateTime;
+
+	@ApiModelProperty(value="开诊细表")
+	@TableField(value = "careOrderItems", exist = false)
+	private List<CareOrderItem> careOrderItems;
 
 	public static final String COL_CO_ID = "co_id";
 	public static final String COL_CO_TYPE = "co_type";

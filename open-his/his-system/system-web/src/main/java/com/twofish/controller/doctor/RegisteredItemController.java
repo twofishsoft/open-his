@@ -44,7 +44,7 @@ public class RegisteredItemController {
 	 */
 	@PostMapping("addRegisteredItem")
 	@ApiOperation(value = "添加挂号项目数据", notes = "添加挂号项目数据")
-	public AjaxResult addDictData(@CurrUser RegisteredItemDto registeredItemDto){
+	public AjaxResult addRegisteredItem(@CurrUser RegisteredItemDto registeredItemDto){
 		return AjaxResult.toAjax(registeredItemService.insert(registeredItemDto));
 	}
 
@@ -55,7 +55,7 @@ public class RegisteredItemController {
 	 */
 	@PutMapping("updateRegisteredItem")
 	@ApiOperation(value = "更新挂号项目数据", notes = "更新挂号项目数据")
-	public AjaxResult updateUser(@CurrUser RegisteredItemDto registeredItemDto){
+	public AjaxResult updateRegisteredItem(@CurrUser RegisteredItemDto registeredItemDto){
 		return AjaxResult.toAjax(registeredItemService.update(registeredItemDto));
 	}
 
@@ -66,18 +66,18 @@ public class RegisteredItemController {
 	 */
 	@DeleteMapping("deleteRegisteredItemByIds/{registeredItemIds}")
 	@ApiOperation(value = "根据ID挂号项目数据", notes = "根据ID删除挂号项目数据")
-	public AjaxResult deleteUserByIds(@PathVariable Long[] registeredItemIds){
+	public AjaxResult deleteRegisteredItemByIds(@PathVariable Long[] registeredItemIds){
 		return AjaxResult.toAjax(registeredItemService.deleteByIds(registeredItemIds));
 	}
 
 	/**
 	 * 根据ID查询挂号项目数据
-	 * @param {registeredItemId
+	 * @param registeredItemId
 	 * @return
 	 */
 	@GetMapping("getRegisteredItemById/{registeredItemId}")
 	@ApiOperation(value = "根据ID查询挂号项目数据", notes = "根据ID查询挂号项目数据")
-	public AjaxResult getOne(@PathVariable Long registeredItemId){
+	public AjaxResult getOne(@PathVariable String registeredItemId){
 		return AjaxResult.success("查询成功", registeredItemService.getOneById(registeredItemId));
 	}
 

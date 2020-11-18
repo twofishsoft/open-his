@@ -81,7 +81,7 @@ public class OrderChargeServiceImpl implements OrderChargeService {
     }
 
     @Override
-    public OrderCharge getOneById(Long id) {
+    public OrderCharge getOneById(String id) {
         return orderChargeMapper.selectById(id);
     }
 
@@ -100,7 +100,15 @@ public class OrderChargeServiceImpl implements OrderChargeService {
     }
 
     @Override
-    public int collectFee(Long regId, OrderChargeDto orderChargeDto) {
+    public OrderCharge queryByChIdAndRegId(String chId, String regId) {
+        QueryWrapper<OrderCharge> qw = new QueryWrapper<>();
+        qw.eq(OrderCharge.COL_CH_ID, chId);
+        qw.eq(OrderCharge.COL_REG_ID, regId);
+        return orderChargeMapper.selectOne(qw);
+    }
+
+    @Override
+    public int collectFee(String regId, OrderChargeDto orderChargeDto) {
         Registration registration = registrationService.getOneById(regId);
         if (null != registration) {
             CareHistory careHistory = careHistoryService.getOneByAttr(CareHistory.COL_REG_ID, regId);
@@ -117,5 +125,10 @@ public class OrderChargeServiceImpl implements OrderChargeService {
             insert(orderChargeDto);
         }
         return 0;
+    }
+
+    @Override
+    public OrderChargeDto getChargedCareHistoryByRegId(String regId) {
+        return null;
     }
 }

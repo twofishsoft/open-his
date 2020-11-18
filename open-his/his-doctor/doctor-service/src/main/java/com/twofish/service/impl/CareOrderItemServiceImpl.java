@@ -4,12 +4,19 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.twofish.constants.Constants;
+import com.twofish.domain.CareHistory;
+import com.twofish.domain.CareOrder;
 import com.twofish.domain.CareOrderItem;
+import com.twofish.domain.CheckResult;
 import com.twofish.dto.CareOrderItemDto;
+import com.twofish.dto.CheckResultDto;
 import com.twofish.mapper.CareOrderItemMapper;
 import com.twofish.vo.DataGridView;
 import org.springframework.stereotype.Service;
+import twofish.service.CareHistoryService;
 import twofish.service.CareOrderItemService;
+import twofish.service.CareOrderService;
+
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +31,10 @@ public class CareOrderItemServiceImpl implements CareOrderItemService {
 
     @Resource
     private CareOrderItemMapper careOrderItemMapper;
+    @Resource
+    private CareHistoryService careHistoryService;
+    @Resource
+    private CareOrderService careOrderService;
 
     @Override
     public DataGridView listPage(CareOrderItemDto careOrderItemDto) {
@@ -69,7 +80,7 @@ public class CareOrderItemServiceImpl implements CareOrderItemService {
     }
 
     @Override
-    public CareOrderItem getOneById(Long id) {
+    public CareOrderItem getOneById(String id) {
         return careOrderItemMapper.selectById(id);
     }
 
@@ -87,4 +98,18 @@ public class CareOrderItemServiceImpl implements CareOrderItemService {
         return careOrderItemMapper.selectOne(qw);
     }
 
+    @Override
+    public List<CareOrderItem> queryNeedCheckItem(CareOrderItemDto careOrderItemDto) {
+        Integer[] checkItemIds = careOrderItemDto.getCheckItemIds();
+        QueryWrapper<CareOrderItem> qw = new QueryWrapper<>();
+        CareHistory careHistory = careHistoryService.getOneByAttr(CareHistory.COL_REG_ID, careOrderItemDto.getRegId());
+        if (null != careHistory) {
+            CareOrder careOrder = careOrderService.getOneByAttr(CareOrder.COL_CH_ID, careHistory.getChId());
+            if (null != careOrder) {
+                qw.eq(CareOrderItem.COL_CO_ID, careOrder.getCoId());
+            }
+        }
+        qw.in(checkItemIds.length != 0, CareOrderItem.COL_CO_ID, checkItemIds);
+        return careOrderItemMapper.selectList(qw);
+    }
 }

@@ -1,7 +1,9 @@
 package twofish.service;
 
 import com.twofish.domain.OrderBackfee;
+import com.twofish.dto.ChargedCareHistoryDto;
 import com.twofish.dto.OrderBackfeeDto;
+import com.twofish.dto.OrderBackfeeWithCashDto;
 import com.twofish.vo.DataGridView;
 import java.util.List;
 
@@ -58,7 +60,7 @@ public interface OrderBackfeeService {
      * @param id
      * @return
      */
-    OrderBackfee getOneById(Long id);
+    OrderBackfee getOneById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合
@@ -75,4 +77,13 @@ public interface OrderBackfeeService {
      * @return
      */
     OrderBackfee getOneByAttr(String attr, Object attrValue);
+
+    /**
+     * 根据挂号ID查询已支付的处方信息【退费时使用】
+     * @param regId
+     * @return
+     */
+    ChargedCareHistoryDto getChargedCareHistoryByRegId(String regId);
+
+    int createOrderBackfeeWithCash(OrderBackfeeWithCashDto orderBackfeeDto, String type);
 }

@@ -44,7 +44,7 @@ public class CareHistoryController {
 	 */
 	@PostMapping("addCareHistory")
 	@ApiOperation(value = "添加病例表数据", notes = "添加病例表数据")
-	public AjaxResult addDictData(@CurrUser CareHistoryDto careHistoryDto){
+	public AjaxResult addCareHistory(@CurrUser CareHistoryDto careHistoryDto){
 		return AjaxResult.toAjax(careHistoryService.insert(careHistoryDto));
 	}
 
@@ -55,7 +55,7 @@ public class CareHistoryController {
 	 */
 	@PutMapping("updateCareHistory")
 	@ApiOperation(value = "更新病例表数据", notes = "更新病例表数据")
-	public AjaxResult updateUser(@CurrUser CareHistoryDto careHistoryDto){
+	public AjaxResult updateCareHistory(@CurrUser CareHistoryDto careHistoryDto){
 		return AjaxResult.toAjax(careHistoryService.update(careHistoryDto));
 	}
 
@@ -66,7 +66,7 @@ public class CareHistoryController {
 	 */
 	@DeleteMapping("deleteCareHistoryByIds/{careHistoryIds}")
 	@ApiOperation(value = "根据ID病例表数据", notes = "根据ID删除病例表数据")
-	public AjaxResult deleteUserByIds(@PathVariable Long[] careHistoryIds){
+	public AjaxResult deleteCareHistoryByIds(@PathVariable Long[] careHistoryIds){
 		return AjaxResult.toAjax(careHistoryService.deleteByIds(careHistoryIds));
 	}
 
@@ -77,7 +77,7 @@ public class CareHistoryController {
 	 */
 	@GetMapping("getCareHistoryById/{careHistoryId}")
 	@ApiOperation(value = "根据ID查询病例表数据", notes = "根据ID查询病例表数据")
-	public AjaxResult getOne(@PathVariable Long careHistoryId){
+	public AjaxResult getOne(@PathVariable String careHistoryId){
 		return AjaxResult.success("查询成功", careHistoryService.getOneById(careHistoryId));
 	}
 
