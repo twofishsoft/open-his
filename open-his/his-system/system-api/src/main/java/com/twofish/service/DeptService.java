@@ -56,7 +56,7 @@ public interface DeptService {
      * @param attrValue 字段值
      * @return
      */
-    List<Dept> findByAttrList(String attr, Object attrValue);
+    List<Dept> queryByAttrList(String attr, Object attrValue);
 
     /**
      * 根据对象中的某个属性，查询数据，返回单个数据
@@ -64,6 +64,6 @@ public interface DeptService {
      * @param attrValue 字段值
      * @return
      */
-    Dept getOneByAttr(String attr, Object attrValue);
+    Dept queryOneByAttr(String attr, Object attrValue);
 
 }

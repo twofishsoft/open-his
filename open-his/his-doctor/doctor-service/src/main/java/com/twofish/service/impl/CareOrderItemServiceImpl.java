@@ -80,19 +80,19 @@ public class CareOrderItemServiceImpl implements CareOrderItemService {
     }
 
     @Override
-    public CareOrderItem getOneById(String id) {
+    public CareOrderItem findById(String id) {
         return careOrderItemMapper.selectById(id);
     }
 
     @Override
-    public List<CareOrderItem> findByAttrList(String attr, Object attrValue) {
+    public List<CareOrderItem> queryByAttrList(String attr, Object attrValue) {
         QueryWrapper<CareOrderItem> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return careOrderItemMapper.selectList(qw);
     }
 
     @Override
-    public CareOrderItem getOneByAttr(String attr, Object attrValue) {
+    public CareOrderItem queryOneByAttr(String attr, Object attrValue) {
         QueryWrapper<CareOrderItem> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return careOrderItemMapper.selectOne(qw);
@@ -102,14 +102,14 @@ public class CareOrderItemServiceImpl implements CareOrderItemService {
     public List<CareOrderItem> queryNeedCheckItem(CareOrderItemDto careOrderItemDto) {
         Integer[] checkItemIds = careOrderItemDto.getCheckItemIds();
         QueryWrapper<CareOrderItem> qw = new QueryWrapper<>();
-        CareHistory careHistory = careHistoryService.getOneByAttr(CareHistory.COL_REG_ID, careOrderItemDto.getRegId());
+        CareHistory careHistory = careHistoryService.queryOneByAttr(CareHistory.COL_REG_ID, careOrderItemDto.getRegId());
         if (null != careHistory) {
-            CareOrder careOrder = careOrderService.getOneByAttr(CareOrder.COL_CH_ID, careHistory.getChId());
+            CareOrder careOrder = careOrderService.queryOneByAttr(CareOrder.COL_CH_ID, careHistory.getChId());
             if (null != careOrder) {
                 qw.eq(CareOrderItem.COL_CO_ID, careOrder.getCoId());
             }
         }
-        qw.in(checkItemIds.length != 0, CareOrderItem.COL_CO_ID, checkItemIds);
+        qw.in(checkItemIds.length != 0, CareOrderItem.COL_ITEM_ID, checkItemIds);
         return careOrderItemMapper.selectList(qw);
     }
 }

@@ -69,19 +69,19 @@ public class RegisteredItemServiceImpl implements RegisteredItemService {
     }
 
     @Override
-    public RegisteredItem getOneById(String id) {
+    public RegisteredItem findById(String id) {
         return registeredItemMapper.selectById(id);
     }
 
     @Override
-    public List<RegisteredItem> findByAttrList(String attr, Object attrValue) {
+    public List<RegisteredItem> queryByAttrList(String attr, Object attrValue) {
         QueryWrapper<RegisteredItem> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return registeredItemMapper.selectList(qw);
     }
 
     @Override
-    public RegisteredItem getOneByAttr(String attr, Object attrValue) {
+    public RegisteredItem queryOneByAttr(String attr, Object attrValue) {
         QueryWrapper<RegisteredItem> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return registeredItemMapper.selectOne(qw);

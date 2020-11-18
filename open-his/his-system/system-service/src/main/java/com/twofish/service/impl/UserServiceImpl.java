@@ -128,7 +128,7 @@ public class UserServiceImpl implements UserService {
      * @param attrValue 字段值
      * @return
      */
-    public List<User> findByAttrList(String attr, Object attrValue) {
+    public List<User> queryByAttrList(String attr, Object attrValue) {
         QueryWrapper<User> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return userMapper.selectList(qw);
@@ -140,7 +140,7 @@ public class UserServiceImpl implements UserService {
      * @param attrValue 字段值
      * @return
      */
-    public User getOneByAttr(String attr, Object attrValue) {
+    public User queryOneByAttr(String attr, Object attrValue) {
         QueryWrapper<User> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return userMapper.selectOne(qw);
@@ -148,7 +148,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsersNeedScheduling(Long deptId) {
-        Role role = roleService.getOneByAttr(Role.COL_ROLE_CODE, Constants.DOCTOR_CODE);
+        Role role = roleService.queryOneByAttr(Role.COL_ROLE_CODE, Constants.DOCTOR_CODE);
         if (null != role) {
             return userMapper.getUsersNeedScheduling(
                     new UserDto(Constants.STATUS_TRUE, Constants.SCHEDULING_FLAG_TRUE, deptId, role.getRoleId())
@@ -159,7 +159,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User queryByPhone(String phone) {
-        return this.getOneByAttr(User.COL_PHONE, phone);
+        return this.queryOneByAttr(User.COL_PHONE, phone);
     }
 
     @Override

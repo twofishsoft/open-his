@@ -78,7 +78,7 @@ public class SchedulingController {
 	@GetMapping("getSchedulingById/{schedulingId}")
 	@ApiOperation(value = "根据ID查询排班信息表数据", notes = "根据ID查询排班信息表数据")
 	public AjaxResult getOne(@PathVariable String schedulingId){
-		return AjaxResult.success("查询成功", schedulingService.getOneById(schedulingId));
+		return AjaxResult.success("查询成功", schedulingService.findById(schedulingId));
 	}
 
 	/**

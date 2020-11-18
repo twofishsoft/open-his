@@ -112,6 +112,12 @@ public interface Constants {
     String PAY_TYPE_1 = "1";//支付宝
 
     /**
+     * 项目类型
+     */
+    String ITEM_TYPE_0 = "0"; //药品
+    String ITEM_TYPE_1 = "1"; //检查项
+
+    /**
      * 医生标识
      */
     String DOCTOR_CODE = "role:doctor";

@@ -78,7 +78,7 @@ public class CareOrderItemController {
 	@GetMapping("getCareOrderItemById/{careOrderItemId}")
 	@ApiOperation(value = "根据ID查询开诊细表数据", notes = "根据ID查询开诊细表数据")
 	public AjaxResult getOne(@PathVariable String careOrderItemId){
-		return AjaxResult.success("查询成功", careOrderItemService.getOneById(careOrderItemId));
+		return AjaxResult.success("查询成功", careOrderItemService.findById(careOrderItemId));
 	}
 
 	/**

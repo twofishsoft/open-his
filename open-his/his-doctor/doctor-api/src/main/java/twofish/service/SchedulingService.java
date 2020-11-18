@@ -58,7 +58,7 @@ public interface SchedulingService {
      * @param id
      * @return
      */
-    Scheduling getOneById(String id);
+    Scheduling findById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合
@@ -66,7 +66,7 @@ public interface SchedulingService {
      * @param attrValue 字段值
      * @return
      */
-    List<Scheduling> findByAttrList(String attr, Object attrValue);
+    List<Scheduling> queryByAttrList(String attr, Object attrValue);
 
     /**
      * 根据对象中的某个属性，查询数据，返回单个数据
@@ -74,7 +74,7 @@ public interface SchedulingService {
      * @param attrValue 字段值
      * @return
      */
-    Scheduling getOneByAttr(String attr, Object attrValue);
+    Scheduling queryOneByAttr(String attr, Object attrValue);
 
     /**
      * 根据条件查询有号的部门

@@ -1,6 +1,7 @@
 package twofish.service;
 
 import com.twofish.domain.OrderChargeItem;
+import com.twofish.dto.OrderBackfeeItemDto;
 import com.twofish.dto.OrderChargeItemDto;
 import com.twofish.vo.DataGridView;
 import java.util.List;
@@ -58,7 +59,7 @@ public interface OrderChargeItemService {
      * @param id
      * @return
      */
-    OrderChargeItem getOneById(String id);
+    OrderChargeItem findById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合
@@ -66,7 +67,7 @@ public interface OrderChargeItemService {
      * @param attrValue 字段值
      * @return
      */
-    List<OrderChargeItem> findByAttrList(String attr, Object attrValue);
+    List<OrderChargeItem> queryByAttrList(String attr, Object attrValue);
 
     /**
      * 根据对象中的某个属性，查询数据，返回单个数据
@@ -74,5 +75,13 @@ public interface OrderChargeItemService {
      * @param attrValue 字段值
      * @return
      */
-    OrderChargeItem getOneByAttr(String attr, Object attrValue);
+    OrderChargeItem queryOneByAttr(String attr, Object attrValue);
+
+    /**
+     * 批量添加
+     * @param list
+     * @return
+     */
+    int batchOrderChargeItem(List<OrderChargeItemDto> list, String orderId);
+
 }

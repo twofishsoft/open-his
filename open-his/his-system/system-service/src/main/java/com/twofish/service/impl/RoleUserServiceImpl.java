@@ -85,7 +85,7 @@ public class RoleUserServiceImpl implements RoleUserService {
      * @param attrValue 字段值
      * @return
      */
-    public List<RoleUser> findByAttrList(String attr, Object attrValue) {
+    public List<RoleUser> queryByAttrList(String attr, Object attrValue) {
         QueryWrapper<RoleUser> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return roleUserMapper.selectList(qw);
@@ -97,7 +97,7 @@ public class RoleUserServiceImpl implements RoleUserService {
      * @param attrValue 字段值
      * @return
      */
-    public RoleUser getOneByAttr(String attr, Object attrValue) {
+    public RoleUser queryOneByAttr(String attr, Object attrValue) {
         QueryWrapper<RoleUser> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return roleUserMapper.selectOne(qw);

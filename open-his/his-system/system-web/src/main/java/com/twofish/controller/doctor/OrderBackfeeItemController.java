@@ -78,7 +78,7 @@ public class OrderBackfeeItemController {
 	@GetMapping("getOrderBackfeeItemById/{orderBackfeeItemId}")
 	@ApiOperation(value = "根据ID查询退费订单详情表数据", notes = "根据ID查询退费订单详情表数据")
 	public AjaxResult getOne(@PathVariable String orderBackfeeItemId){
-		return AjaxResult.success("查询成功", orderBackfeeItemService.getOneById(orderBackfeeItemId));
+		return AjaxResult.success("查询成功", orderBackfeeItemService.findById(orderBackfeeItemId));
 	}
 
 	/**

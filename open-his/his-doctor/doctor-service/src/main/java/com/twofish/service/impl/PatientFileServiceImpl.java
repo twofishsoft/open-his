@@ -69,19 +69,19 @@ public class PatientFileServiceImpl implements PatientFileService {
     }
 
     @Override
-    public PatientFile getOneById(String id) {
+    public PatientFile findById(String id) {
         return patientFileMapper.selectById(id);
     }
 
     @Override
-    public List<PatientFile> findByAttrList(String attr, Object attrValue) {
+    public List<PatientFile> queryByAttrList(String attr, Object attrValue) {
         QueryWrapper<PatientFile> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return patientFileMapper.selectList(qw);
     }
 
     @Override
-    public PatientFile getOneByAttr(String attr, Object attrValue) {
+    public PatientFile queryOneByAttr(String attr, Object attrValue) {
         QueryWrapper<PatientFile> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return patientFileMapper.selectOne(qw);

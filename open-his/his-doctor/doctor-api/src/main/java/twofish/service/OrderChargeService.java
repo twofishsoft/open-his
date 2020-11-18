@@ -1,7 +1,9 @@
 package twofish.service;
 
 import com.twofish.domain.OrderCharge;
+import com.twofish.dto.NoChargeCareHistoryDto;
 import com.twofish.dto.OrderChargeDto;
+import com.twofish.dto.OrderChargeWithCashDto;
 import com.twofish.vo.DataGridView;
 import java.util.List;
 
@@ -58,7 +60,7 @@ public interface OrderChargeService {
      * @param id
      * @return
      */
-    OrderCharge getOneById(String id);
+    OrderCharge findById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合
@@ -66,7 +68,7 @@ public interface OrderChargeService {
      * @param attrValue 字段值
      * @return
      */
-    List<OrderCharge> findByAttrList(String attr, Object attrValue);
+    List<OrderCharge> queryByAttrList(String attr, Object attrValue);
 
     /**
      * 根据对象中的某个属性，查询数据，返回单个数据
@@ -74,7 +76,7 @@ public interface OrderChargeService {
      * @param attrValue 字段值
      * @return
      */
-    OrderCharge getOneByAttr(String attr, Object attrValue);
+    OrderCharge queryOneByAttr(String attr, Object attrValue);
 
     OrderCharge queryByChIdAndRegId(String chId, String regId);
 
@@ -92,4 +94,26 @@ public interface OrderChargeService {
      * @return
      */
     OrderChargeDto getChargedCareHistoryByRegId(String regId);
+
+    /**
+     * 根据挂号ID查询未支付的处方信息及详情
+     * @param regId
+     * @return
+     */
+    NoChargeCareHistoryDto getNoChargeCareHistoryByRegId(String regId);
+
+    /**
+     * 创建现金收费订单
+     * @param orderChargeWithCashDto
+     * @return
+     */
+    int createOrderChargeWithCash(OrderChargeWithCashDto orderChargeWithCashDto, String type);
+
+    /**
+     * 订单列表支付订单
+     * @param orderId
+     * @param type 现金、支付宝
+     * @return
+     */
+    List<OrderCharge> payWithCash(String orderId, String type);
 }

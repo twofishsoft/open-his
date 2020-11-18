@@ -92,7 +92,7 @@ public class RegistrationController {
 	@GetMapping("getRegistrationById/{registrationId}")
 	@ApiOperation(value = "根据ID查询挂号信息数据", notes = "根据ID查询挂号信息数据")
 	public AjaxResult getOne(@PathVariable String registrationId){
-		return AjaxResult.success("查询成功", registrationService.getOneById(registrationId));
+		return AjaxResult.success("查询成功", registrationService.findById(registrationId));
 	}
 
 	/**

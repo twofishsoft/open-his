@@ -58,7 +58,7 @@ public interface PatientService {
      * @param id
      * @return
      */
-    Patient getOneById(String id);
+    Patient findById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合
@@ -66,7 +66,7 @@ public interface PatientService {
      * @param attrValue 字段值
      * @return
      */
-    List<Patient> findByAttrList(String attr, Object attrValue);
+    List<Patient> queryByAttrList(String attr, Object attrValue);
 
     /**
      * 根据对象中的某个属性，查询数据，返回单个数据
@@ -74,7 +74,7 @@ public interface PatientService {
      * @param attrValue 字段值
      * @return
      */
-    Patient getOneByAttr(String attr, Object attrValue);
+    Patient queryOneByAttr(String attr, Object attrValue);
 
     /**
      * 根据身份证号查询患者信息

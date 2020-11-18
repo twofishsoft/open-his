@@ -78,7 +78,7 @@ public class RegisteredItemController {
 	@GetMapping("getRegisteredItemById/{registeredItemId}")
 	@ApiOperation(value = "根据ID查询挂号项目数据", notes = "根据ID查询挂号项目数据")
 	public AjaxResult getOne(@PathVariable String registeredItemId){
-		return AjaxResult.success("查询成功", registeredItemService.getOneById(registeredItemId));
+		return AjaxResult.success("查询成功", registeredItemService.findById(registeredItemId));
 	}
 
 	/**

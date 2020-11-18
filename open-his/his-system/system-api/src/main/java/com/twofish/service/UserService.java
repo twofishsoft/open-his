@@ -71,7 +71,7 @@ public interface UserService {
      * @param attrValue 字段值
      * @return
      */
-    List<User> findByAttrList(String attr, Object attrValue);
+    List<User> queryByAttrList(String attr, Object attrValue);
 
     /**
      * 根据对象中的某个属性，查询数据，返回单个数据
@@ -79,7 +79,7 @@ public interface UserService {
      * @param attrValue 字段值
      * @return
      */
-    User getOneByAttr(String attr, Object attrValue);
+    User queryOneByAttr(String attr, Object attrValue);
 
     /**
      * 根据手机号查询用户

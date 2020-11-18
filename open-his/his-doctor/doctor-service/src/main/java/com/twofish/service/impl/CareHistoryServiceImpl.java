@@ -74,19 +74,19 @@ public class CareHistoryServiceImpl implements CareHistoryService {
     }
 
     @Override
-    public CareHistory getOneById(String id) {
+    public CareHistory findById(String id) {
         return careHistoryMapper.selectById(id);
     }
 
     @Override
-    public List<CareHistory> findByAttrList(String attr, Object attrValue) {
+    public List<CareHistory> queryByAttrList(String attr, Object attrValue) {
         QueryWrapper<CareHistory> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return careHistoryMapper.selectList(qw);
     }
 
     @Override
-    public CareHistory getOneByAttr(String attr, Object attrValue) {
+    public CareHistory queryOneByAttr(String attr, Object attrValue) {
         QueryWrapper<CareHistory> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return careHistoryMapper.selectOne(qw);
@@ -94,7 +94,7 @@ public class CareHistoryServiceImpl implements CareHistoryService {
 
     @Override
     public List<CareHistory> getPatientAllMessageByPatientId(Long patientId) {
-        List<CareHistory> list = findByAttrList(CareHistory.COL_PATIENT_ID, patientId);
+        List<CareHistory> list = queryByAttrList(CareHistory.COL_PATIENT_ID, patientId);
         if (null != list && list.size() != 0) {
             list.forEach(item -> {
                 item.setCareOrders(careOrderService.getCareOrderItem(item.getChId()));

@@ -78,7 +78,7 @@ public class OrderChargeItemController {
 	@GetMapping("getOrderChargeItemById/{orderChargeItemId}")
 	@ApiOperation(value = "根据ID查询支付订单详情表数据", notes = "根据ID查询支付订单详情表数据")
 	public AjaxResult getOne(@PathVariable String orderChargeItemId){
-		return AjaxResult.success("查询成功", orderChargeItemService.getOneById(orderChargeItemId));
+		return AjaxResult.success("查询成功", orderChargeItemService.findById(orderChargeItemId));
 	}
 
 	/**

@@ -112,7 +112,7 @@ public class RoleServiceImpl implements RoleService {
      * @param attrValue 字段值
      * @return
      */
-    public List<Role> findByAttrList(String attr, Object attrValue) {
+    public List<Role> queryByAttrList(String attr, Object attrValue) {
         QueryWrapper<Role> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return roleMapper.selectList(qw);
@@ -124,7 +124,7 @@ public class RoleServiceImpl implements RoleService {
      * @param attrValue 字段值
      * @return
      */
-    public Role getOneByAttr(String attr, Object attrValue) {
+    public Role queryOneByAttr(String attr, Object attrValue) {
         QueryWrapper<Role> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return roleMapper.selectOne(qw);

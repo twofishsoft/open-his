@@ -61,7 +61,7 @@ public interface RegistrationService {
      * @param id
      * @return
      */
-    Registration getOneById(String id);
+    Registration findById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合
@@ -69,7 +69,7 @@ public interface RegistrationService {
      * @param attrValue 字段值
      * @return
      */
-    List<Registration> findByAttrList(String attr, Object attrValue);
+    List<Registration> queryByAttrList(String attr, Object attrValue);
 
     /**
      * 根据对象中的某个属性，查询数据，返回单个数据
@@ -77,7 +77,7 @@ public interface RegistrationService {
      * @param attrValue 字段值
      * @return
      */
-    Registration getOneByAttr(String attr, Object attrValue);
+    Registration queryOneByAttr(String attr, Object attrValue);
 
     /**
      * 作废【根据挂号单号】

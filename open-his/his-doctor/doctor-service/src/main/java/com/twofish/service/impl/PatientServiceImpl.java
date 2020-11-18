@@ -75,19 +75,19 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Patient getOneById(String id) {
+    public Patient findById(String id) {
         return patientMapper.selectById(id);
     }
 
     @Override
-    public List<Patient> findByAttrList(String attr, Object attrValue) {
+    public List<Patient> queryByAttrList(String attr, Object attrValue) {
         QueryWrapper<Patient> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return patientMapper.selectList(qw);
     }
 
     @Override
-    public Patient getOneByAttr(String attr, Object attrValue) {
+    public Patient queryOneByAttr(String attr, Object attrValue) {
         QueryWrapper<Patient> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return patientMapper.selectOne(qw);

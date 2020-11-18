@@ -69,12 +69,12 @@ public class SchedulingServiceImpl implements SchedulingService {
     }
 
     @Override
-    public Scheduling getOneById(String id) {
+    public Scheduling findById(String id) {
         return schedulingMapper.selectById(id);
     }
 
     @Override
-    public List<Scheduling> findByAttrList(String attr, Object attrValue) {
+    public List<Scheduling> queryByAttrList(String attr, Object attrValue) {
         QueryWrapper<Scheduling> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return schedulingMapper.selectList(qw);
@@ -86,7 +86,7 @@ public class SchedulingServiceImpl implements SchedulingService {
     }
 
     @Override
-    public Scheduling getOneByAttr(String attr, Object attrValue) {
+    public Scheduling queryOneByAttr(String attr, Object attrValue) {
         QueryWrapper<Scheduling> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return schedulingMapper.selectOne(qw);

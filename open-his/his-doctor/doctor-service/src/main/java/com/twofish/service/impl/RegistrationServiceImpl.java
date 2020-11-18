@@ -83,19 +83,19 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public Registration getOneById(String id) {
+    public Registration findById(String id) {
         return registrationMapper.selectById(id);
     }
 
     @Override
-    public List<Registration> findByAttrList(String attr, Object attrValue) {
+    public List<Registration> queryByAttrList(String attr, Object attrValue) {
         QueryWrapper<Registration> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return registrationMapper.selectList(qw);
     }
 
     @Override
-    public Registration getOneByAttr(String attr, Object attrValue) {
+    public Registration queryOneByAttr(String attr, Object attrValue) {
         QueryWrapper<Registration> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return registrationMapper.selectOne(qw);
@@ -103,7 +103,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     @Override
     public int doInvalid(String regId) {
-        Registration registration = getOneById(regId);
+        Registration registration = findById(regId);
         if (null != registration) {
             registration.setRegistrationStatus(Constants.REG_STATUS_5);
             return update(registration);
@@ -113,7 +113,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 
     @Override
     public int doReturn(String regId) {
-        Registration registration = getOneById(regId);
+        Registration registration = findById(regId);
         if (null != registration) {
             registration.setRegistrationStatus(Constants.REG_STATUS_4);
             return update(registration);

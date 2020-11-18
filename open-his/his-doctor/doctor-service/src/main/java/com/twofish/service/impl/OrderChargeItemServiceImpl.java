@@ -69,22 +69,34 @@ public class OrderChargeItemServiceImpl implements OrderChargeItemService {
     }
 
     @Override
-    public OrderChargeItem getOneById(String id) {
+    public OrderChargeItem findById(String id) {
         return orderChargeItemMapper.selectById(id);
     }
 
     @Override
-    public List<OrderChargeItem> findByAttrList(String attr, Object attrValue) {
+    public List<OrderChargeItem> queryByAttrList(String attr, Object attrValue) {
         QueryWrapper<OrderChargeItem> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return orderChargeItemMapper.selectList(qw);
     }
 
     @Override
-    public OrderChargeItem getOneByAttr(String attr, Object attrValue) {
+    public OrderChargeItem queryOneByAttr(String attr, Object attrValue) {
         QueryWrapper<OrderChargeItem> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return orderChargeItemMapper.selectOne(qw);
+    }
+
+    @Override
+    public int batchOrderChargeItem(List<OrderChargeItemDto> list, String orderId) {
+        final int[] i = {-1};
+        list.forEach(item -> {
+            item.setOrderId(orderId);
+            item.setItemType(Constants.ITEM_TYPE_0);
+            item.setStatus(Constants.ORDER_DETAILS_STATUS_2);
+            i[0] = insert(item);
+        });
+        return i[0];
     }
 
 }

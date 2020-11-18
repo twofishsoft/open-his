@@ -57,7 +57,7 @@ public interface RoleUserService {
      * @param attrValue 字段值
      * @return
      */
-    List<RoleUser> findByAttrList(String attr, Object attrValue);
+    List<RoleUser> queryByAttrList(String attr, Object attrValue);
 
     /**
      * 根据对象中的某个属性，查询数据，返回单个数据
@@ -65,5 +65,5 @@ public interface RoleUserService {
      * @param attrValue 字段值
      * @return
      */
-    RoleUser getOneByAttr(String attr, Object attrValue);
+    RoleUser queryOneByAttr(String attr, Object attrValue);
 }

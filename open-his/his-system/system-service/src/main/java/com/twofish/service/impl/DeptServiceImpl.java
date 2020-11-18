@@ -85,7 +85,7 @@ public class DeptServiceImpl implements DeptService {
      * @param attrValue 字段值
      * @return
      */
-    public List<Dept> findByAttrList(String attr, Object attrValue) {
+    public List<Dept> queryByAttrList(String attr, Object attrValue) {
         QueryWrapper<Dept> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return deptMapper.selectList(qw);
@@ -97,7 +97,7 @@ public class DeptServiceImpl implements DeptService {
      * @param attrValue 字段值
      * @return
      */
-    public Dept getOneByAttr(String attr, Object attrValue) {
+    public Dept queryOneByAttr(String attr, Object attrValue) {
         QueryWrapper<Dept> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return deptMapper.selectOne(qw);

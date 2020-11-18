@@ -58,7 +58,7 @@ public interface CareHistoryService {
      * @param id
      * @return
      */
-    CareHistory getOneById(String id);
+    CareHistory findById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合
@@ -66,7 +66,7 @@ public interface CareHistoryService {
      * @param attrValue 字段值
      * @return
      */
-    List<CareHistory> findByAttrList(String attr, Object attrValue);
+    List<CareHistory> queryByAttrList(String attr, Object attrValue);
 
     /**
      * 根据对象中的某个属性，查询数据，返回单个数据
@@ -74,7 +74,7 @@ public interface CareHistoryService {
      * @param attrValue 字段值
      * @return
      */
-    CareHistory getOneByAttr(String attr, Object attrValue);
+    CareHistory queryOneByAttr(String attr, Object attrValue);
 
     /**
      * 根据患者ID查询患者所有信息【基础，档案，病例】

@@ -78,7 +78,7 @@ public class CareHistoryController {
 	@GetMapping("getCareHistoryById/{careHistoryId}")
 	@ApiOperation(value = "根据ID查询病例表数据", notes = "根据ID查询病例表数据")
 	public AjaxResult getOne(@PathVariable String careHistoryId){
-		return AjaxResult.success("查询成功", careHistoryService.getOneById(careHistoryId));
+		return AjaxResult.success("查询成功", careHistoryService.findById(careHistoryId));
 	}
 
 	/**

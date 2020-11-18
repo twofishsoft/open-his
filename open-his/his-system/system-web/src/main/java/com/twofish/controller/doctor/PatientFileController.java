@@ -78,7 +78,7 @@ public class PatientFileController {
 	@GetMapping("getPatientFileById/{patientFileId}")
 	@ApiOperation(value = "根据ID查询患者档案数据", notes = "根据ID查询患者档案数据")
 	public AjaxResult getOne(@PathVariable String patientFileId){
-		return AjaxResult.success("查询成功", patientFileService.getOneById(patientFileId));
+		return AjaxResult.success("查询成功", patientFileService.findById(patientFileId));
 	}
 
 	/**

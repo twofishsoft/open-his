@@ -72,7 +72,7 @@ public interface RoleService {
      * @param attrValue 字段值
      * @return
      */
-    List<Role> findByAttrList(String attr, Object attrValue);
+    List<Role> queryByAttrList(String attr, Object attrValue);
 
     /**
      * 根据对象中的某个属性，查询数据，返回单个数据
@@ -80,5 +80,5 @@ public interface RoleService {
      * @param attrValue 字段值
      * @return
      */
-    Role getOneByAttr(String attr, Object attrValue);
+    Role queryOneByAttr(String attr, Object attrValue);
 }

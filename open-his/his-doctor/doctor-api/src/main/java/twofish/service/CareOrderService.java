@@ -58,7 +58,7 @@ public interface CareOrderService {
      * @param id
      * @return
      */
-    CareOrder getOneById(String id);
+    CareOrder findById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合
@@ -66,7 +66,7 @@ public interface CareOrderService {
      * @param attrValue 字段值
      * @return
      */
-    List<CareOrder> findByAttrList(String attr, Object attrValue);
+    List<CareOrder> queryByAttrList(String attr, Object attrValue);
 
     /**
      * 根据对象中的某个属性，查询数据，返回单个数据
@@ -74,7 +74,7 @@ public interface CareOrderService {
      * @param attrValue 字段值
      * @return
      */
-    CareOrder getOneByAttr(String attr, Object attrValue);
+    CareOrder queryOneByAttr(String attr, Object attrValue);
 
     /**
      * 根据病例获取所有的药用处方和明细

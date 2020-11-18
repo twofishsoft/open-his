@@ -60,7 +60,7 @@ public interface OrderBackfeeService {
      * @param id
      * @return
      */
-    OrderBackfee getOneById(String id);
+    OrderBackfee findById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合
@@ -68,7 +68,7 @@ public interface OrderBackfeeService {
      * @param attrValue 字段值
      * @return
      */
-    List<OrderBackfee> findByAttrList(String attr, Object attrValue);
+    List<OrderBackfee> queryByAttrList(String attr, Object attrValue);
 
     /**
      * 根据对象中的某个属性，查询数据，返回单个数据
@@ -76,7 +76,7 @@ public interface OrderBackfeeService {
      * @param attrValue 字段值
      * @return
      */
-    OrderBackfee getOneByAttr(String attr, Object attrValue);
+    OrderBackfee queryOneByAttr(String attr, Object attrValue);
 
     /**
      * 根据挂号ID查询已支付的处方信息【退费时使用】

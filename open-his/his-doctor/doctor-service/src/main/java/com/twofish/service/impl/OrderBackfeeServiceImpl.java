@@ -86,19 +86,19 @@ public class OrderBackfeeServiceImpl implements OrderBackfeeService {
     }
 
     @Override
-    public OrderBackfee getOneById(String id) {
+    public OrderBackfee findById(String id) {
         return orderBackfeeMapper.selectById(id);
     }
 
     @Override
-    public List<OrderBackfee> findByAttrList(String attr, Object attrValue) {
+    public List<OrderBackfee> queryByAttrList(String attr, Object attrValue) {
         QueryWrapper<OrderBackfee> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return orderBackfeeMapper.selectList(qw);
     }
 
     @Override
-    public OrderBackfee getOneByAttr(String attr, Object attrValue) {
+    public OrderBackfee queryOneByAttr(String attr, Object attrValue) {
         QueryWrapper<OrderBackfee> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return orderBackfeeMapper.selectOne(qw);
@@ -107,7 +107,7 @@ public class OrderBackfeeServiceImpl implements OrderBackfeeService {
     @Override
     public ChargedCareHistoryDto getChargedCareHistoryByRegId(String regId) {
         ChargedCareHistoryDto chargedCareHistoryDto = new ChargedCareHistoryDto();
-        CareHistory careHistory = careHistoryService.getOneByAttr(CareHistory.COL_REG_ID, regId);
+        CareHistory careHistory = careHistoryService.queryOneByAttr(CareHistory.COL_REG_ID, regId);
         if (null != careHistory) {
             List<CareOrder> list = careOrderService.getCareOrderItem(careHistory.getChId());
             chargedCareHistoryDto.setCareHistory(careHistory);
@@ -134,8 +134,9 @@ public class OrderBackfeeServiceImpl implements OrderBackfeeService {
         if (null != orderCharge) {
             orderBackfee.setOrderId(orderCharge.getOrderId());
         }
-        orderBackfeeItemService.batchOrderBackfeeItem(list);
-        return orderBackfeeMapper.insert(orderBackfee);
+        int insert = orderBackfeeMapper.insert(orderBackfee);
+        insert = orderBackfeeItemService.batchOrderBackfeeItem(list, orderBackfee.getBackId());
+        return insert;
     }
 
 }

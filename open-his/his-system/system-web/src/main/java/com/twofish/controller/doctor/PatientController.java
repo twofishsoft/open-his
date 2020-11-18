@@ -84,7 +84,7 @@ public class PatientController {
 	@GetMapping("getPatientById/{patientId}")
 	@ApiOperation(value = "根据ID查询患者信息表数据", notes = "根据ID查询患者信息表数据")
 	public AjaxResult getOne(@PathVariable String patientId){
-		return AjaxResult.success("查询成功", patientService.getOneById(patientId));
+		return AjaxResult.success("查询成功", patientService.findById(patientId));
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class PatientController {
 	@GetMapping("getPatientFileById/{patientId}")
 	@ApiOperation(value = "根据患者ID查询患者的档案信息", notes = "根据患者ID查询患者的档案信息")
 	public AjaxResult getPatientFileById(@PathVariable String patientId){
-		return AjaxResult.success("查询成功", patientFileService.getOneById(patientId));
+		return AjaxResult.success("查询成功", patientFileService.findById(patientId));
 	}
 
 	/**

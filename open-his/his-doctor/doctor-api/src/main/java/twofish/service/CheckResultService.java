@@ -60,7 +60,7 @@ public interface CheckResultService {
      * @param id
      * @return
      */
-    CheckResult getOneById(String id);
+    CheckResult findById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合
@@ -68,7 +68,7 @@ public interface CheckResultService {
      * @param attrValue 字段值
      * @return
      */
-    List<CheckResult> findByAttrList(String attr, Object attrValue);
+    List<CheckResult> queryByAttrList(String attr, Object attrValue);
 
     /**
      * 根据对象中的某个属性，查询数据，返回单个数据
@@ -76,7 +76,7 @@ public interface CheckResultService {
      * @param attrValue 字段值
      * @return
      */
-    CheckResult getOneByAttr(String attr, Object attrValue);
+    CheckResult queryOneByAttr(String attr, Object attrValue);
 
     /**
      * 检查完成
@@ -90,7 +90,7 @@ public interface CheckResultService {
      * @param itemId
      * @return
      */
-    int startCheck(Long itemId);
+    int startCheck(String itemId);
 
     /**
      * 查询所有检查中的项目

@@ -88,19 +88,19 @@ public class CheckResultServiceImpl implements CheckResultService {
     }
 
     @Override
-    public CheckResult getOneById(String id) {
+    public CheckResult findById(String id) {
         return checkResultMapper.selectById(id);
     }
 
     @Override
-    public List<CheckResult> findByAttrList(String attr, Object attrValue) {
+    public List<CheckResult> queryByAttrList(String attr, Object attrValue) {
         QueryWrapper<CheckResult> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return checkResultMapper.selectList(qw);
     }
 
     @Override
-    public CheckResult getOneByAttr(String attr, Object attrValue) {
+    public CheckResult queryOneByAttr(String attr, Object attrValue) {
         QueryWrapper<CheckResult> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return checkResultMapper.selectOne(qw);
@@ -109,7 +109,7 @@ public class CheckResultServiceImpl implements CheckResultService {
     @Override
     public int completeCheckResult(CheckResultDto checkResultDto) {
         Integer checkItemId = checkResultDto.getCheckItemId();
-        CheckResult checkResult = getOneByAttr(CheckResult.COL_CHECK_ITEM_ID, checkItemId);
+        CheckResult checkResult = queryOneByAttr(CheckResult.COL_CHECK_ITEM_ID, checkItemId);
         if (null != checkResult) {
             checkResult.setResultImg(checkResultDto.getResultImg());
             checkResult.setResultMsg(checkResultDto.getResultMsg());
@@ -121,8 +121,8 @@ public class CheckResultServiceImpl implements CheckResultService {
     }
 
     @Override
-    public int startCheck(Long itemId) {
-        CheckResult checkResult = getOneByAttr(CheckResult.COL_CHECK_ITEM_ID, itemId);
+    public int startCheck(String itemId) {
+        CheckResult checkResult = queryOneByAttr(CheckResult.COL_CHECK_ITEM_ID, itemId);
         if (null != checkResult) {
             checkResult.setResultStatus(Constants.RESULT_STATUS_0);
             return update(checkResult);
@@ -146,13 +146,13 @@ public class CheckResultServiceImpl implements CheckResultService {
     @Override
     public CheckItemDto queryCheckItemByItemId(String itemId) {
         CheckItemDto checkItemDto = new CheckItemDto();
-        CareOrderItem careOrderItem = careOrderItemService.getOneById(itemId);
+        CareOrderItem careOrderItem = careOrderItemService.findById(itemId);
         if (null != careOrderItem) {
             checkItemDto.setItem(careOrderItem);
-            CareOrder careOrder = careOrderService.getOneById(careOrderItem.getCoId());
+            CareOrder careOrder = careOrderService.findById(careOrderItem.getCoId());
             if (null != careOrder) {
                 checkItemDto.setCareOrder(careOrder);
-                CareHistory careHistory = careHistoryService.getOneById(careOrder.getChId());
+                CareHistory careHistory = careHistoryService.findById(careOrder.getChId());
                 checkItemDto.setCareHistory(careHistory);
             }
         }

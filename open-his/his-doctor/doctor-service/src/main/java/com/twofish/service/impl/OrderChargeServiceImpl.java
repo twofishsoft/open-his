@@ -5,22 +5,23 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import com.twofish.constants.Constants;
-import com.twofish.domain.CareHistory;
-import com.twofish.domain.OrderCharge;
-import com.twofish.domain.Registration;
+import com.twofish.domain.*;
+import com.twofish.dto.NoChargeCareHistoryDto;
 import com.twofish.dto.OrderChargeDto;
+import com.twofish.dto.OrderChargeItemDto;
+import com.twofish.dto.OrderChargeWithCashDto;
 import com.twofish.mapper.OrderChargeMapper;
 import com.twofish.vo.DataGridView;
 import io.netty.util.Constant;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import twofish.service.CareHistoryService;
-import twofish.service.OrderChargeService;
-import twofish.service.RegistrationService;
+import twofish.service.*;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author ww
@@ -36,11 +37,19 @@ public class OrderChargeServiceImpl implements OrderChargeService {
     private RegistrationService registrationService;
     @Resource
     private CareHistoryService careHistoryService;
+    @Resource
+    private CareOrderService careOrderService;
+    @Resource
+    private OrderChargeItemService orderChargeItemService;
 
     @Override
     public DataGridView listPage(OrderChargeDto orderChargeDto) {
+        String patientName = orderChargeDto.getPatientName();
+        String regId = orderChargeDto.getRegId();
         Page<OrderCharge> page = new Page<>(orderChargeDto.getPageNum(), orderChargeDto.getPageSize());
         QueryWrapper<OrderCharge> qw = new QueryWrapper<>();
+        qw.eq(StringUtils.isNotBlank(patientName), OrderCharge.COL_PATIENT_NAME, patientName);
+        qw.eq(StringUtils.isNotBlank(regId), OrderCharge.COL_REG_ID, regId);
         orderChargeMapper.selectPage(page, qw);
         return new DataGridView(page.getTotal(), page.getRecords());
     }
@@ -81,19 +90,19 @@ public class OrderChargeServiceImpl implements OrderChargeService {
     }
 
     @Override
-    public OrderCharge getOneById(String id) {
+    public OrderCharge findById(String id) {
         return orderChargeMapper.selectById(id);
     }
 
     @Override
-    public List<OrderCharge> findByAttrList(String attr, Object attrValue) {
+    public List<OrderCharge> queryByAttrList(String attr, Object attrValue) {
         QueryWrapper<OrderCharge> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return orderChargeMapper.selectList(qw);
     }
 
     @Override
-    public OrderCharge getOneByAttr(String attr, Object attrValue) {
+    public OrderCharge queryOneByAttr(String attr, Object attrValue) {
         QueryWrapper<OrderCharge> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return orderChargeMapper.selectOne(qw);
@@ -109,9 +118,9 @@ public class OrderChargeServiceImpl implements OrderChargeService {
 
     @Override
     public int collectFee(String regId, OrderChargeDto orderChargeDto) {
-        Registration registration = registrationService.getOneById(regId);
+        Registration registration = registrationService.findById(regId);
         if (null != registration) {
-            CareHistory careHistory = careHistoryService.getOneByAttr(CareHistory.COL_REG_ID, regId);
+            CareHistory careHistory = careHistoryService.queryOneByAttr(CareHistory.COL_REG_ID, regId);
             orderChargeDto.setOrderAmount(registration.getRegistrationAmount());
             orderChargeDto.setRegId(regId.toString());
             orderChargeDto.setPatientName(registration.getPatientName());
@@ -122,13 +131,52 @@ public class OrderChargeServiceImpl implements OrderChargeService {
             if (null != careHistory) {
                 orderChargeDto.setChId(careHistory.getChId());
             }
-            insert(orderChargeDto);
+            return insert(orderChargeDto);
         }
-        return 0;
+        return -1;
     }
 
     @Override
     public OrderChargeDto getChargedCareHistoryByRegId(String regId) {
         return null;
     }
+
+    @Override
+    public NoChargeCareHistoryDto getNoChargeCareHistoryByRegId(String regId) {
+        NoChargeCareHistoryDto noChargeCareHistoryDto = new NoChargeCareHistoryDto();
+        CareHistory careHistory = careHistoryService.queryOneByAttr(CareHistory.COL_REG_ID, regId);
+        if (null != careHistory) {
+            noChargeCareHistoryDto.setCareHistory(careHistory);
+            List<CareOrder> list = careOrderService.queryByAttrList(CareOrder.COL_CH_ID, careHistory.getChId());
+            noChargeCareHistoryDto.setCareOrders(list);
+        }
+        return noChargeCareHistoryDto;
+    }
+
+    @Override
+    public int createOrderChargeWithCash(OrderChargeWithCashDto orderChargeWithCashDto, String type) {
+        OrderChargeDto orderChargeDto = orderChargeWithCashDto.getOrderChargeDto();
+        List<OrderChargeItemDto> list = orderChargeWithCashDto.getOrderChargeItemDto();
+        SimpleUser simpleUser = orderChargeWithCashDto.getSimpleUser();
+        OrderCharge orderCharge = new OrderCharge();
+        BeanUtil.copyProperties(orderChargeDto, orderCharge);
+        orderCharge.setOrderStatus(Constants.ORDER_BACKFEE_STATUS_1);
+        orderCharge.setPayPlatformId(UUID.randomUUID().toString().replace("_", ""));
+        orderCharge.setPayTime(new Date());
+        orderCharge.setPayType(type);
+        orderCharge.setCreateBy(simpleUser.getUserName());
+        orderCharge.setUpdateBy(simpleUser.getUserName());
+        int insert = orderChargeMapper.insert(orderCharge);
+        insert = orderChargeItemService.batchOrderChargeItem(list, orderCharge.getOrderId());
+        return insert;
+    }
+
+    @Override
+    public List<OrderCharge> payWithCash(String orderId, String type) {
+        QueryWrapper<OrderCharge> qw = new QueryWrapper<>();
+        qw.eq(OrderCharge.COL_ORDER_ID, orderId);
+        qw.eq(OrderCharge.COL_PAY_TYPE, type);
+        return orderChargeMapper.selectList(qw);
+    }
+
 }

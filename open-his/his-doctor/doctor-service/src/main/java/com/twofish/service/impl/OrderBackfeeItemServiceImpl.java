@@ -69,36 +69,33 @@ public class OrderBackfeeItemServiceImpl implements OrderBackfeeItemService {
     }
 
     @Override
-    public OrderBackfeeItem getOneById(String id) {
+    public OrderBackfeeItem findById(String id) {
         return orderBackfeeItemMapper.selectById(id);
     }
 
     @Override
-    public List<OrderBackfeeItem> findByAttrList(String attr, Object attrValue) {
+    public List<OrderBackfeeItem> queryByAttrList(String attr, Object attrValue) {
         QueryWrapper<OrderBackfeeItem> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return orderBackfeeItemMapper.selectList(qw);
     }
 
     @Override
-    public OrderBackfeeItem getOneByAttr(String attr, Object attrValue) {
+    public OrderBackfeeItem queryOneByAttr(String attr, Object attrValue) {
         QueryWrapper<OrderBackfeeItem> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return orderBackfeeItemMapper.selectOne(qw);
     }
 
     @Override
-    public int batchOrderBackfeeItem(List<OrderBackfeeItemDto> list) {
+    public int batchOrderBackfeeItem(List<OrderBackfeeItemDto> list, String backId) {
         final int[] i = {-1};
         list.forEach(item -> {
+            item.setBackId(backId);
+            item.setItemType(Constants.ITEM_TYPE_0);
             item.setStatus(Constants.ORDER_DETAILS_STATUS_2);
             i[0] = insert(item);
         });
         return i[0];
-    }
-
-    @Override
-    public List<OrderBackfeeItem> queryOrderBackfeeItemByBackId(Long backId) {
-        return findByAttrList(OrderBackfeeItem.COL_BACK_ID, backId);
     }
 }

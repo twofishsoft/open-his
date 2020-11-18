@@ -114,7 +114,7 @@ public class RoleController {
     @GetMapping("getRoleIdsByUserId/{userId}")
     @ApiOperation(value = "获取用户所对应的角色", notes = "获取用户所对应的角色")
     public AjaxResult getUserRole(@PathVariable Long userId) {
-        return AjaxResult.success(this.roleUserService.findByAttrList(RoleUser.COL_USER_ID, userId));
+        return AjaxResult.success(this.roleUserService.queryByAttrList(RoleUser.COL_USER_ID, userId));
     }
 
 }

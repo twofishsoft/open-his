@@ -58,7 +58,7 @@ public interface PatientFileService {
      * @param id
      * @return
      */
-    PatientFile getOneById(String id);
+    PatientFile findById(String id);
 
     /**
      * 根据对象中的某个属性，查询数据，返回集合
@@ -66,7 +66,7 @@ public interface PatientFileService {
      * @param attrValue 字段值
      * @return
      */
-    List<PatientFile> findByAttrList(String attr, Object attrValue);
+    List<PatientFile> queryByAttrList(String attr, Object attrValue);
 
     /**
      * 根据对象中的某个属性，查询数据，返回单个数据
@@ -74,5 +74,5 @@ public interface PatientFileService {
      * @param attrValue 字段值
      * @return
      */
-    PatientFile getOneByAttr(String attr, Object attrValue);
+    PatientFile queryOneByAttr(String attr, Object attrValue);
 }

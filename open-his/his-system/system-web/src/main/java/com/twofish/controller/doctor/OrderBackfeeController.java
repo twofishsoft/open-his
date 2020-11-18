@@ -2,6 +2,7 @@ package com.twofish.controller.doctor;
 
 import com.twofish.annotation.CurrUser;
 import com.twofish.constants.Constants;
+import com.twofish.domain.OrderBackfeeItem;
 import com.twofish.domain.SimpleUser;
 import com.twofish.dto.OrderBackfeeDto;
 import com.twofish.dto.OrderBackfeeWithCashDto;
@@ -45,31 +46,6 @@ public class OrderBackfeeController {
 	}
 
 	/**
-	 * 创建现金退费订单
-	 * @param orderBackfeeDto
-	 * @return
-	 */
-	@PostMapping("createOrderBackfeeWithCash")
-	@ApiOperation(value = "创建现金退费订单", notes = "创建现金退费订单")
-	public AjaxResult createOrderBackfeeWithCash(@RequestBody OrderBackfeeWithCashDto orderBackfeeDto){
-		orderBackfeeDto.setSimpleUser(ShiroSecurityUtils.getCurrentSimpleUser());
-		return AjaxResult.toAjax(orderBackfeeService.createOrderBackfeeWithCash(orderBackfeeDto, Constants.PAY_TYPE_0));
-	}
-
-	/**
-	 * 创建支付宝退费订单
-	 * @param orderBackfeeDto
-	 * @return
-	 */
-	@PostMapping("createOrderBackfeeWithZfb")
-	@ApiOperation(value = "创建支付宝退费订单", notes = "创建支付宝退费订单")
-	public AjaxResult createOrderBackfeeWithZfb(@RequestBody OrderBackfeeWithCashDto orderBackfeeDto){
-		orderBackfeeDto.setSimpleUser(ShiroSecurityUtils.getCurrentSimpleUser());
-		return AjaxResult.toAjax(orderBackfeeService.createOrderBackfeeWithCash(orderBackfeeDto, Constants.PAY_TYPE_1));
-	}
-
-
-	/**
 	 * 更新退费主表数据
 	 * @param orderBackfeeDto
 	 * @return
@@ -96,10 +72,10 @@ public class OrderBackfeeController {
 	 * @param orderBackfeeId
 	 * @return
 	 */
-	@GetMapping("queryOrderBackfeeItemByBackId/{backId}")
+	@GetMapping("queryOrderBackfeeByBackId/{backId}")
 	@ApiOperation(value = "根据ID查询退费主表数据", notes = "根据ID查询退费主表数据")
 	public AjaxResult getOne(@PathVariable String orderBackfeeId){
-		return AjaxResult.success("查询成功", orderBackfeeService.getOneById(orderBackfeeId));
+		return AjaxResult.success("查询成功", orderBackfeeService.findById(orderBackfeeId));
 	}
 
 	/**
@@ -110,7 +86,7 @@ public class OrderBackfeeController {
 	@GetMapping("queryOrderBackfeeItemByBackId/{backId}")
 	@ApiOperation(value = "根据退费单ID查询退费单详情", notes = "根据ID查询退费主表数据")
 	public AjaxResult queryOrderBackfeeItemByBackId(@PathVariable Long backId){
-		return AjaxResult.success("查询成功", orderBackfeeItemService.queryOrderBackfeeItemByBackId(backId));
+		return AjaxResult.success("查询成功", orderBackfeeItemService.queryByAttrList(OrderBackfeeItem.COL_BACK_ID, backId));
 	}
 
 	/**
@@ -124,14 +100,37 @@ public class OrderBackfeeController {
 	}
 
 	/**
-	 * 查询所有可用信息
+	 * 根据挂号ID查询已支付的处方信息【退费时使用】
 	 * @return
 	 */
 	@GetMapping("getChargedCareHistoryByRegId/{regId}")
-	@ApiOperation(value = "查询所有可用信息", notes = "查询所有可用信息")
+	@ApiOperation(value = "根据挂号ID查询已支付的处方信息【退费时使用】", notes = "根据挂号ID查询已支付的处方信息【退费时使用】")
 	public AjaxResult getChargedCareHistoryByRegId(@PathVariable String regId) {
 		return AjaxResult.success(orderBackfeeService.getChargedCareHistoryByRegId(regId));
 	}
 
+	/**
+	 * 创建现金退费订单
+	 * @param orderBackfeeDto
+	 * @return
+	 */
+	@PostMapping("createOrderBackfeeWithCash")
+	@ApiOperation(value = "创建现金退费订单", notes = "创建现金退费订单")
+	public AjaxResult createOrderBackfeeWithCash(@RequestBody OrderBackfeeWithCashDto orderBackfeeDto){
+		orderBackfeeDto.setSimpleUser(ShiroSecurityUtils.getCurrentSimpleUser());
+		return AjaxResult.toAjax(orderBackfeeService.createOrderBackfeeWithCash(orderBackfeeDto, Constants.PAY_TYPE_0));
+	}
+
+	/**
+	 * 创建支付宝退费订单
+	 * @param orderBackfeeDto
+	 * @return
+	 */
+	@PostMapping("createOrderBackfeeWithZfb")
+	@ApiOperation(value = "创建支付宝退费订单", notes = "创建支付宝退费订单")
+	public AjaxResult createOrderBackfeeWithZfb(@RequestBody OrderBackfeeWithCashDto orderBackfeeDto){
+		orderBackfeeDto.setSimpleUser(ShiroSecurityUtils.getCurrentSimpleUser());
+		return AjaxResult.toAjax(orderBackfeeService.createOrderBackfeeWithCash(orderBackfeeDto, Constants.PAY_TYPE_1));
+	}
 
 }

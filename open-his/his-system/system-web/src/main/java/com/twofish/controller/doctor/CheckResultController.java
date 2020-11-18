@@ -96,7 +96,7 @@ public class CheckResultController {
 	@GetMapping("getCheckResultById/{checkResultId}")
 	@ApiOperation(value = "根据ID查询检查结果数据", notes = "根据ID查询检查结果数据")
 	public AjaxResult getOne(@PathVariable String checkResultId){
-		return AjaxResult.success("查询成功", checkResultService.getOneById(checkResultId));
+		return AjaxResult.success("查询成功", checkResultService.findById(checkResultId));
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class CheckResultController {
 	 */
 	@PostMapping("startCheck/{itemId}")
 	@ApiOperation(value = "开始检查", notes = "开始检查")
-	public AjaxResult startCheck(@PathVariable Long itemId) {
+	public AjaxResult startCheck(@PathVariable String itemId) {
 		return AjaxResult.toAjax(checkResultService.startCheck(itemId));
 	}
 

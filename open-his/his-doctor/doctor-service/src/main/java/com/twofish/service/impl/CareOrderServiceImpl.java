@@ -73,19 +73,19 @@ public class CareOrderServiceImpl implements CareOrderService {
     }
 
     @Override
-    public CareOrder getOneById(String id) {
+    public CareOrder findById(String id) {
         return careOrderMapper.selectById(id);
     }
 
     @Override
-    public List<CareOrder> findByAttrList(String attr, Object attrValue) {
+    public List<CareOrder> queryByAttrList(String attr, Object attrValue) {
         QueryWrapper<CareOrder> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return careOrderMapper.selectList(qw);
     }
 
     @Override
-    public CareOrder getOneByAttr(String attr, Object attrValue) {
+    public CareOrder queryOneByAttr(String attr, Object attrValue) {
         QueryWrapper<CareOrder> qw = new QueryWrapper<>();
         qw.eq(attr, attrValue);
         return careOrderMapper.selectOne(qw);
@@ -93,10 +93,10 @@ public class CareOrderServiceImpl implements CareOrderService {
 
     @Override
     public List<CareOrder> getCareOrderItem(String chId) {
-        List<CareOrder> list = this.findByAttrList(CareOrder.COL_CH_ID, chId);
+        List<CareOrder> list = this.queryByAttrList(CareOrder.COL_CH_ID, chId);
         if (null != list && list.size() != 0) {
             list.forEach(item -> {
-                item.setCareOrderItems(careOrderItemService.findByAttrList(CareOrderItem.COL_CO_ID, item.getCoId()));
+                item.setCareOrderItems(careOrderItemService.queryByAttrList(CareOrderItem.COL_CO_ID, item.getCoId()));
             });
         }
         return list;
