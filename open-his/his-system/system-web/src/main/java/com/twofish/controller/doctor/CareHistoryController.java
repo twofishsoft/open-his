@@ -151,7 +151,7 @@ public class CareHistoryController {
 	 * @param regId
 	 * @return
 	 */
-	@GetMapping("receivePatient/{regId}")
+	@PostMapping("receivePatient/{regId}")
 	@ApiOperation(value = "接诊", notes = "接诊")
 	public AjaxResult receivePatient(@PathVariable String regId){
 		return AjaxResult.toAjax(registrationService.receivePatient(regId));
