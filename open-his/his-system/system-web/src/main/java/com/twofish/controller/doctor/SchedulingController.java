@@ -1,7 +1,6 @@
 package com.twofish.controller.doctor;
 
 import com.twofish.annotation.CurrUser;
-import com.twofish.domain.Scheduling;
 import com.twofish.domain.SimpleUser;
 import com.twofish.dto.SchedulingDto;
 import com.twofish.dto.SchedulingInfoDto;
@@ -16,7 +15,6 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 import twofish.service.SchedulingService;
 import javax.annotation.Resource;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

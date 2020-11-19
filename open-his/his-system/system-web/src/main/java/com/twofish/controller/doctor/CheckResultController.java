@@ -1,7 +1,6 @@
 package com.twofish.controller.doctor;
 
 import com.twofish.annotation.CurrUser;
-import com.twofish.domain.CareOrderItem;
 import com.twofish.dto.CareOrderItemDto;
 import com.twofish.dto.CheckResultDto;
 import com.twofish.vo.AjaxResult;
@@ -9,7 +8,6 @@ import com.twofish.vo.DataGridView;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
-import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.web.bind.annotation.*;
 import twofish.service.CareOrderItemService;
 import twofish.service.CheckResultService;

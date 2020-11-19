@@ -1,8 +1,6 @@
 package com.twofish.controller.doctor;
 
 import com.twofish.annotation.CurrUser;
-import com.twofish.constants.Constants;
-import com.twofish.domain.Registration;
 import com.twofish.dto.OrderChargeDto;
 import com.twofish.dto.RegistrationDto;
 import com.twofish.dto.SchedulingDto;
@@ -16,7 +14,6 @@ import twofish.service.OrderChargeService;
 import twofish.service.PatientService;
 import twofish.service.RegistrationService;
 import twofish.service.SchedulingService;
-
 import javax.annotation.Resource;
 
 /**

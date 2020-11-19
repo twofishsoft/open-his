@@ -1,10 +1,7 @@
 package twofish.service;
 
-import com.twofish.domain.Patient;
 import com.twofish.domain.Registration;
-import com.twofish.domain.Scheduling;
 import com.twofish.dto.RegistrationDto;
-import com.twofish.dto.SchedulingDto;
 import com.twofish.vo.DataGridView;
 import java.util.List;
 

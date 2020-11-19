@@ -1,23 +1,15 @@
 package com.twofish.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.twofish.constants.Constants;
-import com.twofish.domain.Patient;
 import com.twofish.domain.Registration;
-import com.twofish.domain.Scheduling;
 import com.twofish.dto.RegistrationDto;
-import com.twofish.dto.SchedulingDto;
-import com.twofish.mapper.CareHistoryMapper;
-import com.twofish.mapper.PatientMapper;
 import com.twofish.mapper.RegistrationMapper;
-import com.twofish.mapper.SchedulingMapper;
 import com.twofish.vo.DataGridView;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import twofish.service.CareHistoryService;
 import twofish.service.RegistrationService;
 import javax.annotation.Resource;
 import java.util.Arrays;

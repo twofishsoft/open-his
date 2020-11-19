@@ -8,7 +8,6 @@ import com.twofish.domain.CareHistory;
 import com.twofish.domain.CareOrder;
 import com.twofish.domain.CareOrderItem;
 import com.twofish.domain.CheckResult;
-import com.twofish.dto.CareOrderItemDto;
 import com.twofish.dto.CheckItemDto;
 import com.twofish.dto.CheckResultDto;
 import com.twofish.mapper.CheckResultMapper;

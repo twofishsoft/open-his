@@ -7,14 +7,12 @@ import com.twofish.constants.Constants;
 import com.twofish.domain.*;
 import com.twofish.dto.CareOrderDto;
 import com.twofish.dto.CareOrderItemDto;
-import com.twofish.dto.CheckResultDto;
 import com.twofish.mapper.CareOrderItemMapper;
 import com.twofish.vo.DataGridView;
 import org.springframework.stereotype.Service;
 import twofish.service.CareHistoryService;
 import twofish.service.CareOrderItemService;
 import twofish.service.CareOrderService;
-
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
@@ -138,4 +136,5 @@ public class CareOrderItemServiceImpl implements CareOrderItemService {
         qw.in(checkItemIds.length != 0, CareOrderItem.COL_ITEM_ID, checkItemIds);
         return careOrderItemMapper.selectList(qw);
     }
+
 }

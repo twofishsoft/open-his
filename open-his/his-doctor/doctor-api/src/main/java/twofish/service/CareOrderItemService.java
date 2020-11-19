@@ -1,9 +1,7 @@
 package twofish.service;
 
 import com.twofish.domain.CareOrderItem;
-import com.twofish.domain.CheckResult;
 import com.twofish.dto.CareOrderItemDto;
-import com.twofish.dto.CheckResultDto;
 import com.twofish.vo.DataGridView;
 import java.util.List;
 

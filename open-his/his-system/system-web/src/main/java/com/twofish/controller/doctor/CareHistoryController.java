@@ -1,7 +1,6 @@
 package com.twofish.controller.doctor;
 
 import com.twofish.annotation.CurrUser;
-import com.twofish.domain.CareOrderItem;
 import com.twofish.dto.CareHistoryDto;
 import com.twofish.dto.CareOrderItemDto;
 import com.twofish.utils.ShiroSecurityUtils;
@@ -13,9 +12,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 import twofish.service.CareHistoryService;
 import twofish.service.CareOrderItemService;
-import twofish.service.CareOrderService;
 import twofish.service.RegistrationService;
-
 import javax.annotation.Resource;
 
 /**

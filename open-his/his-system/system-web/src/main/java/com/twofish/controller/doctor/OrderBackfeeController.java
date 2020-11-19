@@ -3,7 +3,6 @@ package com.twofish.controller.doctor;
 import com.twofish.annotation.CurrUser;
 import com.twofish.constants.Constants;
 import com.twofish.domain.OrderBackfeeItem;
-import com.twofish.domain.SimpleUser;
 import com.twofish.dto.OrderBackfeeDto;
 import com.twofish.dto.OrderBackfeeWithCashDto;
 import com.twofish.utils.ShiroSecurityUtils;
@@ -14,7 +13,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 import twofish.service.*;
-
 import javax.annotation.Resource;
 
 /**
