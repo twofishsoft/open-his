@@ -93,4 +93,10 @@ public interface RegistrationService {
      */
     int doReturn(String regId);
 
+    /**
+     * 根据挂号状态查询挂号信息
+     * @param scheudlingType
+     */
+    List<Registration> queryRegistrationByScheudlingType(String scheudlingType);
+
 }

@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 import twofish.service.CareOrderService;
+import twofish.service.RegistrationService;
+
 import javax.annotation.Resource;
 
 /**
@@ -19,11 +21,13 @@ import javax.annotation.Resource;
 @RestController
 @Log4j2
 @Api(value = "药用处方表数据接口",tags = "药用处方表数据接口")
-@RequestMapping("/doctor/careOrder/")
+@RequestMapping("/doctor/care/")
 public class CareOrderController {
 
 	@Resource
 	private CareOrderService careOrderService;
+	@Resource
+	private RegistrationService registrationService;
 
 	/**
 	 * 分页查询药用处方表
@@ -90,5 +94,39 @@ public class CareOrderController {
 	public AjaxResult selectAllCareOrder() {
 		return AjaxResult.success(careOrderService.selectAll());
 	}
+
+	/**
+	 * 查询待就诊的挂号信息
+	 * @param scheudlingType
+	 * @return
+	 */
+	@GetMapping("queryToBeSeenRegistration/{scheudlingType}")
+	@ApiOperation(value = "查询所有可用信息", notes = "查询所有可用信息")
+	public AjaxResult queryToBeSeenRegistration(@PathVariable String scheudlingType) {
+		return AjaxResult.success(registrationService.queryRegistrationByScheudlingType(scheudlingType));
+	}
+
+	/**
+	 * 查询就诊中的挂号信息
+	 * @param scheudlingType
+	 * @return
+	 */
+	@GetMapping("queryVisitingRegistration/{scheudlingType}")
+	@ApiOperation(value = "查询就诊中的挂号信息", notes = "查询就诊中的挂号信息")
+	public AjaxResult queryVisitingRegistration(@PathVariable String scheudlingType) {
+		return AjaxResult.success(registrationService.queryRegistrationByScheudlingType(scheudlingType));
+	}
+
+	/**
+	 * 查询就诊完成的挂号信息
+	 * @param scheudlingType
+	 * @return
+	 */
+	@GetMapping("queryVisitCompletedRegistration/{scheudlingType}")
+	@ApiOperation(value = "查询就诊完成的挂号信息", notes = "查询就诊完成的挂号信息")
+	public AjaxResult queryVisitCompletedRegistration(@PathVariable String scheudlingType) {
+		return AjaxResult.success(registrationService.queryRegistrationByScheudlingType(scheudlingType));
+	}
+
 
 }

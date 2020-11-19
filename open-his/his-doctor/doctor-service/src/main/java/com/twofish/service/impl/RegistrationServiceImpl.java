@@ -121,4 +121,9 @@ public class RegistrationServiceImpl implements RegistrationService {
         return -1;
     }
 
+    @Override
+    public List<Registration> queryRegistrationByScheudlingType(String scheudlingType) {
+        return queryByAttrList(Registration.COL_REGISTRATION_STATUS, scheudlingType);
+    }
+
 }
