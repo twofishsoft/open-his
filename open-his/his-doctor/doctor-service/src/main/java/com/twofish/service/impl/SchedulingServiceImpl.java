@@ -8,6 +8,7 @@ import com.twofish.domain.Scheduling;
 import com.twofish.dto.SchedulingDto;
 import com.twofish.dto.SchedulingInfoDto;
 import com.twofish.mapper.SchedulingMapper;
+import com.twofish.utils.WeekUtil;
 import com.twofish.vo.DataGridView;
 import com.twofish.vo.SchedulingDataDto;
 import com.twofish.vo.TableDataDto;
@@ -124,10 +125,14 @@ public class SchedulingServiceImpl implements SchedulingService {
                 list.add(tableDataDto);
             });
         }
+        List<String> labelNames = new ArrayList<>();
         List<String> schedulingDay = new ArrayList<>(set);
-        schedulingInfoDto.setSchedulingDay(schedulingDay);
+        schedulingDay.forEach(item -> {
+            labelNames.add(item + "(" + WeekUtil.dateToWeek(item) + ")");
+        });
+        schedulingInfoDto.setLabelNames(labelNames);
         schedulingInfoDto.setTableData(list);
-        schedulingInfoDto.setSchedulingData(getClock(schedulingDay));
+        schedulingInfoDto.setSchedulingData(WeekUtil.getClock(schedulingDay));
         return schedulingInfoDto;
     }
 
@@ -152,45 +157,15 @@ public class SchedulingServiceImpl implements SchedulingService {
                 list.add(tableDataDto);
             });
         }
+        List<String> labelNames = new ArrayList<>();
         List<String> schedulingDay = new ArrayList<>(set);
-        schedulingInfoDto.setSchedulingDay(schedulingDay);
+        schedulingDay.forEach(item -> {
+            labelNames.add(item + "(" + WeekUtil.dateToWeek(item) + ")");
+        });
+        schedulingInfoDto.setLabelNames(labelNames);
         schedulingInfoDto.setTableData(list);
-        schedulingInfoDto.setSchedulingData(getClock(schedulingDay));
+        schedulingInfoDto.setSchedulingData(WeekUtil.getClock(schedulingDay));
         return schedulingInfoDto;
     }
 
-    /**
-     * 获取合适的打卡时间
-     */
-    public SchedulingDataDto getClock(List<String> times) {
-        if (times.size() == 0) {
-            return new SchedulingDataDto();
-        }
-        String min = times.get(0);
-        String max = times.get(0);
-        try {
-            for (int i = 1; i < times.size(); i++) {
-                Integer integer = compareTime(min, times.get(i));
-                if (integer == 1) {
-                    min = times.get(i);
-                }
-                integer = compareTime(max, times.get(i));
-                if (integer == -1) {
-                    max = times.get(i);
-                }
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return new SchedulingDataDto(max, min);
-    }
-
-    /**
-     * 大于:1,小于:-1 等于:0
-     */
-    public Integer compareTime(String start, String end) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//这个地方时间规格可根据自己的需求修改
-        long result = sdf.parse(start).getTime() - sdf.parse(end).getTime();
-        return result < 0L?Integer.valueOf(-1):(result == 0L?Integer.valueOf(0):Integer.valueOf(1));
-    }
 }

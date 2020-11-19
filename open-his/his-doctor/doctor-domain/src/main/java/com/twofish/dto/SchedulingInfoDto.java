@@ -25,7 +25,7 @@ import java.util.List;
 @NoArgsConstructor
 public class SchedulingInfoDto extends BaseDto {
 
-	private List<String> schedulingDay;
+	private List<String> labelNames;
 	private SchedulingDataDto schedulingData;
 	private List<TableDataDto> tableData;
 }

@@ -118,17 +118,7 @@ public class SchedulingController {
 	@GetMapping("queryScheduling")
 	@ApiOperation(value = "查询要排班的医生的排班信息", notes = "查询要排班的医生的排班信息")
 	public AjaxResult queryScheduling(SchedulingDto schedulingDto) {
-		SchedulingInfoDto schedulingInfoDto = schedulingService.queryScheduling(schedulingDto);
-		List<String> schedulingDay = schedulingInfoDto.getSchedulingDay();
-		List<String> labelNames = new ArrayList<>();
-		schedulingDay.forEach(item -> {
-			labelNames.add(item + "(" + WeekUtil.dateToWeek(item) + ")");
-		});
-		AjaxResult success = AjaxResult.success();
-		success.put("labelNames", labelNames);
-		success.put("schedulingData", schedulingInfoDto.getSchedulingData());
-		success.put("tableData", schedulingInfoDto.getTableData());
-		return success;
+		return AjaxResult.success(schedulingService.queryScheduling(schedulingDto));
 	}
 
 	/**
@@ -139,21 +129,8 @@ public class SchedulingController {
 	@ApiOperation(value = "查询当前登陆用户的排班信息", notes = "查询当前登陆用户的排班信息")
 	public AjaxResult queryMyScheduling(SchedulingDto schedulingDto) {
 		SimpleUser currentSimpleUser = ShiroSecurityUtils.getCurrentSimpleUser();
-		Long userId = (Long) currentSimpleUser.getUserId();
-		schedulingDto.setUserId(userId);
-		SchedulingInfoDto schedulingInfoDto = schedulingService.queryMyScheduling(schedulingDto);
-		List<String> schedulingDay = schedulingInfoDto.getSchedulingDay();
-		List<String> labelNames = new ArrayList<>();
-		schedulingDay.forEach(item -> {
-			labelNames.add(item + "(" + WeekUtil.dateToWeek(item) + ")");
-		});
-		AjaxResult success = AjaxResult.success();
-		success.put("labelNames", labelNames);
-		success.put("schedulingData", schedulingInfoDto.getSchedulingData());
-		success.put("tableData", schedulingInfoDto.getTableData());
-		return success;
+		schedulingDto.setUserId((Long) currentSimpleUser.getUserId());
+		return AjaxResult.success(schedulingService.queryMyScheduling(schedulingDto));
 	}
-
-
 
 }
