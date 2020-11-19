@@ -147,17 +147,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsersNeedScheduling(Long deptId) {
-        Role role = roleService.queryOneByAttr(Role.COL_ROLE_CODE, Constants.DOCTOR_CODE);
-        if (null != role) {
-            return userMapper.getUsersNeedScheduling(
-                    new UserDto(Constants.STATUS_TRUE, Constants.SCHEDULING_FLAG_TRUE, deptId, role.getRoleId())
-            );
-        }
-        return null;
-    }
-
-    @Override
     public User queryByPhone(String phone) {
         return this.queryOneByAttr(User.COL_PHONE, phone);
     }
@@ -185,4 +174,14 @@ public class UserServiceImpl implements UserService {
         return i;
     }
 
+    @Override
+    public List<User> getUsersNeedScheduling(Long deptId) {
+        Role role = roleService.queryOneByAttr(Role.COL_ROLE_CODE, Constants.DOCTOR_CODE);
+        if (null != role) {
+            return userMapper.getUsersNeedScheduling(
+                    new UserDto(Constants.STATUS_TRUE, Constants.SCHEDULING_FLAG_TRUE, deptId, role.getRoleId())
+            );
+        }
+        return null;
+    }
 }

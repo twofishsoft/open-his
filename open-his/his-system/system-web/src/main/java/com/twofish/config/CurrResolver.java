@@ -16,7 +16,7 @@ import java.lang.reflect.Field;
 /**
  * @author ww
  **/
-public class ValidatorResolver implements HandlerMethodArgumentResolver {
+public class CurrResolver implements HandlerMethodArgumentResolver {
 
     /**
      * @author ww

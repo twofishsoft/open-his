@@ -1,7 +1,6 @@
 package com.twofish.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import javax.annotation.PostConstruct;
@@ -22,7 +21,7 @@ public class MethodArgumentResolver {
     @PostConstruct
     public void injectSelfMethodArgumentResolver() {
         List<HandlerMethodArgumentResolver> argumentResolvers = new ArrayList<>();
-        argumentResolvers.add(new ValidatorResolver());
+        argumentResolvers.add(new CurrResolver());
         argumentResolvers.addAll(adapter.getArgumentResolvers());
         adapter.setArgumentResolvers(argumentResolvers);
     }

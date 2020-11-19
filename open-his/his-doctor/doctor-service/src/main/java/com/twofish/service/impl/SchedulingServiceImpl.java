@@ -6,13 +6,18 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.twofish.constants.Constants;
 import com.twofish.domain.Scheduling;
 import com.twofish.dto.SchedulingDto;
+import com.twofish.dto.SchedulingInfoDto;
 import com.twofish.mapper.SchedulingMapper;
 import com.twofish.vo.DataGridView;
+import com.twofish.vo.SchedulingDataDto;
+import com.twofish.vo.TableDataDto;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import twofish.service.SchedulingService;
 import javax.annotation.Resource;
-import java.util.Arrays;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @author ww
@@ -41,10 +46,17 @@ public class SchedulingServiceImpl implements SchedulingService {
     }
 
     @Override
-    public int insert(SchedulingDto schedulingDto) {
-        Scheduling scheduling = new Scheduling();
-        BeanUtil.copyProperties(schedulingDto, scheduling);
-        return schedulingMapper.insert(scheduling);
+    public int saveScheduling(SchedulingDto schedulingDto) {
+        String beginDate = schedulingDto.getBeginDate();
+        List<TableDataDto> data = schedulingDto.getData();
+        final int[] i = {-1};
+        data.forEach(item -> {
+            Scheduling scheduling = new Scheduling();
+            BeanUtil.copyProperties(item, scheduling);
+            scheduling.setSchedulingDay(beginDate);
+            i[0] = schedulingMapper.insert(scheduling);
+        });
+        return i[0];
     }
 
     @Override
@@ -92,4 +104,88 @@ public class SchedulingServiceImpl implements SchedulingService {
         return schedulingMapper.selectOne(qw);
     }
 
+    @Override
+    public SchedulingInfoDto queryScheduling() {
+        Set set = new HashSet();
+        List<TableDataDto> list = new ArrayList<>();
+        SchedulingInfoDto schedulingInfoDto = new SchedulingInfoDto();
+
+        List<Scheduling> schedulings = selectAll();
+        if (null != schedulings && schedulings.size() != 0) {
+            schedulings.forEach(item -> {
+                set.add(item.getSchedulingDay());
+                TableDataDto tableDataDto = new TableDataDto();
+                tableDataDto.setUserId(item.getUserId());
+                tableDataDto.setDeptId(item.getDeptId());
+                tableDataDto.setSchedulingType(new String[]{item.getSchedulingType()});
+                tableDataDto.setSubsectionType(item.getSubsectionType());
+                list.add(tableDataDto);
+            });
+        }
+        List<String> schedulingDay = new ArrayList<>(set);
+        schedulingInfoDto.setSchedulingDay(schedulingDay);
+        schedulingInfoDto.setTableData(list);
+        schedulingInfoDto.setSchedulingData(getClock(schedulingDay));
+        return schedulingInfoDto;
+    }
+
+    @Override
+    public SchedulingInfoDto queryMyScheduling(String userId) {
+        List<TableDataDto> list = new ArrayList<>();
+        SchedulingInfoDto schedulingInfoDto = new SchedulingInfoDto();
+        Set set = new HashSet();
+
+        List<Scheduling> schedulings = queryByAttrList(Scheduling.COL_USER_ID, userId);
+        if (null != schedulings && schedulings.size() != 0) {
+            schedulings.forEach(item -> {
+                set.add(item.getSchedulingDay());
+                TableDataDto tableDataDto = new TableDataDto();
+                tableDataDto.setUserId(item.getUserId());
+                tableDataDto.setDeptId(item.getDeptId());
+                tableDataDto.setSchedulingType(new String[]{item.getSchedulingType()});
+                tableDataDto.setSubsectionType(item.getSubsectionType());
+                list.add(tableDataDto);
+            });
+        }
+        List<String> schedulingDay = new ArrayList<>(set);
+        schedulingInfoDto.setSchedulingDay(schedulingDay);
+        schedulingInfoDto.setTableData(list);
+        schedulingInfoDto.setSchedulingData(getClock(schedulingDay));
+        return schedulingInfoDto;
+    }
+
+    /**
+     * 获取合适的打卡时间
+     */
+    public SchedulingDataDto getClock(List<String> times) {
+        if (times.size() == 0) {
+            return new SchedulingDataDto();
+        }
+        String min = times.get(0);
+        String max = times.get(0);
+        try {
+            for (int i = 1; i < times.size(); i++) {
+                Integer integer = compareTime(min, times.get(i));
+                if (integer == 1) {
+                    min = times.get(i);
+                }
+                integer = compareTime(max, times.get(i));
+                if (integer == -1) {
+                    max = times.get(i);
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new SchedulingDataDto(max, min);
+    }
+
+    /**
+     * 大于:1,小于:-1 等于:0
+     */
+    public Integer compareTime(String start, String end) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");//这个地方时间规格可根据自己的需求修改
+        long result = sdf.parse(start).getTime() - sdf.parse(end).getTime();
+        return result < 0L?Integer.valueOf(-1):(result == 0L?Integer.valueOf(0):Integer.valueOf(1));
+    }
 }

@@ -3,10 +3,7 @@ package com.twofish.domain;
 import java.util.Date;
 import java.math.BigDecimal;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -99,7 +96,7 @@ public class CareOrderItem extends BaseEntity {
 	 * 创建时间
 	 */
 	@ApiModelProperty(value="创建时间")
-	@TableField(value = "create_time")
+	@TableField(value = "create_time", fill = FieldFill.INSERT)
 	private Date createTime;
 
 	public static final String COL_ITEM_ID = "item_id";

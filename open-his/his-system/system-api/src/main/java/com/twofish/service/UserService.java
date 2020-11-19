@@ -3,19 +3,14 @@ package com.twofish.service;
 import com.twofish.domain.User;
 import com.twofish.dto.UserDto;
 import com.twofish.vo.DataGridView;
+import io.swagger.models.auth.In;
+
 import java.util.List;
 
 /**
  * @author ww
  */
 public interface UserService {
-
-    /**
-     * 查询需要排班的医生信息
-     * @param deptId
-     * @return
-     */
-    List<User> getUsersNeedScheduling(Long deptId);
 
     /**
      * 分页查询用户数据
@@ -94,5 +89,12 @@ public interface UserService {
      * @return
      */
     int updateRole(UserDto userDto);
+
+    /**
+     * 查询需要排班的医生信息
+     * @param deptId
+     * @return
+     */
+    List<User> getUsersNeedScheduling(Long deptId);
 
 }

@@ -2,6 +2,7 @@ package twofish.service;
 
 import com.twofish.domain.Scheduling;
 import com.twofish.dto.SchedulingDto;
+import com.twofish.dto.SchedulingInfoDto;
 import com.twofish.vo.DataGridView;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public interface SchedulingService {
      * @param schedulingDto
      * @return
      */
-    int insert(SchedulingDto schedulingDto);
+    int saveScheduling(SchedulingDto schedulingDto);
 
     /**
      * 修改
@@ -82,4 +83,17 @@ public interface SchedulingService {
      * @return
      */
     List<Scheduling> listDeptForScheduling(SchedulingDto schedulingDto);
+
+    /**
+     * 查询要排班的医生的排班信息
+     * @return
+     */
+    SchedulingInfoDto queryScheduling();
+
+    /**
+     * 查询当前登陆用户的排班信息
+     * @param userId
+     * @return
+     */
+    SchedulingInfoDto queryMyScheduling(String userId);
 }

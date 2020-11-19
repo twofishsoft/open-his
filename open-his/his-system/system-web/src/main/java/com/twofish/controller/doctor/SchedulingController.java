@@ -1,7 +1,13 @@
 package com.twofish.controller.doctor;
 
 import com.twofish.annotation.CurrUser;
+import com.twofish.domain.Scheduling;
+import com.twofish.domain.SimpleUser;
 import com.twofish.dto.SchedulingDto;
+import com.twofish.dto.SchedulingInfoDto;
+import com.twofish.service.UserService;
+import com.twofish.utils.ShiroSecurityUtils;
+import com.twofish.utils.WeekUtil;
 import com.twofish.vo.AjaxResult;
 import com.twofish.vo.DataGridView;
 import io.swagger.annotations.Api;
@@ -10,6 +16,9 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.web.bind.annotation.*;
 import twofish.service.SchedulingService;
 import javax.annotation.Resource;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author ww
@@ -24,6 +33,8 @@ public class SchedulingController {
 
 	@Resource
 	private SchedulingService schedulingService;
+	@Resource
+	private UserService userService;
 
 	/**
 	 * 分页查询排班信息表
@@ -38,14 +49,14 @@ public class SchedulingController {
 	}
 
 	/**
-	 * 添加排班信息表数据
+	 * 保存排班信息
 	 * @param schedulingDto
 	 * @return
 	 */
-	@PostMapping("addScheduling")
-	@ApiOperation(value = "添加排班信息表数据", notes = "添加排班信息表数据")
-	public AjaxResult addScheduling(@CurrUser SchedulingDto schedulingDto){
-		return AjaxResult.toAjax(schedulingService.insert(schedulingDto));
+	@PostMapping("saveScheduling")
+	@ApiOperation(value = "保存排班信息", notes = "保存排班信息")
+	public AjaxResult saveScheduling(@RequestBody SchedulingDto schedulingDto){
+		return AjaxResult.toAjax(schedulingService.saveScheduling(schedulingDto));
 	}
 
 	/**
@@ -97,9 +108,53 @@ public class SchedulingController {
 	 */
 	@GetMapping("queryUsersNeedScheduling")
 	@ApiOperation(value = "查询要排班的医生信息", notes = "查询要排班的医生信息")
-	public AjaxResult queryUsersNeedScheduling() {
-		return AjaxResult.success(schedulingService.selectAll());
+	public AjaxResult queryUsersNeedScheduling(SchedulingDto schedulingDto) {
+		Long deptId = Long.parseLong(schedulingDto.getDeptId().toString());
+		return AjaxResult.success(userService.getUsersNeedScheduling(deptId));
 	}
+
+	/**
+	 * 查询要排班的医生的排班信息
+	 * @return
+	 */
+	@GetMapping("queryScheduling")
+	@ApiOperation(value = "查询要排班的医生的排班信息", notes = "查询要排班的医生的排班信息")
+	public AjaxResult queryScheduling() {
+		SchedulingInfoDto schedulingInfoDto = schedulingService.queryScheduling();
+		List<String> schedulingDay = schedulingInfoDto.getSchedulingDay();
+		List<String> labelNames = new ArrayList<>();
+		schedulingDay.forEach(item -> {
+			labelNames.add(item + "(" + WeekUtil.dateToWeek(item) + ")");
+		});
+		AjaxResult success = AjaxResult.success();
+		success.put("labelNames", labelNames);
+		success.put("schedulingData", schedulingInfoDto.getSchedulingData());
+		success.put("tableData", schedulingInfoDto.getTableData());
+		return success;
+	}
+
+	/**
+	 * 查询当前登陆用户的排班信息
+	 * @return
+	 */
+	@GetMapping("queryMyScheduling")
+	@ApiOperation(value = "查询当前登陆用户的排班信息", notes = "查询当前登陆用户的排班信息")
+	public AjaxResult queryMyScheduling() {
+		SimpleUser currentSimpleUser = ShiroSecurityUtils.getCurrentSimpleUser();
+		String userId = (String) currentSimpleUser.getUserId();
+		SchedulingInfoDto schedulingInfoDto = schedulingService.queryMyScheduling(userId);
+		List<String> schedulingDay = schedulingInfoDto.getSchedulingDay();
+		List<String> labelNames = new ArrayList<>();
+		schedulingDay.forEach(item -> {
+			labelNames.add(item + "(" + WeekUtil.dateToWeek(item) + ")");
+		});
+		AjaxResult success = AjaxResult.success();
+		success.put("labelNames", labelNames);
+		success.put("schedulingData", schedulingInfoDto.getSchedulingData());
+		success.put("tableData", schedulingInfoDto.getTableData());
+		return success;
+	}
+
 
 
 }

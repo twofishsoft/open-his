@@ -1,6 +1,8 @@
 package com.twofish.domain;
 
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -59,7 +61,7 @@ public class Scheduling extends BaseEntity {
 	 * 创建时间
 	 */
 	@ApiModelProperty(value="创建时间")
-	@TableField(value = "create_time")
+	@TableField(value = "create_time", fill = FieldFill.INSERT)
 	private Date createTime;
 
 	/**

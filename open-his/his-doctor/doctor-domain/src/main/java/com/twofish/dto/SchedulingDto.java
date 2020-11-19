@@ -3,6 +3,7 @@ package com.twofish.dto;
 import java.util.Date;
 
 import com.twofish.vo.BaseDto;
+import com.twofish.vo.TableDataDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author ww
@@ -65,4 +67,6 @@ public class SchedulingDto extends BaseDto {
 	@ApiModelProperty(value="创建者")
 	private String createBy;
 
+	private String beginDate;
+	private List<TableDataDto> data;
 }
