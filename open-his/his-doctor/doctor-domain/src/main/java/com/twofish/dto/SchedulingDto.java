@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 import java.util.List;
 
@@ -29,13 +31,13 @@ public class SchedulingDto extends BaseDto {
 	 * 医生ID
 	 */
 	@ApiModelProperty(value="医生ID")
-	private Integer userId;
+	private Long userId;
 
 	/**
 	 * 科室ID
 	 */
 	@ApiModelProperty(value="科室ID")
-	private Integer deptId;
+	private Long deptId;
 
 	/**
 	 * 值班日期
@@ -66,6 +68,9 @@ public class SchedulingDto extends BaseDto {
 	 */
 	@ApiModelProperty(value="创建者")
 	private String createBy;
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date queryDate;
 
 	private String beginDate;
 	private List<TableDataDto> data;

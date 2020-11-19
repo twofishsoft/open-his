@@ -88,12 +88,12 @@ public interface SchedulingService {
      * 查询要排班的医生的排班信息
      * @return
      */
-    SchedulingInfoDto queryScheduling();
+    SchedulingInfoDto queryScheduling(SchedulingDto schedulingDto);
 
     /**
      * 查询当前登陆用户的排班信息
-     * @param userId
+     * @param schedulingDto
      * @return
      */
-    SchedulingInfoDto queryMyScheduling(String userId);
+    SchedulingInfoDto queryMyScheduling(SchedulingDto schedulingDto);
 }

@@ -105,12 +105,15 @@ public class SchedulingServiceImpl implements SchedulingService {
     }
 
     @Override
-    public SchedulingInfoDto queryScheduling() {
+    public SchedulingInfoDto queryScheduling(SchedulingDto schedulingDto) {
         Set set = new HashSet();
         List<TableDataDto> list = new ArrayList<>();
         SchedulingInfoDto schedulingInfoDto = new SchedulingInfoDto();
-
-        List<Scheduling> schedulings = selectAll();
+        QueryWrapper<Scheduling> qw = new QueryWrapper<>();
+        qw.eq(null != schedulingDto.getDeptId(), Scheduling.COL_DEPT_ID, schedulingDto.getDeptId());
+        qw.eq(null != schedulingDto.getUserId(), Scheduling.COL_USER_ID, schedulingDto.getUserId());
+        qw.eq(null != schedulingDto.getQueryDate(), Scheduling.COL_SCHEDULING_DAY, schedulingDto.getQueryDate());
+        List<Scheduling> schedulings = schedulingMapper.selectList(qw);;
         if (null != schedulings && schedulings.size() != 0) {
             schedulings.forEach(item -> {
                 set.add(item.getSchedulingDay());
@@ -130,12 +133,15 @@ public class SchedulingServiceImpl implements SchedulingService {
     }
 
     @Override
-    public SchedulingInfoDto queryMyScheduling(String userId) {
+    public SchedulingInfoDto queryMyScheduling(SchedulingDto schedulingDto) {
         List<TableDataDto> list = new ArrayList<>();
         SchedulingInfoDto schedulingInfoDto = new SchedulingInfoDto();
         Set set = new HashSet();
 
-        List<Scheduling> schedulings = queryByAttrList(Scheduling.COL_USER_ID, userId);
+        QueryWrapper<Scheduling> qw = new QueryWrapper<>();
+        qw.eq(Scheduling.COL_USER_ID, schedulingDto.getUserId());
+        qw.eq(null != schedulingDto.getQueryDate(), Scheduling.COL_SCHEDULING_DAY, schedulingDto.getQueryDate());
+        List<Scheduling> schedulings = schedulingMapper.selectList(qw);
         if (null != schedulings && schedulings.size() != 0) {
             schedulings.forEach(item -> {
                 set.add(item.getSchedulingDay());

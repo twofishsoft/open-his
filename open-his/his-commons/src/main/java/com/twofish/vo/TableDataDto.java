@@ -18,12 +18,12 @@ public class TableDataDto {
     /**
      * 医生ID
      */
-    private Integer userId;
+    private Long userId;
 
     /**
      * 科室ID
      */
-    private Integer deptId;
+    private Long deptId;
 
     /**
      * 排班时段1上午  2下午 3晚上 字典表数据翻译
