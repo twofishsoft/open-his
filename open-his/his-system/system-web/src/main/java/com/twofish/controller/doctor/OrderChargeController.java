@@ -138,7 +138,7 @@ public class OrderChargeController {
 	 * @return
 	 */
 	@GetMapping("queryOrderChargeOrderId/{orderId}")
-	@ApiOperation(value = "创建支付宝收费订单", notes = "创建支付宝收费订单")
+	@ApiOperation(value = "根据订单ID查询订单信息【验证是否支付成功】", notes = "根据订单ID查询订单信息【验证是否支付成功】")
 	public AjaxResult queryOrderChargeOrderId(@PathVariable String orderId){
 		return AjaxResult.success(orderChargeService.findById(orderId));
 	}

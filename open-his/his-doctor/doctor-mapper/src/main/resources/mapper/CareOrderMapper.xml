@@ -24,4 +24,20 @@
 		his_care_order t
 	</sql>
 
+	<select id="getNoChargeCareByRegId" parameterType="com.twofish.dto.CareOrderDto" resultMap="BaseResultMap">
+		SELECT
+		t.co_id,t.co_type,t.user_id,t.patient_id,t.patient_name,t.ch_id,t.all_amount,t.create_by,
+			t.create_time,t.update_by,t.update_time
+		FROM
+		his_care_order t, his_order_charge h
+		WHERE
+		t.ch_id = h.chId
+		<if test="chId != null and chId != ''">
+			AND t.ch_id = #{chId}
+		</if>
+		<if test="orderStatus != null and orderStatus != ''">
+			AND h.order_status = #{orderStatus}
+		</if>
+	</select>
+
 </mapper>

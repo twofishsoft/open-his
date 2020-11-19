@@ -77,9 +77,16 @@ public interface CareOrderService {
     CareOrder queryOneByAttr(String attr, Object attrValue);
 
     /**
-     * 根据病例获取所有的药用处方和明细
-     * @param chId
+     * 查询处方信息
+     * @param careOrderDto
      * @return
      */
-    List<CareOrder> getCareOrderItem(String chId);
+    List<CareOrder> getNoChargeCareByRegId(CareOrderDto careOrderDto);
+
+    /**
+     * 根据病例获取所有的药用处方和明细
+     * @param careOrderDto
+     * @return
+     */
+    List<CareOrder> getCareOrderItem(CareOrderDto careOrderDto);
 }

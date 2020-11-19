@@ -3,6 +3,7 @@ package com.twofish.dto;
 import java.util.Date;
 import java.math.BigDecimal;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.twofish.vo.BaseDto;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -89,5 +90,8 @@ public class CareOrderDto extends BaseDto {
 	 */
 	@ApiModelProperty(value="更新时间")
 	private Date updateTime;
+
+	@ApiModelProperty(value="订单状态0未支付  1 支付成功  2支付超时 3支付失败 字典表his_order_charge_status")
+	private String orderStatus;
 
 }

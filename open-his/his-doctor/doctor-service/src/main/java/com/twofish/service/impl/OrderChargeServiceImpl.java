@@ -6,10 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import com.twofish.constants.Constants;
 import com.twofish.domain.*;
-import com.twofish.dto.NoChargeCareHistoryDto;
-import com.twofish.dto.OrderChargeDto;
-import com.twofish.dto.OrderChargeItemDto;
-import com.twofish.dto.OrderChargeWithCashDto;
+import com.twofish.dto.*;
 import com.twofish.mapper.OrderChargeMapper;
 import com.twofish.vo.DataGridView;
 import io.netty.util.Constant;
@@ -146,9 +143,12 @@ public class OrderChargeServiceImpl implements OrderChargeService {
         NoChargeCareHistoryDto noChargeCareHistoryDto = new NoChargeCareHistoryDto();
         CareHistory careHistory = careHistoryService.queryOneByAttr(CareHistory.COL_REG_ID, regId);
         if (null != careHistory) {
-            noChargeCareHistoryDto.setCareHistory(careHistory);
-            List<CareOrder> list = careOrderService.queryByAttrList(CareOrder.COL_CH_ID, careHistory.getChId());
+            CareOrderDto chargeDto = new CareOrderDto();
+            chargeDto.setChId(careHistory.getChId());
+            chargeDto.setOrderStatus(Constants.ORDER_DETAILS_STATUS_0);
+            List<CareOrder> list = careOrderService.getNoChargeCareByRegId(chargeDto);
             noChargeCareHistoryDto.setCareOrders(list);
+            noChargeCareHistoryDto.setCareHistory(careHistory);
         }
         return noChargeCareHistoryDto;
     }

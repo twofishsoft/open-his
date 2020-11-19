@@ -5,10 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.twofish.constants.Constants;
 import com.twofish.domain.*;
-import com.twofish.dto.ChargedCareHistoryDto;
-import com.twofish.dto.OrderBackfeeDto;
-import com.twofish.dto.OrderBackfeeItemDto;
-import com.twofish.dto.OrderBackfeeWithCashDto;
+import com.twofish.dto.*;
 import com.twofish.mapper.OrderBackfeeMapper;
 import com.twofish.vo.DataGridView;
 import org.apache.commons.lang3.StringUtils;
@@ -109,7 +106,10 @@ public class OrderBackfeeServiceImpl implements OrderBackfeeService {
         ChargedCareHistoryDto chargedCareHistoryDto = new ChargedCareHistoryDto();
         CareHistory careHistory = careHistoryService.queryOneByAttr(CareHistory.COL_REG_ID, regId);
         if (null != careHistory) {
-            List<CareOrder> list = careOrderService.getCareOrderItem(careHistory.getChId());
+            CareOrderDto chargeDto = new CareOrderDto();
+            chargeDto.setChId(careHistory.getChId());
+            chargeDto.setOrderStatus(Constants.ORDER_DETAILS_STATUS_1);
+            List<CareOrder> list = careOrderService.getCareOrderItem(chargeDto);
             chargedCareHistoryDto.setCareHistory(careHistory);
             chargedCareHistoryDto.setCareOrders(list);
         }

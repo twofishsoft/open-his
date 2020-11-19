@@ -92,8 +92,13 @@ public class CareOrderServiceImpl implements CareOrderService {
     }
 
     @Override
-    public List<CareOrder> getCareOrderItem(String chId) {
-        List<CareOrder> list = this.queryByAttrList(CareOrder.COL_CH_ID, chId);
+    public List<CareOrder> getNoChargeCareByRegId(CareOrderDto careOrderDto) {
+        return careOrderMapper.getNoChargeCareByRegId(careOrderDto);
+    }
+
+    @Override
+    public List<CareOrder> getCareOrderItem(CareOrderDto careOrderDto) {
+        List<CareOrder> list = this.getNoChargeCareByRegId(careOrderDto);
         if (null != list && list.size() != 0) {
             list.forEach(item -> {
                 item.setCareOrderItems(careOrderItemService.queryByAttrList(CareOrderItem.COL_CO_ID, item.getCoId()));
