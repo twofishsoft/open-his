@@ -115,7 +115,7 @@ public class PatientController {
 	 */
 	@GetMapping("getPatientAllMessageByPatientId/{patientId}")
 	@ApiOperation(value = "根据患者ID查询患者所有信息【基础，档案，病例】", notes = "根据患者ID查询患者所有信息【基础，档案，病例】")
-	public AjaxResult getPatientAllMessageByPatientId(@PathVariable Long patientId){
+	public AjaxResult getPatientAllMessageByPatientId(@PathVariable String patientId){
 		return AjaxResult.success("查询成功", careHistoryService.getPatientAllMessageByPatientId(patientId));
 	}
 

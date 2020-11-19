@@ -35,6 +35,13 @@ public interface CareOrderItemService {
     int insert(CareOrderItemDto careOrderItemDto);
 
     /**
+     * 批量添加
+     * @param careOrderItemDto
+     * @return
+     */
+    int saveCareOrderItem(CareOrderItemDto careOrderItemDto);
+
+    /**
      * 修改
      * @param careOrderItemDto
      * @return
@@ -54,6 +61,13 @@ public interface CareOrderItemService {
      * @return
      */
     int deleteByIds(Long[] ids);
+
+    /**
+     * 根据处方详情ID删除处方详情【只能删除未支付的】
+     * @param itemId
+     * @return
+     */
+    int deleteCareOrderItemById(String itemId);
 
     /**
      * 根据ID查询数据

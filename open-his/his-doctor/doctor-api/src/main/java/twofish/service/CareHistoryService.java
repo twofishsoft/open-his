@@ -2,6 +2,8 @@ package twofish.service;
 
 import com.twofish.domain.CareHistory;
 import com.twofish.dto.CareHistoryDto;
+import com.twofish.dto.CareOrdersDto;
+import com.twofish.dto.PatientAllMessageDto;
 import com.twofish.vo.DataGridView;
 import java.util.List;
 
@@ -81,5 +83,19 @@ public interface CareHistoryService {
      * @param patientId
      * @return
      */
-    List<CareHistory> getPatientAllMessageByPatientId(Long patientId);
+    List<CareHistory> getPatientAllMessageByPatientId(String patientId);
+
+    /**
+     * 根据患者ID获取患者信息、档案信息、病历信息
+     * @param patientId
+     */
+    PatientAllMessageDto getPatientAllMessageByPatientIds(String patientId);
+
+    /**
+     * 根据病例ID查询处方列表及详情
+     * @param chId
+     * @return
+     */
+    CareOrdersDto queryCareOrdersByChId(String chId);
+
 }

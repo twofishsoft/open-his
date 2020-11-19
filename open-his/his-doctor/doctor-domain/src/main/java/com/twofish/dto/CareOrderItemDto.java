@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author ww
@@ -90,6 +91,8 @@ public class CareOrderItemDto extends BaseDto {
 	@ApiModelProperty(value="创建时间")
 	private Date createTime;
 
+	private List<CareOrderItemDto> careOrderItems;
+	private CareOrderDto careOrder;
 	private String regId;
 	private Integer[] checkItemIds;
 }

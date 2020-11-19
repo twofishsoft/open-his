@@ -4,10 +4,8 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.twofish.constants.Constants;
-import com.twofish.domain.CareHistory;
-import com.twofish.domain.CareOrder;
-import com.twofish.domain.CareOrderItem;
-import com.twofish.domain.CheckResult;
+import com.twofish.domain.*;
+import com.twofish.dto.CareOrderDto;
 import com.twofish.dto.CareOrderItemDto;
 import com.twofish.dto.CheckResultDto;
 import com.twofish.mapper.CareOrderItemMapper;
@@ -59,6 +57,25 @@ public class CareOrderItemServiceImpl implements CareOrderItemService {
     }
 
     @Override
+    public int saveCareOrderItem(CareOrderItemDto careOrderItemDto) {
+        SimpleUser simpleUser = careOrderItemDto.getSimpleUser();
+        CareOrderDto careOrderDto = careOrderItemDto.getCareOrder();
+        careOrderDto.setUserId((Long) simpleUser.getUserId());
+        careOrderDto.setCreateBy(simpleUser.getUserName());
+        careOrderDto.setUpdateBy(simpleUser.getUserName());
+        CareOrder careOrder = careOrderService.saveCareOrder(careOrderDto);
+        if (null != careOrder) {
+            List<CareOrderItemDto> careOrderItems = careOrderItemDto.getCareOrderItems();
+            careOrderItems.forEach(item -> {
+                item.setCoId(careOrder.getCoId());
+                item.setStatus(Constants.ORDER_DETAILS_STATUS_0);
+                insert(item);
+            });
+        }
+        return 0;
+    }
+
+    @Override
     public int update(CareOrderItemDto careOrderItemDto) {
         CareOrderItem careOrderItem = new CareOrderItem();
         BeanUtil.copyProperties(careOrderItemDto, careOrderItem);
@@ -74,7 +91,16 @@ public class CareOrderItemServiceImpl implements CareOrderItemService {
     public int deleteByIds(Long[] careOrderItemIds) {
         List<Long> ids = Arrays.asList(careOrderItemIds);
         if(ids != null && ids.size() > 0){
-        return careOrderItemMapper.deleteBatchIds(ids);
+            return careOrderItemMapper.deleteBatchIds(ids);
+        }
+        return -1;
+    }
+
+    @Override
+    public int deleteCareOrderItemById(String itemId) {
+        CareOrderItem careOrderItem = findById(itemId);
+        if (null != careOrderItem && Constants.ORDER_DETAILS_STATUS_0.equals(careOrderItem.getStatus())) {
+            return careOrderItemMapper.deleteById(itemId);
         }
         return -1;
     }

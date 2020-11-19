@@ -99,4 +99,17 @@ public interface RegistrationService {
      */
     List<Registration> queryRegistrationByScheudlingType(String scheudlingType);
 
+    /**
+     * 接诊
+     * @param regId
+     * @return
+     */
+    int receivePatient(String regId);
+
+    /**
+     * 完成就诊
+     * @param regId
+     * @return
+     */
+    int visitComplete(String regId);
 }

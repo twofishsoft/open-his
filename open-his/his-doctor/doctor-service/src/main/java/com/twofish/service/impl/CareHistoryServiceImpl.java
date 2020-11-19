@@ -6,12 +6,15 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.twofish.constants.Constants;
 import com.twofish.domain.CareHistory;
 import com.twofish.domain.CareOrder;
+import com.twofish.domain.CareOrderItem;
 import com.twofish.dto.CareHistoryDto;
+import com.twofish.dto.CareOrderDto;
+import com.twofish.dto.CareOrdersDto;
+import com.twofish.dto.PatientAllMessageDto;
 import com.twofish.mapper.CareHistoryMapper;
 import com.twofish.vo.DataGridView;
 import org.springframework.stereotype.Service;
-import twofish.service.CareHistoryService;
-import twofish.service.CareOrderService;
+import twofish.service.*;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
@@ -29,6 +32,12 @@ public class CareHistoryServiceImpl implements CareHistoryService {
     private CareHistoryMapper careHistoryMapper;
     @Resource
     private CareOrderService careOrderService;
+    @Resource
+    private CareOrderItemService careOrderItemService;
+    @Resource
+    private PatientService patientService;
+    @Resource
+    private PatientFileService patientFileService;
 
     @Override
     public DataGridView listPage(CareHistoryDto careHistoryDto) {
@@ -93,14 +102,35 @@ public class CareHistoryServiceImpl implements CareHistoryService {
     }
 
     @Override
-    public List<CareHistory> getPatientAllMessageByPatientId(Long patientId) {
+    public List<CareHistory> getPatientAllMessageByPatientId(String patientId) {
         List<CareHistory> list = queryByAttrList(CareHistory.COL_PATIENT_ID, patientId);
         if (null != list && list.size() != 0) {
             list.forEach(item -> {
-                item.setCareOrders(careOrderService.getCareOrderItem(item.getChId()));
+                CareOrderDto careOrderDto = new CareOrderDto();
+                careOrderDto.setChId(item.getChId());
+                item.setCareOrders(careOrderService.getCareOrderItem(careOrderDto));
             });
         }
         return list;
+    }
+
+    @Override
+    public PatientAllMessageDto getPatientAllMessageByPatientIds(String patientId) {
+        PatientAllMessageDto dto = new PatientAllMessageDto();
+        dto.setCareHistoryList(getPatientAllMessageByPatientId(patientId));
+        dto.setPatient(patientService.findById(patientId));
+        dto.setPatientFile(patientFileService.findById(patientId));
+        return dto;
+    }
+
+    @Override
+    public CareOrdersDto queryCareOrdersByChId(String chId) {
+        CareOrdersDto dto = new CareOrdersDto();
+        CareOrder careOrder = careOrderService.queryOneByAttr(CareOrder.COL_CH_ID, chId);
+        List<CareOrderItem> list = careOrderItemService.queryByAttrList(CareOrderItem.COL_CO_ID, careOrder.getCoId());
+        dto.setCareOrder(careOrder);
+        dto.setCareOrderItems(list);
+        return dto;
     }
 
 }

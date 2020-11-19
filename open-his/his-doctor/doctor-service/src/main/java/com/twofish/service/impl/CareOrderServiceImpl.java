@@ -4,14 +4,14 @@ import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.twofish.constants.Constants;
-import com.twofish.domain.CareOrder;
-import com.twofish.domain.CareOrderItem;
+import com.twofish.domain.*;
 import com.twofish.dto.CareOrderDto;
+import com.twofish.dto.PatientAllMessageDto;
 import com.twofish.mapper.CareOrderMapper;
 import com.twofish.vo.DataGridView;
 import org.springframework.stereotype.Service;
-import twofish.service.CareOrderItemService;
-import twofish.service.CareOrderService;
+import twofish.service.*;
+
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
@@ -49,6 +49,14 @@ public class CareOrderServiceImpl implements CareOrderService {
         CareOrder careOrder = new CareOrder();
         BeanUtil.copyProperties(careOrderDto, careOrder);
         return careOrderMapper.insert(careOrder);
+    }
+
+    @Override
+    public CareOrder saveCareOrder(CareOrderDto careOrderDto) {
+        CareOrder careOrder = new CareOrder();
+        BeanUtil.copyProperties(careOrderDto, careOrder);
+        careOrderMapper.insert(careOrder);
+        return careOrder;
     }
 
     @Override
@@ -106,4 +114,5 @@ public class CareOrderServiceImpl implements CareOrderService {
         }
         return list;
     }
+
 }

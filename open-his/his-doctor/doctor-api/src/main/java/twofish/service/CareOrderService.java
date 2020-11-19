@@ -2,6 +2,7 @@ package twofish.service;
 
 import com.twofish.domain.CareOrder;
 import com.twofish.dto.CareOrderDto;
+import com.twofish.dto.PatientAllMessageDto;
 import com.twofish.vo.DataGridView;
 import java.util.List;
 
@@ -31,6 +32,13 @@ public interface CareOrderService {
      * @return
      */
     int insert(CareOrderDto careOrderDto);
+
+    /**
+     * 添加
+     * @param careOrder
+     * @return 返回添加的数据
+     */
+    CareOrder saveCareOrder(CareOrderDto careOrderDto);
 
     /**
      * 修改
@@ -89,4 +97,5 @@ public interface CareOrderService {
      * @return
      */
     List<CareOrder> getCareOrderItem(CareOrderDto careOrderDto);
+
 }

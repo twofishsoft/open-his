@@ -126,4 +126,24 @@ public class RegistrationServiceImpl implements RegistrationService {
         return queryByAttrList(Registration.COL_REGISTRATION_STATUS, scheudlingType);
     }
 
+    @Override
+    public int receivePatient(String regId) {
+        Registration registration = findById(regId);
+        if (null != registration) {
+            registration.setRegistrationStatus(Constants.REG_STATUS_2);
+            return update(registration);
+        }
+        return -1;
+    }
+
+    @Override
+    public int visitComplete(String regId) {
+        Registration registration = findById(regId);
+        if (null != registration) {
+            registration.setRegistrationStatus(Constants.REG_STATUS_3);
+            return update(registration);
+        }
+        return -1;
+    }
+
 }

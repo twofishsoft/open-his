@@ -51,7 +51,7 @@
             ${ew.customSqlSegment}
     </select>
 
-    <select id="getUsersNeedScheduling" parameterType="com.twofish.domain.User" resultMap="BaseResultMap">
+    <select id="getUsersNeedScheduling" parameterType="com.twofish.dto.UserDto" resultMap="BaseResultMap">
         SELECT s.user_id, s.dept_id, s.user_name, s.user_type, s.sex, s.age, s.scheduling_flag
         from sys_user s, sys_role_user b
         where b.role_id = #{roleId}
