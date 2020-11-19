@@ -182,6 +182,6 @@ public class UserServiceImpl implements UserService {
                     new UserDto(Constants.STATUS_TRUE, Constants.SCHEDULING_FLAG_TRUE, deptId, role.getRoleId())
             );
         }
-        return null;
+        return new ArrayList<>();
     }
 }
