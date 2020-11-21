@@ -126,16 +126,36 @@
           <el-table-column type="selection" width="50" align="center" />
           <el-table-column label="用户ID" align="center" prop="userId" width="100px" />
           <el-table-column label="用户姓名" align="center" prop="userName" :show-overflow-tooltip="true" />
-          <el-table-column label="部门" align="center" prop="dept.deptName" :show-overflow-tooltip="true" />
+          <el-table-column label="部门" align="center" prop="dept.deptName" />
           <el-table-column label="手机号码" align="center" prop="phone" />
-          <el-table-column label="性别" align="center" prop="sexName" />
+          <el-table-column label="性别" align="center" prop="sex">
+            <template v-slot="{row}">
+              {{ row.sex | dictDateName(sexOptions) }}
+            </template>
+          </el-table-column>
           <el-table-column label="年龄" align="center" prop="age" />
-          <el-table-column label="是否排班" align="center" prop="schedulingFlagName" />
-          <el-table-column label="级别" align="center" prop="levelName" />
-          <el-table-column label="背景" align="center" prop="backgroundName" />
+          <el-table-column label="是否排班" align="center" prop="schedulingFlagName">
+            <template v-slot="{row}">
+              <el-tag :type="row.schedulingFlag == 0 ? 'success' : 'danger'">
+                {{ row.schedulingFlag | dictDateName(schedulingFlagOptions) }}
+              </el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column label="级别" align="center" prop="userRank">
+            <template v-slot="{row}">
+              {{ row.userRank | dictDateName(levelOptions) }}
+            </template>
+          </el-table-column>
+          <el-table-column label="背景" align="center" prop="background">
+            <template v-slot="{row}">
+              {{ row.background | dictDateName(backgroundOptions) }}
+            </template>
+          </el-table-column>
           <el-table-column label="状态" align="center">
             <template v-slot="{row}">
-              <el-tag :type="row.status == 0 ? 'success' : 'danger'">{{ row.statusName }}</el-tag>
+              <el-tag :type="row.status == 0 ? 'success' : 'danger'">
+                {{ row.status | dictDateName(statusOptions) }}
+              </el-tag>
             </template>
           </el-table-column>
           <el-table-column label="创建时间" align="center" prop="createTime" width="170">
@@ -386,9 +406,7 @@ export default {
       }
     }
   },
-  created() {
-    this.getList()
-    this.queryAllDept()
+  beforeCreate() {
     // 状态
     this.getDicts('sys_normal_disable').then(response => {
       this.statusOptions = response.data
@@ -399,6 +417,7 @@ export default {
     })
     // 级别
     this.getDicts('sys_user_level').then(response => {
+      console.log(response)
       this.levelOptions = response.data
     })
     // 是否排班
@@ -409,6 +428,11 @@ export default {
     this.getDicts('sys_user_background').then(response => {
       this.backgroundOptions = response.data
     })
+  },
+  created() {
+    this.getList()
+    // 部门
+    this.queryAllDept()
   },
   methods: {
     /** 查询用户列表 */

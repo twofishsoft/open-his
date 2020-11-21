@@ -66,3 +66,9 @@ export function toThousandFilter(num) {
 export function uppercaseFirst(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
+
+export function dictDateName(id, list) {
+  if (!list) return "";
+  const value = list.filter(item => item.dictValue == id)
+  return value.length != 0 ? value[0].dictLabel : '';
+}
