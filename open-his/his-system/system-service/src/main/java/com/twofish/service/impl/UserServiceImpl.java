@@ -52,11 +52,6 @@ public class UserServiceImpl implements UserService {
         qw.le(null != userDto.getEndTime(), User.COL_CREATE_TIME, userDto.getEndTime());
         userMapper.selectPage(page, qw);
         page.getRecords().stream().forEach(user -> {
-            user.setStatusName(dictDataService.queryDataByTypeAndValue("sys_normal_disable", user.getStatus()));
-            user.setBackgroundName(dictDataService.queryDataByTypeAndValue("sys_user_background", user.getBackground()));
-            user.setLevelName(dictDataService.queryDataByTypeAndValue("sys_user_level", user.getUserRank()));
-            user.setSexName(dictDataService.queryDataByTypeAndValue("sys_user_sex", user.getSex()));
-            user.setSchedulingFlagName(dictDataService.queryDataByTypeAndValue("his_scheduling_flag", user.getSchedulingFlag()));
             Dept dept = deptService.getOneById(user.getDeptId());
             if (null != dept) {
                 user.setDept(dept);
